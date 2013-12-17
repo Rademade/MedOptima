@@ -1,0 +1,20 @@
+<?php
+$count = sizeof($this->thead);
+?><thead>
+<tr><?php
+    for($i = 0; $i < $count; $i++):
+        ?><td <?php
+        if ($i == 0):
+            ?>class="first"<?
+        endif;
+        ?>><?php
+        ?><span><?=$this->thead[$i]?></span><?php
+        ?></td><?php
+    endfor;
+    if ($this->isControllable): ?>
+        <td>
+            Управление
+        </td><?
+    endif;
+    ?></tr>
+</thead>

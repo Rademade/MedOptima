@@ -1,0 +1,47 @@
+<?php
+	$name = $this->name;
+	$id = 'category_' .  $name;
+	$idInput = 'category_input_' . $name;
+	$idAutocompleate = 'autocompleate_' . $name;
+	$postData = array();
+	if (isset( $_POST[$name]) ):
+		$postData = $_POST[$name];
+	endif;
+?><div class="selectItem">
+	<input
+		id="<?=$idInput?>"
+		type="text"
+		name=""
+		autocomplete="off"
+		class="field textInput"
+		value=""
+		placeholder="Enter name"
+	/>
+</div>
+<ul class="selectedItems"><?
+	foreach ($postData as $id):
+		$category = Application_Model_Category::getById( $id );
+		?><li><?
+			?><span class="name"><?=$category->getContent()->getName()?></span><?
+			?><i class="remove"></i><?
+			?><span class="type"><?=$this->CategoryLevelToString( $category->getLevel() )?></span><?
+		?></li><?
+	endforeach;
+?></ul>
+<div id="<?=$idAutocompleate?>"></div>
+<div id="<?=$id?>"><?
+	foreach ($postData as $id):
+		?><input type="hidden" name="<?=$name?>[]" value="<?=$id?>"/><?php
+	endforeach;
+?></div>
+<?php
+$this->HeadScript()->captureStart();
+?>$(function(){<?php
+	?>Adminka.GoodCategoriesList(
+		$("#<?=$id?>"),
+		"<?=$name?>",
+		"<?=$idInput?>",
+		"<?=$idAutocompleate?>"
+	);<?php
+?>});<?php
+$this->HeadScript()->captureEnd();

@@ -1,0 +1,10 @@
+<?php
+$cfg = Zend_Registry::get('cfg');
+$url = $this->url(array(
+    'code' => $this->code->getCode()
+), 'email-activate');
+?>Спасибо за регистрацию на сайте AzRestoran.<br/>
+Пожалуйста, подтвердите свой аккаунт, перейдите по <a href="http://<?=$cfg['domain'] . $url?>">ссылке</a>.<br/>
+<br/>
+С наилучшими пожеланиями,<br/>
+<a href="http://<?=$cfg['domain']?>">AzRestoran</a><br/>

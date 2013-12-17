@@ -1,0 +1,16 @@
+<?php
+$table = new RM_View_Table();
+$table->setEditRoute('admin-lang-edit')
+    ->setStatusUrl($this->url(array(), 'admin-lang-ajax'))
+    ->setHead('Language name');
+foreach ($this->langs as $lang):
+    /* @var $lang RM_Lang */
+    $row = $table
+        ->addRecord( $lang->getId(), $lang->getName() )
+        ->setStatus($lang->getStatus());
+    if (!$lang->isDefault()):
+		$row->setHideble();
+		$row->setDeletable();
+	endif;
+endforeach;
+echo $table;

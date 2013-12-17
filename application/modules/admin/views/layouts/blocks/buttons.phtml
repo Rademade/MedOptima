@@ -1,0 +1,14 @@
+<?php
+$view = Zend_Layout::getMvcInstance()->getView();
+?><div class="main-control"><?php
+
+    echo $this->partial('/blocks/buttons/auto-add.phtml', array());
+
+    echo $this->partial('/blocks/buttons/search.phtml', array());
+
+    foreach (RM_View_Top::getInstance()->getButtons() as $button):
+        ?><a href="<?=$button->getUrl()?>" class="main-links"><?php
+        echo $button->getName();
+        ?></a><?php
+    endforeach;
+?></div>

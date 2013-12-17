@@ -1,0 +1,13 @@
+<?php
+if (!is_null($this->paginationData)) :
+    if (isset($this->paginationData->previous)) :
+        ?><link rel="prev" href="<?=$this->url(array(
+            'page' => $this->paginationData->previous
+        ))?>"/><?
+    endif;
+    if (isset($this->paginationData->next)) :
+        ?><link rel="next" href="<?=$this->url(array(
+            'page' => $this->paginationData->next
+        ))?>"/><?
+    endif;
+endif;

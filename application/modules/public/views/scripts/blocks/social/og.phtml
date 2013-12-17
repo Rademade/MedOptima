@@ -1,0 +1,23 @@
+<?php
+if ($this->ogElement instanceof RM_Interface_OgElement):
+
+    $cfg = Zend_Registry::get('cfg');
+    $description = trim( htmlspecialchars(
+        $this->CutText(
+            str_replace(
+                "\n", '',
+                strip_tags( $this->ogElement->getDescription() )          //remove tags
+            ),                                                          //remove \n
+            300                                                         //max length 300 chars
+        )                                                               //html special chars
+    ) );                                                                //trim
+
+    ?><meta property="og:title" content="<?=$this->ogElement->getTitle()?>"/><?
+        $photos = is_array( $this->ogElement->getPhoto() ) ? $this->ogElement->getPhoto() : [$this->ogElement->getPhoto()];
+        foreach ($photos as $photo):
+            ?><meta property="og:image" content="http://<?=$cfg['domain'], ($photo instanceof RM_Photo) ? $photo->getPath(300, 300) : ''?>"/><?
+            echo PHP_EOL;
+        endforeach;
+    ?><meta property="og:url" content="<?=$this->url()?>"/>
+    <meta property="og:description" content="<?=$description?>"/><?php
+endif;

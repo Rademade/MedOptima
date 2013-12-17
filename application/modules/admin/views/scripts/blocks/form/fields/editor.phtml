@@ -1,0 +1,33 @@
+<?php
+	$view = Zend_Layout::getMvcInstance()->getView();
+	$name = $this->name;
+	$id = (($this->idLang) ? $this->idLang . '_' : '') . $name;
+	$uniqid = md5($id . uniqid());
+	$postField = false;
+	if (isset($_POST[$name])):
+		$postField = $_POST[$name];
+	else:
+		if (($this->idLang) && 
+			isset($_POST['lang'][$this->idLang]) && 
+			isset($_POST['lang'][$this->idLang][$name])
+		):
+			$postField = $_POST['lang'][$this->idLang][$name];
+		endif;
+	endif;
+?><textarea id="<?=$uniqid?>" style="height:250px;" <?php
+	?>id="<?=$this->id?>" <? 
+	?>name="<? if ($this->idLang):
+		?>lang[<?=$this->idLang?>][<?=$name?>]<?php 
+	else:
+		echo $name; 
+	endif ?>" <?
+	?>class="field editor lang_<?=$this->idLang?> <?=$id?>" <?
+?>><?=($postField) ?  $postField : $this->value ?></textarea>
+<input type="hidden" name="process[<?=$name?>]" value="<?=RM_Content_Field_Process::PROCESS_TYPE_HTML?>"  /><?php
+$view->headScript()->captureStart();
+?>$('#<?=$uniqid?>').redactor({
+	image_upload: '<?='/ru/image/upload'?>',
+	image_delete: '<?='/ru/image/delete'?>',
+	image_settings: '<?='/ru/image/settings'?>'
+});<?php
+$view->headScript()->captureEnd();

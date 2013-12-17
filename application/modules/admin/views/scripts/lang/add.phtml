@@ -1,0 +1,9 @@
+<?php
+$form = new RM_View_Form();
+$form
+    ->add(new RM_View_Form_Field_Text('Language name', 'lang_name', ''))
+    ->add(new RM_View_Form_Field_Image('Flag photo', 'id_photo', 0, 16, 11))
+    ->add(new RM_View_Form_Field_Text('Browser url', 'lang_url', ''))
+    ->add(new RM_View_Form_Field_Text('Language ISO', 'iso_name', ''))
+    ->add(new RM_View_Form_Field_Checkbox('Default language', 'default', 1));
+echo $form->render();

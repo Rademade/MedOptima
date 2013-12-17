@@ -1,0 +1,17 @@
+<?php
+	$name = $this->name;
+	$idPreview = 'preview_' . $name . uniqid();
+	$idInput = 'input_' . $name . uniqid();
+	$postField = $this->value;
+	if (isset($_POST[$name])):
+		$postField = $_POST[$name];
+	endif;
+	if (!$postField):
+		$postField = 'ffffff';
+	endif;
+?>
+<div id="<?=$idPreview?>" class="colorPreview" style="background-color:#<?=$postField?>"></div>
+<input id="<?=$idInput?>" name="<?=$name?>" type="hidden" value="<?=$postField?>" />
+<?php $this->headScript()->captureStart();
+	?>Adminka.colorPiker($('#<?=$idPreview?>'), $('#<?=$idInput?>'));<?php
+$this->headScript()->captureEnd(); ?>

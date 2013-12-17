@@ -1,0 +1,18 @@
+<?php
+$table = new RM_View_Table();
+$table
+    ->setStatusUrl($this->url(array(), 'admin-error-ajax'))
+    ->setHead('Category log name', 'Error count', 'New error count');
+$table->addPaginator($this->errorCategories);
+foreach ($this->errorCategories as $errorCategory):
+    /* @var $errorCategory RM_Error_Category */
+    $row = $table
+        ->addRecord($errorCategory->getId(), $errorCategory->getName())
+        ->setUrl(array(
+        'idLog' => $errorCategory->getId(),
+        'page' => 1
+    ), 'admin-error-list')
+        ->addTd( $errorCategory->getErrorCount() )
+        ->addTd( $errorCategory->getNewErrorCount() );
+endforeach;
+echo $table;

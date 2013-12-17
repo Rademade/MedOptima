@@ -1,0 +1,30 @@
+<?php
+$table = new RM_View_Table();
+$table->setEditRoute('admin-user-edit')
+	->setStatusUrl($this->url(array(), 'admin-user-ajax'))
+	->setHead('User name', 'Email', 'Role description')
+	->addPaginator($this->users);
+foreach ($this->users as $user):
+	/* @var $user Application_Model_User_Profile */
+	$row = $table
+		->addRecord( $user->getId(), $user->getFullName() )
+		->addTd( $user->getEmail() )
+		->addTd( $user->getUser()->getRole()->getShortDesc() );
+    if ( $this->user->getRole()->isSubordinate( $user->getUser()->getRole() ) ):
+	    $row->addIcon(
+            new RM_View_Element_Icon(
+                'admin-user-settings',
+                array(
+                    'id' => $user->getId(),
+                    'page' => $this->page
+                ),
+                'User settings',
+                RM_View_Element_Icon::ICON_SETTINGS
+            )
+        );
+    endif;
+    $row->setStatus($user->getStatus())
+		->setHideble()
+		->setDeletable();
+endforeach;
+echo $table;

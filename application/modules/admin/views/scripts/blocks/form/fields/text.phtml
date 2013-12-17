@@ -1,0 +1,30 @@
+<?php
+	$name = $this->name;
+	$id = (($this->idLang) ? $this->idLang . '_' : '') . $name;
+	$postField = false;
+	if (isset($_POST[$name])) {
+		$postField = $_POST[$name];
+	} else {
+		if (($this->idLang) && 
+			isset($_POST['lang'][$this->idLang]) && 
+			isset($_POST['lang'][$this->idLang][$name])
+		) {
+			$postField = $_POST['lang'][$this->idLang][$name];
+		}
+	}
+?><input <?php
+	?>id="<?=$id?>" <?
+	if ($this->disabled):
+		?>disabled="disabled"<?
+	endif;
+	?> name="<? if ($this->idLang):
+		?>lang[<?=$this->idLang?>][<?=$name?>]<?php 
+	else:
+		echo $name; 
+	endif ?>" <?
+	?>type="<?=$this->type?>" <?
+	?>autocomplete="off" <?
+	?>class="field textInput lang_<?=$this->idLang?> <?=$id?>" <?
+	?>value="<?=htmlentities(($postField) ?  $postField : $this->value)?>" <?
+?>/>
+<input type="hidden" name="process[<?=$name?>]" value="<?=RM_Content_Field_Process::PROCESS_TYPE_LINE?>"  />

@@ -1,0 +1,38 @@
+<div class="no-bg-items">
+
+    <!--<div class="button sec-links">Upload new photo
+        <input id="uploadPhoto" type="file" name="photo">
+    </div>-->
+
+    <div id="uploadPhoto" class="button sec-links">
+        <div class="avatarDropArea" style="display:none"></div>
+        <div class="button uplProfile">Upload new photo
+            <div id="qq-input-box"></div>
+        </div>
+        <ul class="qq-upload-list" style="display:none"></ul>
+    </div>
+
+	<div class="clear"></div>
+    <ul id="galleryPhotos" class="gallery_photos" unselectable="on"><?php
+        foreach ($this->gallery->getPhotos() as $photo) :
+            ?><li data-id="<?=$photo->getIdPhoto()?>">
+                <img src="<?=$photo->getPath(150, 150)?>" alt="" />
+                <i class="delete delete-photo-link"></i>
+            </li><?
+        endforeach;
+    ?></ul>
+	<div class="clear"></div>
+</div><?php
+$this->HeadScript()->captureStart();
+?>$(function() {
+	Adminka.Gallery(
+		<?=$this->gallery->getId()?>,
+		'<?=$this->url(array(), 'admin-gallery-ajax')?>',
+		'<?=$this->url(array(
+            'id' => $this->gallery->getId()
+        ), 'admin-gallery-photo-qq-upload')?>',
+		$('#galleryPhotos'),
+		$('#uploadPhoto')
+	);
+});<?
+$this->HeadScript()->captureEnd();

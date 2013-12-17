@@ -1,0 +1,30 @@
+.multi-list-item-container div:not(:last-child) .add-one {
+    display: none;
+}
+
+.multi-list-item-container .list-item {
+    margin: 10px 0;
+}
+
+.add-one,
+.del-one {
+    display: inline-block;
+    width:23px;
+    height:23px;
+    border:0;
+    background: url("/s/admin/images/icons/plus.png");
+    position:relative;
+    top:-2px;
+    cursor: pointer;
+    padding-bottom: 9px;
+}
+
+.del-one {
+    background: url("/s/admin/images/icons/minus.png");
+}
+#special-condition-input {
+    width: 500px;
+}
+#special-condition-percent-input {
+    width: 60px;
+}

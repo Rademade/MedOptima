@@ -1,0 +1,139 @@
+body {
+	font-family: Arial, 'Helvetica CY', 'Nimbus Sans L', sans-serif;     
+	font-size: 13px;
+	margin: 0;
+	padding: 0;
+	overflow-x: hidden;
+	background-color: #fff;
+	text-indent: 20px;	
+}
+
+blockquote {
+	margin: 10px;
+	margin-left: 3em;
+	background-color: #fff;
+	border: 1px solid #ebebeb;
+	line-height: 1.5em;	
+	font-style: italic;
+	color: #777;	
+}
+div {
+	text-indent:20px!important;
+	line-height: 18px;
+	background-color: #fff;
+}
+p {
+	margin:0;
+	color: #3E5462;
+	font-family: Arial, 'Helvetica CY', 'Nimbus Sans L', sans-serif;
+	font-size: 12px;
+	line-height: 18px;
+	background-color: #fff;
+}
+ul, ol {
+	background-color: #fff;
+	line-height: 18px;
+	list-style: disc outside;
+	text-indent:0;
+}
+ol {
+	list-style: decimal outside;
+}
+ul li ul, ol li ol, ul li ol, ol li ul {
+	border: none;
+	margin: 2px !important;
+	padding: 0;
+}
+dl { 
+	background-color: #fff;
+}
+dl dt { font-weight: bold; }
+dd { margin-left: 1.5em;}
+
+table {
+	background-color: #fff;
+	border-collapse: collapse;
+	margin:5px;
+}
+table td {
+	border: 1px solid #ddd;
+}
+table thead td {
+	border-bottom: 2px solid #000 !important;
+	font-weight: bold;
+}
+code, pre { font: 1.2em/1 "Courier New", Courier, monospace; border: 1px dashed #ccc; background: #f5f5f5;  padding: 1em; 	margin: 10px; }
+pre {  line-height: 1.7em; font-size: .9em; background: #f5f5f5; overflow: auto;  }
+
+iframe, object {
+	margin: 10px;
+}
+
+.img_left {
+	float: left;
+	margin-right: 10px; 
+	margin-bottom: 10px;
+}
+.img_right {
+	float: right;
+	margin-left: 10px; 
+	margin-bottom: 10px;
+}
+
+.redactor_video_box {
+	width: 300px;
+	height: 200px;
+	background: url(/s/admin/images/editor/video_box.png) center no-repeat #000 !important;	
+	margin: 10px;
+}
+.redactor_video_box object, .redactor_video_box embed, .redactor_video_box iframe {
+	display: none;
+}
+
+.redactor_file_link {
+	padding-left: 20px;
+}
+.redactor_file_ico_avi 	  { background: url(/s/admin/images/editor/fileicons/avi.png) no-repeat; }
+.redactor_file_ico_csv 	  { background: url(/s/admin/images/editor/fileicons/csv.png) no-repeat; }
+.redactor_file_ico_doc 	  { background: url(/s/admin/images/editor/fileicons/doc.png) no-repeat; }
+.redactor_file_ico_gif 	  { background: url(/s/admin/images/editor/fileicons/gif.png) no-repeat; }
+.redactor_file_ico_html   { background: url(/s/admin/images/editor/fileicons/html.png) no-repeat; }
+.redactor_file_ico_jpg 	  { background: url(/s/admin/images/editor/fileicons/jpg.png) no-repeat; }
+.redactor_file_ico_mov	  { background: url(/s/admin/images/editor/fileicons/mov.png) no-repeat; }
+.redactor_file_ico_other  { background: url(/s/admin/images/editor/fileicons/other.png) no-repeat; }
+.redactor_file_ico_pdf 	  { background: url(/s/admin/images/editor/fileicons/pdf.png) no-repeat; }
+.redactor_file_ico_png 	  { background: url(/s/admin/images/editor/fileicons/png.png) no-repeat; }
+.redactor_file_ico_ppt 	  { background: url(/s/admin/images/editor/fileicons/ppt.png) no-repeat; }
+.redactor_file_ico_rar 	  { background: url(/s/admin/images/editor/fileicons/rar.png) no-repeat; }
+.redactor_file_ico_rtf 	  { background: url(/s/admin/images/editor/fileicons/rtf.png) no-repeat; }
+.redactor_file_ico_txt 	  { background: url(/s/admin/images/editor/fileicons/txt.png) no-repeat; }
+.redactor_file_ico_xls 	  { background: url(/s/admin/images/editor/fileicons/xls.png) no-repeat; }
+.redactor_file_ico_zip 	  { background: url(/s/admin/images/editor/fileicons/zip.png) no-repeat; }
+
+
+h1, h2, h3, h4,h5 {
+	font-weight: normal;
+	background-color: #fff;
+}
+
+h1 {
+	font-size: 20px;
+}
+h2 {
+	font-size: 16px;
+}
+h3 {
+	font-size: 14px;
+}
+h4 {
+	font-size: 12px;
+	font-weight: bold;
+}
+
+a {
+	color: #0071B9;
+	text-decoration: underline;
+}
+a :hover {
+	text-decoration: none;
+}

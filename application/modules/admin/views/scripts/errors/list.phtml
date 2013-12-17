@@ -1,0 +1,19 @@
+<?php
+$table = new RM_View_Table();
+$table
+    ->setStatusUrl($this->url(array(), 'admin-error-ajax'))
+    ->setHead('Error url', 'Error date-time', 'Unwatched')
+    ->setEditRoute('admin-error-edit')
+    ->addPaginator($this->errors);
+foreach ($this->errors as $error):
+    /* @var $error RM_Error */
+    $row = $table
+        ->addRecord($error->getId(), $error->getUrl())
+        ->setUrl(array(
+        'id' => $error->getId()
+    ), 'admin-error-edit')
+        ->addTd( $error->getDate() )
+        ->addTd( $error->getStatus() === RM_Error::STATUS_NEW ? '✔' : '')
+        ->setDeletable();
+endforeach;
+echo $table;

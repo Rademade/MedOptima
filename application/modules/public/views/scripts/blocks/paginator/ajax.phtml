@@ -1,0 +1,45 @@
+<?php
+$view = Zend_Layout::getMvcInstance()->getView();
+?><div class="paginator <?
+    if (sizeof($this->pagesInRange) < 2) :
+        ?>hide<?
+    endif;
+?>" id="paginator">
+    <div class="paginator-link-container">
+        <a title="<?=$view->translate->_('Предыдущая страница')?>" class="prev <?
+            if (!isset($this->previous)) :
+                ?>unactive<?
+            endif;
+        ?>" href="javascript:void(0);"><i class="ico prev-ico"></i></a><?
+        if ($this->firstPageInRange > $this->first) :
+            ?><a data-page="<?=$this->first?>" href="javascript:void(0);" class="first"><?=$this->first?></a><?
+                if ($this->firstPageInRange > $this->first + 1) :
+                    ?><span>...</span><?
+                endif;
+        endif;
+        foreach ($this->pagesInRange as $page) :
+            ?><a data-page="<?=$page?>" href="javascript:void(0);" class="<?
+                if ($page === $this->current) :
+                    ?>current<?
+                endif;
+                if ($page === $this->first) :
+                    ?> first<?
+                endif;
+                if ($page === $this->last) :
+                    ?> last<?
+                endif;
+            ?>"><?=$page?></a><?php
+        endforeach;
+        if ($this->lastPageInRange < $this->last) :
+            if ($this->lastPageInRange < $this->last - 1) :
+                ?><span>...</span><?
+            endif;
+            ?><a data-page="<?=$this->last?>" href="javascript:void(0);" class="last"><?=$this->last?></a><?
+        endif;
+        ?><a title="<?=$view->translate->_('Следующая страница')?>" class="next <?
+            if (!isset($this->next)) :
+                ?>unactive<?
+            endif;
+        ?>" href="javascript:void(0);"><i class="ico next-ico"></i></a>
+    </div>
+</div>

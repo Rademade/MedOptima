@@ -1,0 +1,14 @@
+<?php
+$table = new RM_View_Table();
+$table->setEditRoute($this->editRoute)
+    ->setStatusUrl($this->ajaxUrl)
+    ->setHead('Name')
+    ->addPaginator($this->authors);
+foreach ($this->authors as $author) :
+    /* @var Application_Model_Author $author */
+    $table->addRecord($author->getId(), $author->getName())
+        ->setStatus($author->getStatus())
+        ->setHideble()
+        ->setDeletable();
+endforeach;
+echo $table;

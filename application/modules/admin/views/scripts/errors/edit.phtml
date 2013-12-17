@@ -1,0 +1,13 @@
+<?php
+$error = $this->error;
+/* @var $error RM_Error */
+$form = new RM_View_Form();
+$errorTime = new RM_View_Form_Field_Text('Error time', '', $error->getDate());
+$errorUrl = new RM_View_Form_Field_Text('Error url', $error->getUrl(), $error->getUrl());
+echo $form
+    ->add($errorUrl->disable())
+    ->add(new RM_View_Form_Field_Textarea('Error text', '', $error->getText()))
+    ->add(new RM_View_Form_Field_Block('$_SERVER', $this->GetDump( $error->getServerData()) ))
+    ->add(new RM_View_Form_Field_Block('$_REQUEST', $this->GetDump( $error->getRequestData()) ))
+    ->add($errorTime->disable())
+    ->render();

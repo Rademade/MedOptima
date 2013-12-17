@@ -1,0 +1,108 @@
+<input id="statusUrl" type="hidden" value="<?=$this->url(array(),'admin-errors-status')?>"/>
+<?=$this->partial('blocks/top.phtml');?>
+<? $this->headScript()->captureStart()?>
+$(document).ready(function(){
+    $("#tabs").tabs();
+    $('tr.order').click(function(){
+        if ($(this).hasClass('new')) {
+            $(this).removeClass('new');
+            var id = parseInt($(this).children('td:eq(2)').text(), 10);
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    type:3,
+                    id: id
+                },
+            });
+        }
+        if ($(this).hasClass('open')) {
+            $(this).removeClass('open').next().hide();
+        } else {
+            $(this).addClass('open').next().show();
+        }
+    });
+
+    $('.convert').click(function(){
+        var tr = $(this).parent().parent().next();
+        tr.show();
+        var elem = tr.children('td:eq(2)').children('div').children('b');
+        elem.html(unescape(elem.html().replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>')));
+        $(this).remove();
+        return false;
+    });
+    
+});
+<? $this->headScript()->captureEnd()?>
+<div id="tabs">
+	<ul><?php
+        $titleListIds = array();
+        foreach ($this->errorTitles as $errorTitle):
+            $titleListIds[] = $errorTitle->idLog;
+            ?><li><a href="#log_<?=$errorTitle->idLog?>"><?=$errorTitle->logName?><?php
+            if ($errorTitle->count > 0):
+                ?> (<?=$errorTitle->count?>)<?php
+            endif
+            ?></a></li><?php
+        endforeach;
+        ?></ul><?php
+$i = 0;
+$j = 1;
+$titleLogs = array();
+foreach ($this->errors as $error):
+    if (!in_array($error->getIdLog(), $titleLogs)):
+        if ($i !== 0):
+            ?></tbody></table></div><?php
+        endif;
+        $j = 0;
+        ?>
+				<div id="log_<?=$error->getIdLog()?>">
+					<table class="zebra">
+						<thead>
+                        <tr>
+                            <td width="2%">&nbsp;</td>
+                            <td width="3%">&nbsp;</td>
+                            <td width="15%">Код ошибки</td>
+                            <td width="30%">Адрес</td>
+                            <td width="43%">Время</td>
+                            <td width="7%">&nbsp;</td>
+                        </tr>
+                        </thead>
+					<tbody>
+			<?php
+        $titleLogs[] = $error->getIdLog();
+    endif;
+    ++$i;
+    ?>
+<tr id="id_<?=$error->getId()?>" class="id_<?=$error->getId()?> <?=($j%2==0) ? 'grey' : ''?> order <?=$error->getId()?>_4 <?if ($error->isNew()):
+    ?>new<?
+endif ?>">
+    <td width="2%">&nbsp;</td>
+    <td width="3%"><img src="/s/admin/images/arrow_blue_down.gif" alt="" width="10" height="15"></td>
+    <td width="15%"><?=$error->getId()?></td>
+    <td width="30%"><a href="<?=$error->getUrl()?>" target="_blank" ><?=$error->getUrl()?></a></td>
+    <td width="43%"><?=$error->getDate()?></td>
+    <td width="7%">
+        <a href="javascript:changeStatus(<?=$error->getId()?>);" class="delete" title="Удалить"><?php
+            ?><img src="/s/admin/images/icon_delete.gif" alt="" width="9" height="8"><?php
+            ?></a>
+    </td>
+</tr>
+<tr class="id_<?=$error->getId()?> hide <?=($j%2==0) ? 'grey' : ''?>">
+    <td width="100%" colspan="6"><textarea class="errorDescription"><?=$error->getText()?></textarea></td>
+</tr>
+    <?
+    ++$j;
+endforeach;
+if ($i!==0):
+    ?></tbody></table></div><?php
+endif;
+//если некоторые логи пустые
+foreach ($titleListIds as $id):
+    if (!in_array($id, $titleLogs)):
+        ?><div id="log_<?=$id?>"></div><?php
+    endif;
+endforeach;
+?>
+<br/>
+<input id="statusUrl" type="hidden" value="<?=$this->url(array(),'admin-errors-status')?>"/>

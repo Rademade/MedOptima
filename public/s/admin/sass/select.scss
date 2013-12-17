@@ -1,0 +1,109 @@
+@CHARSET "UTF-8";
+
+.select {
+	width:150px;
+	float:left;
+	position: relative;
+	text-align: left;
+}
+	a.selectedLi {
+		display:inline-block;
+		width:93px;
+		float:left;
+		color:#3e5462;
+		padding:0 15px 0 10px;
+		@extend .sec-links;
+		position: relative;
+	}
+		div.select span {
+			display:inline-block;
+			height:26px;
+			width:8px;
+			float:left;
+			position:relative;
+			left:-1px;
+			overflow:hidden;
+			cursor:pointer;
+			@extend .sec-links;
+			i {
+				display:inline-block;
+				height:6px;
+				width:8px;
+				float:right;
+				position:relative;
+				top:11px;
+				overflow:hidden;
+				background: url("../images/sprite.png") -40px 0;
+				cursor:pointer;
+			}
+		}
+	ul.selectUl {
+		list-style: none;
+		width:149px;
+		height:200px;
+		overflow-y:auto;
+		overflow-x:hidden;
+		float:left;
+		display:none;
+		position: absolute;
+		top:27px;/*selected height*/
+		z-index: 999;
+	}
+		ul.selectUl li {
+			height: 24px;
+			line-height: 24px;
+			width:147px;
+			background: #fff;
+			@include border-bottom;
+			@include border-right;
+			@include border-left;
+			float:left;
+		}
+			ul.selectUl li a {
+				color:#3e5462;
+				height: 100%;
+				width:137px;
+				display: inline-block;
+				padding:0 0 0 10px;
+				background: none;
+				position: static;
+				float:none;
+				font-weight: 400;
+			}
+			ul.selectUl li a:hover {
+				text-decoration: none;
+			}
+
+/*
+
+div.divClassName {
+	margin:7px 0 0 15px;
+	width:140px;
+}
+	div.divClassName ul {
+		width:152px;
+	}
+		div.divClassName ul li {
+			width:150px;
+		}
+			div.divClassName ul li a {
+				width:140px;
+			}
+
+*/
+
+div.select77 {
+	width:77px;
+}
+	div.select77 .selectedLi {
+		width:20px;
+	}
+	div.select77 ul {
+		width:76px;
+	}
+		div.select77 ul li{
+			width:74px;
+		}
+			div.select77 ul li a {
+				width:65px;
+			}

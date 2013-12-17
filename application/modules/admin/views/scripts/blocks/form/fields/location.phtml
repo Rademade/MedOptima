@@ -1,0 +1,46 @@
+<?php
+	$name = $this->name;
+	$id = md5($name);
+	$postField = false;
+	if (isset($_POST[$name])) :
+		$postField = $_POST[$name];
+	else:
+		$postField = array(
+			'lat' => $this->lat,
+			'lng' => $this->lng,
+			'zoom' => $this->zoom
+		);
+	endif;
+?><div id="<?=$id?>" style="width:<?=$this->width?>px;height:<?=$this->height?>px"></div>
+<input id="<?=$id?>_lat" type="hidden" name="<?=$name?>[lat]" value="<?=$postField['lat']?>"/>
+<input id="<?=$id?>_lng" type="hidden" name="<?=$name?>[lng]" value="<?=$postField['lng']?>"/>
+<input id="<?=$id?>_zoom" type="hidden" name="<?=$name?>[zoom]" value="<?=$postField['zoom']?>"><?
+$this->HeadScript()->captureStart();
+    //TODO move js to specify JS file
+    ?>$(function(){
+        var lat = $('#<?=$id?>_lat');
+        var lng = $('#<?=$id?>_lng');
+        var zoom = $('#<?=$id?>_zoom');
+        var center = new google.maps.LatLng(<?=$postField['lat']?>, <?=$postField['lng']?>);
+        var opt = {
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            center : center,
+            zoom : <?=$postField['zoom']?>,
+            minZoom: 1,
+            streetViewControl: false
+        };
+        var map = new google.maps.Map($('#<?=$id?>')[0], opt);
+        var marker = new google.maps.Marker({
+            map : map,
+            draggable: true,
+            position: center
+        });
+        google.maps.event.addListener(marker, "dragend", function() {
+            lat.val( marker.position.lat() );
+            lng.val( marker.position.lng() );
+        });
+        google.maps.event.addListener(map, "zoom_changed", function() {
+            zoom.val( map.getZoom() );
+        });
+    });<?
+$this->HeadScript()->captureEnd();

@@ -1,0 +1,26 @@
+<?php
+	$name = $this->name;
+	$values = isset($_POST[ $name ]) ? $_POST[ $name ] : $this->selected;
+	foreach ($values as &$value) {
+		$value = (int)$value;
+	}
+?><select
+	id="_<?=$name?>"
+	name="<?=$name?>[]"
+	class="multiselect"
+	multiple="multiple"
+    style="width:42%;height:150px"
+><?
+	foreach ($this->options as $id => $option):
+		?><option <?php 
+			if (in_array($id, $values)):
+				?>selected="selected"<?php
+			endif;
+		?> value="<?=$id?>"><?=$option?></option><?
+	endforeach;
+?></select><?php
+$this->headScript()->captureStart();
+?>$(function(){
+	$('#_<?=$name?>').multiselect();
+});<?
+$this->headScript()->captureEnd();

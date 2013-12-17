@@ -1,0 +1,51 @@
+<?php
+$name = $this->name;
+$values = (isset($_POST[$name]) && sizeof($_POST[$name]['key']) > 0) ?
+    $_POST[$name] :
+    array(
+        'key' => array('' => ''),
+        'value' => array('' => '')
+    );
+$attrNames = $values['key'];
+$attrValues = $values['value'];
+$onlyOne = sizeof($attrNames) == 1;
+?>
+    <div id="multi_list_<?= $name ?>" class="multi-list-item-container"><?
+foreach ($attrNames as $index => $attrName) :
+    ?>
+    <div class="list-item">
+    <input
+        type="text"
+        name="<?= $name ?>[key][]"
+        autocomplete="off"
+        class="field short"
+        value="<?= $attrName ?>"
+        placeholder="<?= isset($this->options['attr_placeholder']) ? $this->options['attr_placeholder'] : 'Название' ?>"
+        id="special-condition-input"
+        />
+    <span class="arrow">=></span>
+    <input
+        type="text"
+        name="<?= $name ?>[value][]"
+        autocomplete="off"
+        class="field short"
+        value="<?= $attrValues[$index] ?>"
+        placeholder="<?= isset($this->options['val_placeholder']) ? $this->options['val_placeholder'] : 'Значение' ?>"
+        id="special-condition-percent-input"
+        /><?
+    if ($this->buttonsEnabled):
+        ?><button class="add-one" title="Добавить ещё"></button>
+        <button class="del-one<?
+        if ($onlyOne) :
+            ?> hide<?
+        endif;
+        ?>" title="Удалить"></button><?
+    endif;?>
+    </div><?
+endforeach;
+?></div><?
+$this->HeadScript()->captureStart();
+?>$(function() {
+    Adminka.MultiList.init($('#multi_list_<?= $name ?>'));
+    });<?
+$this->HeadScript()->captureEnd();

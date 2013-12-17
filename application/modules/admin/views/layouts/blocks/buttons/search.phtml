@@ -1,0 +1,28 @@
+<?php
+$view = Zend_Layout::getMvcInstance()->getView();
+if ( RM_View_Top::getInstance()->isSearch() ):
+    $inputName = 'search';
+    $searchQuery = isset($_GET[ $inputName ]) ? $_GET[ $inputName ] : '';
+
+    ?><form id="filterForm" action="<?=$this->url()?>" method="get"><?
+
+        ?><input id="<?=$inputName?>"
+                 name="<?=$inputName?>"
+                 type="text"
+                 placeholder="Что вам нужно найти?"
+                 value="<?=$searchQuery?>"/><?
+        ?><div id="searchList"></div><?
+        ?><input type="submit" class="main-links" value="Поиск"/><?
+        ?><input type="hidden" name="type" value="" /><?
+
+        $view->headScript()->captureStart();
+            ?>Adminka.ItemsSearch(<?
+                ?>'#<?=$inputName?>',<?
+                ?>'#searchList',<?
+                ?>'#filterForm', <?
+                ?>'<?=RM_View_Top::getInstance()->getSearchUrl()?>'<?
+            ?>);<?
+        $view->headScript()->captureEnd();
+
+    ?></form><?
+endif;

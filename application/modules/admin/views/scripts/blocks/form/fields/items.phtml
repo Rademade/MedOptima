@@ -1,0 +1,48 @@
+<?php
+	$name = $this->name;
+	$id = 'items_' .  $name;
+	$idInput = 'items_input_' . $name;
+	$idAutocompleate = 'autocompleate_item_' . $name;
+	$postData = array();
+	if (isset( $_POST[$name]) ):
+		$postData = $_POST[$name];
+	endif;
+?><div class="selectItem">
+	<input
+		id="<?=$idInput?>"
+		type="text"
+		name=""
+		autocomplete="off"
+		class="field textInput"
+		value=""
+		placeholder="Введите название товара"
+	/>
+</div>
+<ul class="selectedItems"><?
+	foreach ($postData as $id):
+		$item = Application_Model_Item::getById( $id );
+		/* @var $item Application_Model_Item */
+		?><li><?
+			?><span class="name"><?=$item->getContent()->getName()?></span><?
+			?><i class="remove"></i><?
+			?><span class="type"><?=$item->getArticle()?></span><?
+		?></li><?
+	endforeach;
+?></ul>
+<div id="<?=$idAutocompleate?>"></div>
+<div id="<?=$id?>"><?
+	foreach ($postData as $id):
+		?><input type="hidden" name="<?=$name?>[]" value="<?=$id?>"/><?php
+	endforeach;
+?></div>
+<?php
+$this->HeadScript()->captureStart();
+?>$(function(){<?php
+	?>Adminka.GoodItemsList(
+		$("#<?=$id?>"),
+		"<?=$name?>",
+		"<?=$idInput?>",
+		"<?=$idAutocompleate?>"
+	);<?php
+?>});<?php
+$this->HeadScript()->captureEnd();

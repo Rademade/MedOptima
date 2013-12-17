@@ -1,0 +1,14 @@
+<tr class="<?
+    if ($this->grey):
+        ?>grey <?
+    else:
+        ?>white <?
+    endif;
+    if ($this->hide):
+        ?>hide <?
+    endif;
+        ?>number_<?=$this->id;
+?>">
+    <td width="193" class="first"><span><?=$this->name?></span></td>
+    <td><?=$this->html?></td>
+</tr>

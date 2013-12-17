@@ -1,0 +1,27 @@
+<?php
+	$name = $this->name;
+	$id = $name;
+	$postField = false;
+	if (isset($_POST[$name])) {
+		$postField = $_POST[$name];
+	}
+?><input <?php
+	?>id="<?=$id?>" <?
+	if ($this->disabled):
+		?>disabled="disabled"<?
+	endif;
+	?> name="<?=$name?>" <?
+	?>type="text" <?
+	?>autocomplete="off" <?
+	?>class="field textInput <? echo $id;
+        array_walk($this->inputClasses, function ($inputClass) {
+            echo ' ' . $inputClass;
+        });
+	?>" value="<?=($postField) ?  $postField : $this->value ?>" <?
+?>/><?
+$withTime = $this->withTime ? $this->withTime : 'false';
+$this->HeadScript()->captureStart();
+    ?>$(function() {
+        Adminka.datepicker('#<?=$id?>', <?=$withTime?>);
+    });<?
+$this->HeadScript()->captureEnd();

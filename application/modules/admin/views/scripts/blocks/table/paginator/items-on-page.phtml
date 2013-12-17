@@ -1,0 +1,21 @@
+<?php
+if (is_array($this->itemsOnPage) && sizeof($this->itemsOnPage) > 0):
+    ?><div id="paginator-items-on-page" class="select select-count-on-page">
+        <a href="javascript:void(0);" class="selectedLi"><?=$this->selectedOnPage?></a><span class="selectUlMarker"><i></i></span>
+        <div class="clear"></div>
+        <ul class="selectUl selectMonthUl"><?
+            foreach ($this->itemsOnPage as $onPage):
+                ?><li>
+                    <a href="javascript:void(0);"><?=$onPage?></a>
+                </li><?
+            endforeach;
+        ?></ul>
+    </div><?
+    $this->HeadScript()->captureStart();
+        ?>$(function(){
+            $('#paginator-items-on-page').rmSelect(function($a) {
+                window.location.href = '<?=$this->url(array('page' => 1))?>' + '?on=' + $a.text();
+            });
+        });<?
+    $this->HeadScript()->captureEnd();
+endif;

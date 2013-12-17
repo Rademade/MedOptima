@@ -1,0 +1,58 @@
+<?php
+    $name = $this->name;
+    $inputName = $this->name;
+    $value = false;
+
+    if (!is_null($this->idLang)) {
+        $inputName = $name . "[" . $this->idLang . "]";
+    }
+
+    if (isset($_POST[$name]) && !is_array($_POST[$name])) {
+        $value = $_POST[$name];
+        $value = (empty($value)) ? 0 : $value;
+    } elseif (
+        ($this->idLang) &&
+        isset($_POST[$name][$this->idLang]) &&
+        isset($_POST[$name][$this->idLang])
+    ) {
+        $value = (int)$_POST[$name][$this->idLang];
+    }
+
+	$view = Zend_Layout::getMvcInstance()->getView();
+	$inputId = md5(uniqid() . $this->name);
+	$hiddenId = md5(uniqid() . $this->name . $value);
+	$previewId = md5(uniqid() . $this->name . uniqid());
+?><div class="button sec-links">
+	Загрузить новое фото
+	<input <?php 
+		?>id="<?=$inputId?>" <? 
+		?>name="photo" <?
+		?>type="file" <? 
+		?>class="upload field textInput <?=$this->id?>" <?
+		?>value="" <?
+	?>/>
+</div>
+<input id="<?=$hiddenId?>" name="<?=$inputName?>" type="hidden" value="<?=$value?>" />
+<div class="imagePreview" style="width:<?=$this->size->width?>px;height:<?=$this->size->height?>px"><?php 
+	?><img id="<?=$previewId?>" class="previewImage" src="<?
+		if ($value):
+			echo RM_Photo::getById($value)->getPath(
+				$this->size->width,
+				$this->size->height
+			);
+		endif;?>" <?
+	?> width="<?=$this->size->width?>"  height="<?=$this->size->height?>" alt=""/><?
+?></div><?php
+$this->headScript()->captureStart();
+	?>(function(){
+		new uploadImage('<?=$view->url(array(), 'upload-image')?>',
+			$('#<?=$inputId?>'), 
+			$('#<?=$hiddenId?>'),
+			$('#<?=$previewId?>'),
+			<?=(int)$value?>,
+			<?=$this->size->width?>,
+			<?=$this->size->height?>
+		);
+	})();<?php
+$this->headScript()->captureEnd();
+?>

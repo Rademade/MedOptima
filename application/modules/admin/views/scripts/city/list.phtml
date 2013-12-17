@@ -1,0 +1,16 @@
+<?php
+$table = new RM_View_Table();
+$table->setEditRoute('admin-city-edit')
+    ->setStatusUrl($this->url(array(), 'admin-city-ajax'))
+    ->setSortable()
+    ->setHead('City name')
+    ->addPaginator($this->cities);
+foreach ($this->cities as $city):
+    /* @var Application_Model_City $city */
+    $row = $table->addRecord($city->getId(), $city->getContent()->getName())
+        ->addIcon($this->icon()->getCityRestaurantIcon($city))
+        ->setPosition($city->getPosition())
+        ->setStatus($city->getStatus())
+        ->setDeletable();
+endforeach;
+echo $table;

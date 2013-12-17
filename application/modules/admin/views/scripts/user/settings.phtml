@@ -1,0 +1,12 @@
+<?php
+$form = new RM_View_Form();
+$email = new RM_View_Form_Field_Text('User email', '', $this->email);
+echo $form
+	->add( $email->disable() )
+	->add( new RM_View_Form_Field_Select('User status', 'user_status', $this->GetUserStatus(), 0))
+	->add( new RM_View_Form_Field_Select(
+		'User type',
+		'user_type',
+		$this->GetUserRoles(),
+		0
+	) );

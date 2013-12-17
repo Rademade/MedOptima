@@ -1,0 +1,30 @@
+#event-log-table {
+    width: 100%;
+}
+
+#event-log-table td {
+    padding: 7px 15px;
+    border: 1px solid #E3E3E3;
+}
+
+#event-log-table td.title {
+    width: 15%;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+#event-log-table span.sub-title {
+    float: left;
+    font-weight: bold;
+}
+
+#event-log-table div.content {
+    float: right;
+    width: 90%;
+    padding-right: 40px;
+}
+
+#event-log-table li {
+    clear: both;
+    padding-top: 3px;
+}

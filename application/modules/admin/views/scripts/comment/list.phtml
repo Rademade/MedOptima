@@ -1,0 +1,25 @@
+<?php
+$table = new RM_View_Table();
+$table->setEditRoute('admin-comment-edit')
+	->setStatusUrl($this->ajaxUrl)
+	->setHead('№', 'Имя пользователя', 'Страница', 'Текст', 'Рейтинг', 'Дата')
+	->addPaginator($this->comments);
+foreach ($this->comments as $comment):
+	/* @var Application_Model_Comment $comment */
+    $voteFacade = new Application_Model_Comment_Vote_Facade($comment);
+	$row = $table
+		->addRecord($comment->getId(), $comment->getId())
+        ->addTd($this->getCommentUserInfo($comment))
+        ->addTd(join('', array(
+            '<a href="', $this->getCommentUrl($comment), '" target="_blank">',
+                $comment->getCommentableEntity()->getContent()->getName(),
+            '</a>'
+        )))
+		->addTd($this->cutText($comment->getText(), 20))
+        ->addTd($voteFacade->getRate())
+		->addTd($comment->getCommentDate()->getDate(RM_Date_Date::SEARCH_DATE))
+        ->setStatus($comment->getStatus())
+        ->setHideble()
+		->setDeletable();
+endforeach;
+echo $table;

@@ -1,0 +1,24 @@
+<?
+	$name = $this->name;
+	$id = (($this->idLang) ? $this->idLang . '_' : '') . $name;
+	$postField = false;
+	if (isset($_POST[$name])) {
+		$postField = $_POST[$name];
+	} else {
+		if (($this->idLang) && 
+			isset($_POST['lang'][$this->idLang]) && 
+			isset($_POST['lang'][$this->idLang][$name])
+		) {
+			$postField = $_POST['lang'][$this->idLang][$name];
+		}
+	}
+?><textarea <?
+	?>id="<?=$id?>"<?
+	?>name="<? if ($this->idLang):
+		?>lang[<?=$this->idLang?>][<?=$name?>]<?php 
+	else:
+		echo $name; 
+	endif ?>" <?
+	?>class="field textInput lang_<?=$this->idLang?> <?=$id?>" <?
+?>><?=($postField) ?  $postField : $this->value ?></textarea>
+<input type="hidden" name="process[<?=$name?>]" value="<?=RM_Content_Field_Process::PROCESS_TYPE_TEXT?>"  />

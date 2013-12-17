@@ -1,0 +1,106 @@
+.item-control a.icon-link {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    position: relative;
+    top: 3px;
+}
+
+.no-bg-items li {
+    position:relative;
+    border: 1px solid rgb(227, 227, 227);
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    float: left;
+    padding:5px;
+    width: 150px;
+    height: 150px;
+    margin: 15px 15px 0 0;
+}
+
+.no-bg-items li i.delete-photo-link {
+    position:absolute;
+    margin:0;
+    right:5px;
+    top:5px;
+}
+.b {
+    position: absolute;
+    width: 100%;
+}
+
+#filterForm {
+    width: 370px;
+    float: left;
+}
+
+#filterForm input {
+    float:left;
+    display: inline-block;
+}
+
+#filterForm input[type="text"] {
+    width:250px;
+}
+
+#filterForm input[type="submit"] {
+    margin-left:10px;
+    height:28px;
+    font-weight:700;
+}
+
+.main-control a.main-links {
+    float: right;
+}
+.select.short {
+    width: 100px;
+}
+.select.short a.selectedLi {
+    width: 10px;
+}
+.select.short ul.selectUl {
+    width: 66px;
+    height: 150px;
+}
+ul.selectUl {
+    height: 300px;
+    border-top: 1px solid #E3E3E3;
+    top:0px;
+}
+.date-input {
+    width: 65px !important;
+}
+.table-condition-requirements {
+    font-size: 11px;
+    border: 1px solid #e3e3e3;
+    width: 130px;
+    text-align: center;
+    border-collapse: collapse;
+    border-spacing: 0px;
+    background: rgb(247, 247, 247);;
+}
+
+.items table.table-condition-requirements td {
+    border-bottom: 1px solid #e3e3e3;
+    padding: 5px;
+}
+
+.items table.table-condition-requirements .first-td {
+    border-bottom: 1px solid #e3e3e3;
+    padding: 5px;
+}
+
+.table-link:hover .table-condition-requirements td {
+    background: #eff4f7;
+}
+.reservation-status-select {
+    width: 320px;
+}
+.select.reservation-status-select a.selectedLi {
+    width: 250px;
+}
+.download-button {
+    margin: 10px 28px;
+    float: right;
+}

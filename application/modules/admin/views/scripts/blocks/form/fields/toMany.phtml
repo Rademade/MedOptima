@@ -1,0 +1,51 @@
+<?php
+$name = $this->name;
+$idHidden = 'category_' .  $name;
+$idInput = 'category_input_' . $name;
+$idAutocompleate = 'autocompleate_' . $name;
+$postData = array();
+if (isset( $_POST[$name]) ):
+    $postData = $_POST[$name];
+endif;
+?><div class="selectItem">
+    <input
+        id="<?=$idInput?>"
+        type="text"
+        name=""
+        autocomplete="off"
+        class="field textInput"
+        value=""
+        placeholder="Enter name"
+        />
+</div>
+<ul class="selectedItems"><?
+    $class = $this->class;
+    foreach ($postData as $id):
+        $category = $class::getById( $id );
+        if ($category instanceof $class):
+            ?><li>
+                <span class="name"><?=$category->getContent()->getName()?></span>
+                <i class="remove"></i>
+            </li><?
+        endif;
+    endforeach;
+    ?></ul>
+<div id="<?=$idAutocompleate?>"></div>
+<div id="<?=$idHidden?>"><?
+    foreach ($postData as $id):
+        ?><input type="hidden" name="<?=$name?>[]" value="<?=$id?>"/><?php
+    endforeach;
+    ?></div>
+<?php
+$this->HeadScript()->captureStart();
+?>$(function(){<?php
+    ?>Adminka.GoodToMany(<?
+        ?>$("#<?=$idHidden?>"),<?
+        ?>"<?=$name?>",<?
+        ?>"<?=$idInput?>",<?
+        ?>"<?=$idAutocompleate?>",<?
+        ?>'0',<?
+        ?>'<?=$this->url?>'<?
+    ?>);<?php
+?>});<?php
+$this->HeadScript()->captureEnd();

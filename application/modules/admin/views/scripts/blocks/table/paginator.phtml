@@ -1,0 +1,39 @@
+<?php
+
+$params = array();
+$excludeParams = array('page');
+
+foreach ($_GET as $key => $value):
+    if (!in_array($key, $excludeParams)) {
+        $params[] = join('=', array($key, $value));
+    }
+endforeach;
+
+$urlParams = (!empty($params)) ? ('?' . join('&', $params)) : '';
+
+?><div class="paginator"><?
+
+    foreach ($this->pagesInRange as $page):
+        if ($page != $this->current):
+            ?><a href="<?=$this->url( array(
+                'page' => $page
+            )) . $urlParams?>" class="sec-links"><?=$page?></a><?php
+        else:
+            ?><a class="sec-links current"><?=$page?></a><?php
+        endif;
+    endforeach;
+
+    if (isset($this->previous)):
+        ?><a class="sec-links arrow f-arrow" href="<?=$this->url(array(
+            "page"=>$this->previous
+        )) . $urlParams?>"><i></i></a><?
+    endif;
+
+    if (isset($this->next)):
+        ?><a class="sec-links arrow" href="<?=$this->url(array(
+            "page" => $this->next
+        )) . $urlParams?>"><i></i></a><?
+    endif;
+
+?></div><?
+echo $this->render('blocks/table/paginator/items-on-page.phtml');

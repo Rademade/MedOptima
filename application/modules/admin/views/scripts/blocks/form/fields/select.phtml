@@ -1,0 +1,27 @@
+<?php
+reset($this->data);
+$name = $this->name;
+$id = (($this->idLang) ? $this->idLang . '_' : '') . $name;
+$selectedValue = isset($_POST[ $name ]) ? $_POST[ $name ] : ($this->value ? $this->value : key($this->data));
+if ($selectedValue !== false):
+    $selectedName = isset($this->data[ $selectedValue ]) ? $this->data[ $selectedValue ] : current($this->data);
+    $selectedName = $this->data[ $selectedValue ];
+    ?><div id="<?=$id?>" class="select<?
+        array_walk($this->additionalClasses, function ($class) {
+                echo ' ' . $class;
+        });?>">
+        <a href="javascript:void(0);" class="selectedLi"><?=$selectedName?></a><span class="selectUlMarker"><i></i></span>
+        <div class="clear"></div>
+        <ul class="selectUl selectMonthUl"><?
+            foreach ($this->data as $optionValue => $optionName):
+                ?><li><?
+                    ?><a data-val="<?=$optionValue?>" href="javascript:void(0);"><?=$optionName?></a><?
+                ?></li><?
+            endforeach;
+        ?></ul>
+        <input type="hidden" name="<?=$name?>" value="<?=$selectedValue?>"/>
+    </div><?
+    $this->HeadScript()->captureStart();
+        ?>$(function(){ $('#<?=$id?>').rmSelect(); });<?
+    $this->HeadScript()->captureEnd();
+endif;

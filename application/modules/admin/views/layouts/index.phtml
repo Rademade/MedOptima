@@ -1,0 +1,41 @@
+<?=$this->doctype();?>
+<html lang="en">
+<head><?
+    echo $this->headMeta();
+    echo $this->headTitle();
+    echo $this->headLink();
+    echo $this->headStyle();
+    ?></head>
+<body>
+<div class="wrapper"><?php
+    echo $this->render('blocks/head.phtml');
+    ?><div class="middle">
+        <div class="container">
+            <div class="content">
+                <div class="main-b">
+                    <h2 class="page-title"><?=RM_View_Top::getInstance()->getTitle()?></h2><?php
+                    echo $this->render('blocks/breadcrumbs.phtml');
+                    echo $this->render('blocks/buttons.phtml');
+                    ?>
+                </div>
+                <div class="clear"></div><?php
+                ?><div class="b"><?php
+                    echo $this->layout()->content;
+                ?></div><?php
+                ?><div class="clear"></div>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class="domain-container"><?php
+                $cfg = Zend_Registry::get('cfg');
+                ?><h2 class="domain"><?=$cfg['domain']?></h2>
+            </div><?php
+            echo $this->render('blocks/menu.phtml');
+            ?></div>
+    </div>
+    <div class="clear"></div>
+</div>
+<ul id="globalError" class="errors"></ul><?php
+echo $this->headScript();
+?></body>
+</html>

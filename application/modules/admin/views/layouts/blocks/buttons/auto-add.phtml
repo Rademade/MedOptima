@@ -1,0 +1,15 @@
+<?php
+$view = Zend_Layout::getMvcInstance()->getView();
+if (RM_View_Top::getInstance()->isAutoAdd()):
+    ?><input id="autoAdd" name="autoAdd" type="text" placeholder="Выберите чтобы добавить..." /><?
+    ?><div id="autoAddList"></div><?
+    $view->headScript()->captureStart();
+    ?>Adminka.autoAdd(<?
+        ?>'#autoAdd',<?
+        ?>'#autoAddList',<?
+        ?>'<?=RM_View_Top::getInstance()->getSearchAutoAddUrl()?>',<?
+        ?>'<?=RM_View_Top::getInstance()->getSubmitAutoAddUrl()?>',<?
+        ?>'<?=RM_View_Top::getInstance()->getType()?>'<?
+    ?>);<?
+    $view->headScript()->captureEnd();
+endif;

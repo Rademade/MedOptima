@@ -1,0 +1,18 @@
+<?php
+$table = new RM_View_Table();
+$table->setEditRoute('admin-page-edit')
+    ->setStatusUrl($this->ajaxUrl)
+    ->setHead('Page name')
+    ->addPaginator($this->pages);
+foreach ($this->pages as $page):
+    /* @var RM_Page $page */
+    $row = $table
+        ->addRecord($page->getId(), $page->getContent()->getName())
+        ->setPreviewUrl($page->getRoute()->getUrl());
+    if (!$page->isSystem()) :
+        $row->setStatus($page->getStatus())
+            ->setHideble()
+            ->setDeletable();
+    endif;
+endforeach;
+echo $table;

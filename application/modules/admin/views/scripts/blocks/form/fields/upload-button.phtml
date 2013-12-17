@@ -1,0 +1,6 @@
+<?php
+    $view = Zend_Layout::getMvcInstance()->getView();
+    $inputId = md5(uniqid() . $this->name);
+?><div class="button sec-links">
+    Загрузить файл <input id="<?=$inputId?>" class="upload" type="file" name="file" value="">
+</div>

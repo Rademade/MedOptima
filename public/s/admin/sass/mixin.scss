@@ -1,0 +1,99 @@
+/*---------------------BORDER RADIUS----------------------*/
+$radius: 2px;
+
+@mixin border-radius($radius) {
+	-webkit-border-radius: $radius;
+	-moz-border-radius: $radius;
+	border-radius: $radius;
+}
+
+/*------------------------BORDER--------------------------*/
+$border-thinkness: 1px;
+$border-style: solid;
+$border-color: #e3e3e3;
+
+@mixin border($border-thinkness, $border-style, $border-color) {
+	border: $border-thinkness $border-style $border-color;
+}
+
+@mixin border-top($border-thinkness, $border-style, $border-color) {
+	border-top: $border-thinkness $border-style $border-color;
+}
+
+@mixin border-bottom($border-thinkness, $border-style, $border-color) {
+	border-bottom: $border-thinkness $border-style $border-color;
+}
+
+@mixin border-left($border-thinkness, $border-style, $border-color) {
+	border-left: $border-thinkness $border-style $border-color;
+}
+
+@mixin border-right($border-thinkness, $border-style, $border-color) {
+	border-right: $border-thinkness $border-style $border-color;
+}
+
+/*------------------------ICO LINK--------------------------*/
+
+/* example
+@include ico-link(
+	$width:16px, 
+	$height:10px,
+	$url:"#{$path}sprite.png", 
+	$bg-position:0 -19px
+);
+ */
+
+@mixin ico-link($width, $height, $url, $bg-position) {
+	display: inline-block;
+	width:$width;
+	height:$height;
+	background: url($url)$bg-position;
+}
+
+/*---------------------------ICO-----------------------------*/
+
+/* example
+@include ico(
+	$width:16px, 
+	$height:10px, 
+	$url:"#{$path}sprite.png", 
+	$bg-position:0 -19px, 
+	$top:1px, 
+	$left:1px
+);
+ */
+
+@mixin ico($width, $height, $url, $bg-position, $top, $left) {
+	display: inline-block;
+	width:$width;
+	height:$height;
+	background: url($url)$bg-position;
+	position: absolute;
+	top:$top;
+	left:$left;
+}
+
+/*---------------------------ICO right-----------------------------*/
+
+/* example
+@include ico-r(
+	$width:16px, 
+	$height:10px, 
+	$url:"#{$path}sprite.png", 
+	$bg-position:0 -19px, 
+	$top, 
+	$right
+);
+ */
+
+@mixin ico-r($width, $height, $url, $bg-position, $top, $right) {
+	display: inline-block;
+	width:$width;
+	height:$height;
+	background: url($url)$bg-position;
+	position: absolute;
+	top:$top;
+	right:$right;
+}
+
+

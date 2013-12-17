@@ -1,0 +1,11 @@
+<?php
+$form = new RM_View_Form();
+$passwd = new RM_View_Form_Field_Text('User password', 'passwd', '');
+$form
+	->add(new RM_View_Form_Field_Text('User email', 'email', ''))
+	->add($passwd->setType('password'))
+	->add(new RM_View_Form_Field_Image('Avatar', 'id_avatar', 0, 74, 74))
+	->add(new RM_View_Form_Field_Text('User name', 'user_name', ''))
+    ->add(new RM_View_Form_Field_Text('Last name', 'last_name', ''))
+	->add(new RM_View_Form_Field_Text('Phone', 'phone', ''));
+echo $form->render();

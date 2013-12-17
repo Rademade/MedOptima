@@ -1,0 +1,50 @@
+<?php
+$name = $this->name;
+$id = 'relation_' .  $name;
+$idInputName = 'relation_input_id_' . $name;
+$idInputValue = 'relation_input_name_' . $name;
+
+$idEntity = $this->value;
+if (isset( $_POST[$name]) ):
+    $idEntity = $_POST[$name];
+endif;
+
+?><div id="<?=$id?>"><?
+
+    ?><div class="selectItem">
+        <input
+            id="<?=$idInputName?>"
+            type="text"
+            name=""
+            autocomplete="off"
+            class="field textInput"
+            value=""
+            placeholder="Enter name"
+        />
+    </div>
+
+    <ul class="selectedItems"><?
+        /* @var $entityName RM_Entity */
+        $entityName = $this->entityName;
+        $entity = $entityName::getById( $idEntity );
+        if ($entity instanceof RM_Entity):
+            ?><li><?
+                ?><span class="name"><?=$entity->getContent()->getName()?></span><?
+                ?><i class="remove"></i><?
+            ?></li><?
+        endif;
+    ?></ul>
+
+    <input id="<?=$idInputValue?>"  type="hidden" name="<?=$name?>" value="<?=$idEntity?>"/>
+<div><?
+
+$this->HeadScript()->captureStart();
+    ?>$(function(){<?php
+        ?>Adminka.GoodToEntity(<?
+            ?>$("#<?=$id?>"), <?
+            ?>$("#<?=$idInputName?>"), <?
+            ?>$("#<?=$idInputValue?>"), <?
+            ?>'<?=$this->searchUrl?>'<?
+        ?>);<?php
+    ?>});<?php
+$this->HeadScript()->captureEnd();

@@ -1,0 +1,19 @@
+<div id="login">
+    <form action="<?= $this->url(array(),'admin-login'); ?>" method="post" id="mainForm">
+        <table class="zebra edit">
+            <tr class="">
+                <td width="80" class="first" style="text-align: right;">Email</td>
+                <td width="180"><input type="text" class="field" id="admin_login"  name="login"/></td>
+            </tr>
+            <tr class="">
+                <td width="80" class="first">Password</td>
+                <td width="180"><input type="password" class="field"  id="admin_passwd" name="password" /></td>
+            </tr>
+            <tr class="">
+                <td colspan="2">
+                    <a href="javascript:SubmitFrom(0);" type="submit" class="button_blue">Login</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>

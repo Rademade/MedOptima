@@ -1,0 +1,241 @@
+@CHARSET "UTF-8";
+.hide {display: none;}
+.hide_in_web {position: absolute; top:-200px;}
+.w10 {display:block; float: left; width: 10px;}
+.m10 {margin: 10px;}
+.m20 {margin: 20px;}
+.center {text-align: left;}
+html, body {margin:0; padding:0}
+body {font-family:Tahoma, Geneva, sans-serif; font-size:12px; color:#02497f;}
+img {border:0}
+a {text-decoration:underline; border:0; color:#086a03}
+a:hover {text-decoration:none; color:#086a03}
+.right {float:right;text-align:right;}
+.mr20 {margin-right:20px;}
+a.hide {display: none!important;}
+.multiselect {
+	width:430px;
+	height:150px;
+}
+.SizeContent {position:relative;}
+.w930 {width:930px;overflow:hidden;text-align:left;}
+form {display:inline}
+table {border-collapse:collapse}
+td {padding:0; vertical-align:top}
+ul, li {margin:0; padding:0; list-style:none}
+#login {text-align: center; margin: 0px auto; width:1000px;}
+
+#wrapper {width:1200px; margin:0 auto}
+
+.closeMenu {height: 30px; width: 200px; text-align: center;}
+#content {border:solid #e5e5e5; border-width:1px 0; height:1%}
+
+#main_menu {padding:10px 0 3px 26px; border-bottom:solid 1px #e5e5e5; float:left; width:170px}
+	#main_menu li {display:inline}
+	#main_menu a {text-decoration:none; color:#02497f; display:block; margin:0 0 15px 0; cursor:pointer}
+	#main_menu a:hover {padding-top:0}
+	#main_menu img {display:inline-block; vertical-align:top}
+	#main_menu span {text-decoration:underline; display:inline-block; vertical-align:top; margin:0 0 0 11px}
+	#main_menu a:hover span {text-decoration:none}
+	#main_menu li.active a {color:#444444}
+	#main_menu li.active span {text-decoration:none}
+
+#text {float:left; width:1003px; border-left:solid 1px #e5e5e5}
+	#text div.top_head {height:27px; overflow:hidden; background-color:#dbdbdb}
+	#text div.top_head div.back {float:left; padding:6px 30px 0 10px}
+	#text div.top_head div.back a {text-decoration:none; color:#02497f}
+	#text div.top_head div.back a img {vertical-align:top; position:relative; top:1px; margin:0 5px 0 0}
+	#text div.top_head div.text {font-weight:bold; color:#434343; float:left; padding:6px 0 0 10px}
+	
+	#text div.top_links {border-bottom:solid 1px #e5e5e5}
+	#text div.top_links a.add {text-decoration:none; float:left; margin:10px 0 0 14px; vertical-align:top}
+	#text div.top_links span.process {display:table-cell; text-decoration:none; float:left; margin:0px; height:23px; width:75px; padding:10px 10px 0 0; border-right: 1px solid #e6e6e6; }
+	#text div.top_links a.add:hover {padding-top:0}
+	#text div.top_links a.add img {vertical-align:top; margin:0 10px 0 0}
+	#text div.top_links a.add span {display:inline-block; vertical-align:top; text-decoration:underline}
+	#text div.top_links a.add:hover span {text-decoration:none}
+	#text div.top_links span.sep {width:1px; height:33px; background-color:#e6e6e6; float:left; margin:0 15px}
+	#text div.top_links input.field {float:left; margin:6px 0 0 0}
+	
+	#text div.top_links	input[disabled='disabled'] {background: #F2F2F2;}
+	#text div.top_links select {width:150px; margin:6px 0 0 0}
+	#text div.top_links .newListSelected {margin:5px 0 0 0; float:left}
+	#text div.top_links div.exit {float:right; margin:0 17px 0 0; font-size:11px; border:solid #e6e6e6; border-width:0 1px; padding:10px 20px 0 20px; height:23px}
+	#text div.top_links div.exit a {color:#515050; text-decoration:none}
+	#text div.top_links div.exit a:hover {padding-top:0}
+	#text div.top_links div.exit span {text-decoration:underline}
+	#text div.top_links div.exit a:hover span {text-decoration:none}
+	#text div.top_links div.exit img {margin:0 8px 0 0}
+	
+	#text ul.tree {border-bottom:solid 1px #FFF}
+	#text ul.tree a {color:#02497f; text-decoration:none; float:right; margin:4px 24px 4px 0}
+	#text ul.tree a.edit {float:left; margin:4px 0 4px 14px}
+	#text ul.tree li {border-top:solid #FFF 1px; overflow:hidden; padding:0px;}
+	#text ul.tree li.grey {background-color:#f2f2f2}
+	#text ul.tree li.light {background-color:#fbfbfb}
+	#text ul.tree li a.text {float:left; margin:6px 0 6px 20px}
+	#text ul.tree li li a.text {background-image:url(/s/admin/images/sub_square.gif); background-repeat:no-repeat; background-position:5px 50%; padding:0 0 0 17px; margin-left:35px}
+	#text ul.tree li li li a.text {background-image:url(/s/admin/images/sub_sub_square.gif); background-repeat:no-repeat; background-position:5px 50%; margin-left:55px}
+	#text ul.tree li {clear:left}
+
+
+	#text div.slideFrame {width: 1000px; overflow: hidden; z-index: 1;}
+	#text div.centerButton {margin-left:270px;}
+	#text table.fieldsEdit {float: left;}
+	#text div.slideBox {position:relative;}
+
+	#text table.zebra {width:1000px; background-color:#fbfbfb; position: relative;}
+	#text table.zebra td {padding:6px 0; border:solid #FFF; border-width:1px 0}
+	#text table.zebra a.edit {display:inline-block; margin:0 0 0 14px}
+	#text table.zebra tr.grey td {background-color:#f2f2f2}
+	#text table.zebra tr.new td {background-color:#ffe69c}
+	#text table.zebra tr.sub td.second {background-image:url(/s/admin/images/sub_square.gif); background-repeat:no-repeat; background-position:5px 50%; padding-left:17px}
+	#text table.zebra tr.sub_sub td.second {background-image:url(/s/admin/images/sub_sub_square.gif); background-position:22px 50%; padding-left:35px}
+	#text table.zebra thead {font-size:11px}
+	#text table.zebra thead td {background-color:#e1edd3; padding:8px 0; color:#086a03}
+	#text table.zebra tr.info {display:none}
+	#text table.zebra tr.info td, #text table.zebra tr.opened td {background-color:#e1edd3}
+	#text table.items td {background:0; border:0; padding:6px 0; color:#000}
+	#text table.items span {font-size:11px; color:#6f6f6f}
+	#text table.zebra div.sep {background-color:#cfd8c6; height:1px; overflow:hidden; margin:10px 0 10px 0}
+	#text table.zebra thead a {color:#086a03; text-decoration:none}
+	#text table.zebra a.delete {position:relative; top:3px}
+	#text table.zebra td.articul {padding-left:15px; color:#4f4d4d}
+	#text table.zebra td .hide_input_overflow {width: 170px; overflow: hidden; cursor: pointer;}
+	#text table.zebra td .hide_input_position {position: relative; top:0px; left:-190px; cursor: pointer;  width: 400px;}
+	#text table.pages tr {cursor:pointer}
+	#text table.zebra td table.foldingMech {width: 500px;}
+	#text table.zebra td table.foldingMech tr {border: 0px solid black;}
+	#text table.zebra td table.foldingMech td {border: 0px solid black; padding-left: 20px; color:#343434;}
+
+	.image_box {float: left; margin:10px 21px 20px 21px; }
+
+	#text table.edit td.first {padding:9px 19px 0 0; text-align:right; color:#343434}
+	#text table.edit td.first .center {
+		text-align: left;
+		display: inline-block;
+		margin-top: 5px;
+		font-size: 12px;
+	}
+	#text table.edit input.field {width:307px}
+	#text table.edit input.short_field {width: 100px;}
+	#text table.edit input.short {width: 147px;}
+	#text table.edit input[disabled='disabled'] {background: #F2F2F2;}
+	#text table.edit textarea {width:307px; height:77px; margin:0 0 7px 0}
+
+
+	#text div.pages {margin:8px 0 0 0}
+	#text div.pages a {display:inline-block; width:26px; height:18px; text-decoration:none; color:#02497f; text-align:center; padding:5px 0 0 0}
+	#text div.pages a.active {background-color:#C4DEEE; color:#333;}
+
+#langPanel {width: 100%; height: 35px; position: relative; top:3px; z-index: 2;}
+	#langPanel a {display: block; cursor: pointer; text-decoration: none; float: left; width: 100px; height:20px; padding:5px 0px; margin: 5px 20px 0px 20px; background: #bbb; text-align: center; border-top-left-radius: 15px 15px; border-top-right-radius: 15px 15px; font-size: 13px; color:#343434; }
+	#langPanel a:hover {text-decoration: underline;}
+	#langPanel a.current {letter-spacing: 1px; font-weight: bold; border: 1px solid #F2F2F2; background: #fff;}
+	#langPanel a.current:hover {text-decoration: none;}
+
+h1 {font-size:18px; color:#3a3a3a; font-weight:normal; padding:30px 26px 20px 26px; margin:0}
+input.field {padding:2px 4px 3px 4px; background:0; border:solid 1px #9ebfd8; color:#0c456f; font-family:Tahoma, Geneva, sans-serif; font-size:12px; background-color:#FFF}
+input.field_search {background-image:url(/s/admin/images/field_search_bg.gif); background-repeat:no-repeat; background-position:97% 50%; width:252px}
+textarea {padding:2px 4px 2px 4px; background:0; border:solid 1px #9ebfd8; color:#0c456f; font-family:Tahoma, Geneva, sans-serif; font-size:12px; background-color:#FFF}
+div.clear {clear:both; height:0; overflow:hidden}
+div.sep_green {height:10px; background-color:#e1edd3; overflow:hidden}
+a.button_blue {background-color:#41769f; border:solid 1px #3d5d76; height:17px; padding:2px 10px 0 10px; text-align:center; color:#FFF; text-decoration:none; display:inline-block}
+a.button_grey {background-color:#8c8c8c; border:solid 1px #6c6c6c; height:17px; padding:2px 10px 0 10px; text-align:center; color:#FFF; text-decoration:none; display:inline-block}
+span.grey {color:#696969}
+
+.logo {float: right; margin: 10px 20px 20px auto; width: 113px; height: 49px; }
+
+.PopUpBg {top:0px; left:0px; text-align: center; position: fixed; width: 100%; height: 100%; padding: 0px; background: #ccc; z-index: 10;}
+.errorPopUp {position: fixed; top:200px; margin: 0px 0px 0px -270px; left:50%; width: 540px; background:#eaeaea;   box-shadow: 5px 5px 5px #000; -moz-box-shadow: 5px 5px 5px #000;  -webkit-box-shadow: 5px 5px 5px #000;}
+.errorPopUp div.PopUpHeader {height: 40px; width: 540px; background: #01487e; color:#eef2f6;}
+.errorPopUp div.PopUpHeader span {display: block; float: left; font-size: 14px; height: 18px; margin: 12px 0px 5px 20px;}
+.errorPopUp div.PopUpHeader a {display: block; border: 0px; margin:7px 9px 7px 0px; padding: 0px; float:right;}
+.errorPopUp div.PopUpHeader a img {display: block; border: 0px; margin: 0px; padding: 0px;}
+.errorPopUp div.PopUpHeader a#saveButton {display: block; float:right; width:83px; padding:3px 0 0 0; text-align:center; margin:7px 9px 7px 0px; height:21px; background:#1A5988; color:#fff; text-decoration: none; font-size: 13px;}
+.errorPopUp div.PopUpBody {width: 540px; text-align: left; padding: 15px 20px 20px 20px; }
+.errorPopUp div.PopUpBody ul {}
+.errorPopUp div.PopUpBody ul li span {display: block; float: left; overflow: hidden; width:15px; height:1px; border-top:1px solid black; margin:7px 5px 5px 0px;  }
+.errorPopUp div.PopUpBody ul li {color:#080808; margin-top:5px;}
+.alpha60 {background: rgb(0, 0, 0); background: rgba(0, 0, 0, 0.6); -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";}
+
+.gallery_photos {display: block;	-moz-user-select: none;-khtml-user-select: none;user-select: none}
+	.gallery_photos li {display: block; position:relative; float:left; width: 150px; height:150px; margin: 5px; padding: 0px; border: 1px solid black;}
+	.gallery_photos li img {display: block;}
+	.gallery_photos li a {
+		display: block;
+		position:absolute;
+		top:5px;
+		right:5px;
+		padding: 1px;
+		border: 1px solid black;
+		width: 9px;
+		height: 8px;
+		float: right;
+		background-position:center center;
+		background-image: url(/s/admin/images/icon_delete.gif);
+		background-color: #fff;
+		background-repeat: no-repeat;
+	}
+	.gallery_photos li a:hover {border:1px solid #AF563A;}
+
+#pageListBoxes {margin: 10px 0px 5px 20px;}
+	#pageListBoxes span { font-size: 12px; font-weight: bold; display: block; margin: 0px 0px 5px 0px; padding: 0px 2px; color: #343434;}
+	#pageListBoxes img {margin: 1px 0 0 5px; display: block;float:left;}
+	#pageListBoxes input {display: block;  float:left;}
+		
+#settingsList {margin: 20px; display: block; font-size: 14px; }
+	#settingsList li {display: block; margin-top:10px; }
+	#settingsList li a {color:#02497F; font-weight: bold; text-decoration: none;}	
+	#settingsList li a:hover {text-decoration: underline;}
+	
+#map {width:750px; height:400px; float:left}
+#navPanel {width:250px; float:right;}
+	#addMarker {margin:20px 0 0 100px;}
+	#markerList {margin:20px 0 0 30px;}
+		#markerList ul, #markerList li {list-style: square inside;}
+		#markerList ul li span {display:inline-block; width:80px; overflow: hidden;}
+	#descTextarea {width:490px;}
+/*editor*/
+#text table.zebra td table {}
+#text table.zebra td table td {border-width: 0px; padding: 0px;}
+a.preview {position: relative; top:3px; left: 5px;}
+
+.errorDescription {
+	display:block;
+	margin:0 auto;
+	width: 99%;
+	height: 150px;
+	outline: 0;
+}
+.ui-tabs .ui-tabs-nav li#addLangLi {
+	float:right;
+	border: 0px;
+}
+.ui-tabs .ui-tabs-nav li#addLangLi .plus {
+	font-size:22px;
+	font-weight: bold;
+	padding: 0px;
+	width:24px;
+	text-align: center;
+	line-height:24px;
+	cursor: pointer;
+	border: 1px solid #ccc;
+}
+.ui-tabs .ui-tabs-nav li#addLangLi .plus:hover {
+	background: #fff;
+	color: #EB8F00;
+	opacity: 1;
+	filter: Alpha(Opacity=1)
+}
+.ui-tabs .ui-tabs-nav .removeTab  {
+	display:inline-block;
+}
+.imagePreview {
+	margin-top:5px;
+	border: 1px solid #aaa;
+	background:#ccc;
+}
+.heightFixer {
+	height: 25px;
+}

@@ -1,0 +1,16 @@
+<?php
+$view = Zend_Layout::getMvcInstance()->getView();
+?><div class="header"><?php
+    ?><div class="control-link"><?php
+        if ($view->profile instanceof RM_User_Profile_Interface):
+            ?><b><a href="<?=$this->url(array(
+            'page' => 1,
+            'id' => $view->profile->getId()
+        ), 'admin-user-edit')?>"><?php
+            echo $view->profile->getFullName();
+            ?></a></b><?
+        endif;
+        /*<a href="javascript:void(0);">Настройки</a><?*/
+        ?><a href="<?=$this->url(array(),'admin-logout') ?>">Выйти</a>
+    </div>
+</div>

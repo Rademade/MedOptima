@@ -1,0 +1,33 @@
+<?php
+$form = new RM_View_Form();
+$form->getLangPanel()->allLangs();
+$form
+    ->add(new RM_View_Form_Field_Image('Photo', 'photo', 0, 200, 150))
+    ->add(
+        new RM_View_Form_Field_ToEntity(
+            'Restaurant',
+            'restaurant',
+            'Application_Model_Restaurant',
+            $this->url(array(
+                'idCity' => 0
+            ), 'admin-restaurant-ajax'),
+            0
+        )
+    )
+    ->add(
+        new RM_View_Form_Field_ToEntity(
+            'Author',
+            'author',
+            'Application_Model_Author',
+            $this->url(array(), 'admin-author-ajax'),
+            0
+        )
+    )
+    ->add(new RM_View_Form_Field_Text('Page title', 'pageTitle', array()))
+    ->add(new RM_View_Form_Field_Text('Page description', 'pageDesc', array()))
+    ->add(new RM_View_Form_Field_Text('Page keywords', 'pageKeywords', array()))
+    ->add(new RM_View_Form_Field_Text('Название', 'name', array()))
+    ->add(new RM_View_Form_Field_Date('Дата размещения', 'add_date', date('d.m.Y')))
+    ->add(new RM_View_Form_Field_Textarea('Описание', 'desc', array()))
+    ->add(new RM_View_Form_Field_Editor('Текст', 'content', array()));
+echo $form->render();

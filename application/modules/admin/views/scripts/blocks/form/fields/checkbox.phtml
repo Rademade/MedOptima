@@ -1,0 +1,13 @@
+<?php 
+$postField = 0;
+$name = $this->name;
+if (isset($_POST[$name])) {
+	$postField = intval($_POST[$name]);
+}
+?><div class="heightFixer"><?php 
+	?><input type="checkbox"  name="<?=$name?>"<?
+		if ($postField === 1):
+			?>checked="checked"<?
+		endif;
+    ?> value="1"/><?php
+?></div>

@@ -1,0 +1,19 @@
+<?php
+	echo $this->doctype();
+?><html>
+    <head><?
+        echo $this->headMeta();
+        echo $this->headTitle();
+        echo $this->headLink();
+        echo $this->headStyle();
+        echo $this->render('blocks/social/og.phtml');
+        echo $this->render('blocks/paginator/relations.phtml');
+        ?><!--[if lt IE 9]>
+            <script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <h1>Index layout</h1><?php
+        echo $this->headScript();
+    ?></body>
+</html>

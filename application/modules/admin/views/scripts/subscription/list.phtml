@@ -1,0 +1,18 @@
+<?php
+Head::getInstance()->getCSS()->add('color');
+$table = new RM_View_Table();
+$table
+    ->setStatusUrl($this->url(array(), 'admin-subscription-ajax'))
+    ->setHead('Subscriber\'s email', 'Subscribe date', 'Subscribe type')
+    ->addPaginator($this->subscriptions);
+foreach ($this->subscriptions as $subscription):
+    /* @var Application_Model_Subscription $subscription */
+    $row = $table
+        ->addRecord( $subscription->getId(), $subscription->getEmail() )
+        ->addTd($subscription->getDate())
+        ->addTd($this->getSubscriptionType($subscription->getType()))
+        ->setStatus( $subscription->getStatus() )
+        ->setHideble()
+        ->setDeletable();
+endforeach;
+echo $table;

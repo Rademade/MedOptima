@@ -1,0 +1,23 @@
+<?php
+$data = array();
+for ($i = $this->max; $i >= $this->min; $i--) {
+    $data[$i] = $i > 0 ? '+' . $i : $i;
+}
+$id = $this->id;
+$selectedValue = $this->position;
+$name = isset($data[ $selectedValue ]) ? $data[ $selectedValue ] : 0;
+?><div id="manual-position-<?=$id?>" class="select short">
+    <a href="javascript:void(0);" class="selectedLi"><?=$name?></a><span class="selectUlMarker"><i></i></span>
+    <div class="clear"></div>
+    <ul class="selectUl selectMonthUl"><?
+        foreach ($data as $optionValue => $optionName):
+            ?><li><?
+            ?><a data-val="<?=$optionValue?>" href="javascript:void(0);"><?=$optionName?></a><?
+            ?></li><?
+        endforeach;
+        ?></ul>
+    <input type="hidden" value="<?=$selectedValue?>"/>
+</div><?
+$this->HeadScript()->captureStart();
+?>Adminka.ItemManualPosition('manual-position-<?=$id?>', <?=$id?>);<?
+$this->HeadScript()->captureEnd();

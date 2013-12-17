@@ -1,0 +1,4 @@
+<?php
+echo $this->headScript()->captureStart();
+    ?>$(function(){ R.Like.init($('.special-like'), '<?=$this->url(array(), 'like-ajax-like')?>'); });<?
+echo $this->headScript()->captureEnd();

@@ -1,0 +1,8 @@
+<?php
+    $view = Zend_Layout::getMvcInstance()->getView();
+    ?><input id="uploadURI" type="hidden" value="<?=$this->url(array(), 'upload-image')?>" />
+    <a href="javascript:void(0);" onclick="$('#mainForm').submit();" class="main-links">Save</a><?php
+    if (sizeof(RM_View_Top::getInstance()->getBreadcrumbs()) > 1):
+        ?><a href="<?=RM_View_Top::getInstance()->getBreadcrumbs()->getBack()?>" class="sec-links">Cancel</a><?php
+    endif;
+?>

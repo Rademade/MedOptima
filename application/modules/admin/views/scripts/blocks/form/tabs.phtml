@@ -1,0 +1,33 @@
+<?php
+	$view = Zend_Layout::getMvcInstance()->getView();
+	$formLangs = $this->formLangs;
+	/* @var $formLangs RM_View_Form_Langs */
+?><ul id="tabLI" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all"><?
+    $unusedLangs = array();
+    $i = 0;
+    foreach ($formLangs->getLangs() as $lang):
+        /* @var $lang RM_Lang */
+        ?><li data-id="<?=$lang->getId()?>" data-iso="<?=$lang->getIsoName()?>" class="ui-state-default ui-corner-top <?php
+        if ($i === 0):
+            ?>ui-tabs-selected ui-state-active"<?php
+        endif;
+        ?>"><?php
+        ?><a href="#<?=$lang->getIsoName()?>"><?=$lang->getName()?></a><?php
+        if ($formLangs->isDeleteble( $lang )):
+            ?><span class="ui-icon ui-icon-close removeTab">&nbsp;</span><?php
+        endif;
+        ?></li><?php
+        ++$i;
+    endforeach;
+    ?></ul><?php
+if ($formLangs->isMultiLang()):
+    $view->headScript()->captureStart();
+        ?>$(function(){<?php
+            ?>LangsTabs.setUsedLangsIds(<?
+                echo json_encode($formLangs->getLangIds());
+            ?>).setUnusedLangsIds(<?
+                echo json_encode($formLangs->getUnaddedLangsIds());
+        ?>);<?php
+    ?>});<?php
+    $view->headScript()->captureEnd();
+endif;

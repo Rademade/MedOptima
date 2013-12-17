@@ -1,0 +1,15 @@
+<?php
+/**
+ * @see Application_Model_View_Form -> renderTranslation -> _renderLangFields
+ */
+?><div id="<?=RM_Lang::getById($this->idLang)->getIsoName()?>" <?
+?>class="ui-tabs-panel ui-widget-content ui-corner-bottom <?
+if (!$this->first):
+    ?>ui-tabs-hide<?
+endif; ?>" >
+    <table class="items edit-inside" width="100%" cellpadding="0" cellspacing="0">
+        <tbody><?
+        echo $this->html;
+        ?></tbody>
+    </table>
+</div>

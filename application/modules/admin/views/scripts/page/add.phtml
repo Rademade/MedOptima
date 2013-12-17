@@ -1,0 +1,29 @@
+<?php
+$form = new RM_View_Form();
+$form->getLangPanel()->allLangs();
+
+$urlField = new RM_View_Form_Field_Text('Page url', 'url', '');
+
+if (isset($_POST['system']) && intval($_POST['system']) === 1) {
+    $urlField->disable();
+}
+
+$form
+    ->add($urlField)
+    ->add(new RM_View_Form_Field_Text('Page title', 'pageTitle', array()))
+    ->add(new RM_View_Form_Field_Text('Page description', 'pageDesc', array()))
+    ->add(new RM_View_Form_Field_Text('Page keywords', 'pageKeywords', array()))
+    ->add(new RM_View_Form_Field_Text('Page name', 'name', array()))
+    ->add(new RM_View_Form_Field_Text('Seo title', 'seoTitle', array()))
+    ->add(new RM_View_Form_Field_Textarea('Seo text', 'seoText', array()))
+    ->add(new RM_View_Form_Field_Editor('Page content', 'content', array()));
+
+if ($this->user->getRole()->isProgrammer()) :
+    if ($this->action) :
+        $action = new RM_View_Form_Field_Text('Controller action', '', $this->action);
+        $form->add($action->disable());
+    endif;
+    $form->add(new RM_View_Form_Field_Checkbox('System page', 'system', '1'));
+endif;
+
+echo $form->render();

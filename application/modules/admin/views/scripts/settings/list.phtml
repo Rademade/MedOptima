@@ -1,0 +1,28 @@
+<?
+$this->headScript()->captureStart();
+?>
+$(function(){
+    $('a').click(function(){
+        var e = $(this);
+        var action = e.attr('data-action');
+        e.removeAttr('data-action');
+        if (action) {
+            var name = e.html();
+            e.html('Processing...');
+            $.ajax({
+                url: "<?=$this->url(array(), 'admin-settings-clear')?>",
+                type: "POST",
+                data: 'type=' + action,
+                success: function(result) {
+                    e.html(name + ' (Done)');
+                }
+            });
+        }
+    });
+});
+<?php
+$this->headScript()->captureEnd();
+?><ul id="settingsList">
+    <li><a href="javascript:void(0);" data-action="route" class="sec-links m-l-t">Clear cache</a></li>
+    <li><a href="javascript:void(0);" data-action="image" class="sec-links m-l-t">Clear imagecache</a></li>
+</ul>

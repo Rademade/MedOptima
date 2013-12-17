@@ -1,0 +1,16 @@
+<?php
+echo $this->doctype();
+?><html><head><?php
+    echo $this->headMeta();
+    echo $this->headTitle();
+    echo $this->headLink();
+    echo $this->headStyle();
+    ?>
+    <script type="text/javascript">window.MODAL = true;</script>
+</head>
+<body><?
+    echo $this->layout()->content;
+    echo $this->partial('blocks/analytics.phtml');
+    echo $this->headScript();
+?></body>
+</html>

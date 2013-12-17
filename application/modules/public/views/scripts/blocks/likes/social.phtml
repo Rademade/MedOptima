@@ -1,0 +1,15 @@
+<?php
+    $cfg = Zend_Registry::get('cfg');
+    $url = 'http://' . $cfg['domain'] . $this->url();
+?><div class="article-like-item">
+    <div class="fb-like"
+         data-href="<?=$url?>"
+         data-width="90"
+         data-layout="button_count"
+         data-show-faces="false"
+         data-send="false">
+    </div>
+</div>
+<div class="<?=$this->googlePlusClass?>">
+    <div class="g-plusone" data-size="medium" data-href="<?=$url?>"></div>
+</div>

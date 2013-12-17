@@ -1,0 +1,33 @@
+/*---------------------BORDER RADIUS----------------------*/
+/*------------------------BORDER--------------------------*/
+/*------------------------ICO LINK--------------------------*/
+/* example
+@include ico-link(
+	$width:16px, 
+	$height:10px,
+	$url:"#{$path}sprite.png", 
+	$bg-position:0 -19px
+);
+ */
+/*---------------------------ICO-----------------------------*/
+/* example
+@include ico(
+	$width:16px, 
+	$height:10px, 
+	$url:"#{$path}sprite.png", 
+	$bg-position:0 -19px, 
+	$top:1px, 
+	$left:1px
+);
+ */
+/*---------------------------ICO right-----------------------------*/
+/* example
+@include ico-r(
+	$width:16px, 
+	$height:10px, 
+	$url:"#{$path}sprite.png", 
+	$bg-position:0 -19px, 
+	$top, 
+	$right
+);
+ */

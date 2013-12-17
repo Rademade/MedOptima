@@ -1,0 +1,44 @@
+<?=$this->doctype();?>
+<html lang="en">
+<head><?php
+	echo $this->headMeta();
+	echo $this->headTitle();
+	echo $this->headLink();
+	echo $this->headStyle();
+?></head>
+<body>
+	<div class="fix">
+		<div class="b enter">
+			<div class="b-head edit-head">
+				<h1>Improve WEB with Rademade</h1>
+			</div>
+			<form id="loginForm" action="<?=$this->url()?>" method="post">
+				<input id="adminLogin" name="adminLogin" type="text" placeholder="Login" />
+				<input id="adminPasswd" name="adminPasswd" type="password" placeholder="Password" />
+				<div class="clear"></div>
+				<input id="adminRemember" name="adminRemember" checked="checked" type="checkbox" value="1" />
+				<label for="adminRemember">Remember me on this computer</label>
+				<div class="clear"></div>
+				<div class="b-head">
+					<a href="javascript:void(0);" id="loginButton" class="main-links">Вход</a>
+				</div>
+			</form>
+		</div>
+		<div class="clear"></div>
+		<a href="http://rademade.com/" target="__blank"><?php 
+			?><img src="/s/admin/images/enter-logo.png" class="admin-logo" /><?php 
+		?></a>
+	</div><?php
+	?><ul id="globalError" class="errors"></ul><?php
+	$this->headScript()->captureStart();
+		?>$(function(){<?php
+			?>var loginFrom = new LoginFrom(<?php
+				?>$('#loginForm'),<?php
+				?>$('#loginButton'), '<?php
+				echo $this->url(array(), 'index-ajax');
+			?>');<?php
+		?>});<?php
+	$this->headScript()->captureEnd();
+	echo $this->headScript();
+?></body>
+</html>

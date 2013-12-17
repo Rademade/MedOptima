@@ -1,0 +1,37 @@
+<form id="redactorInsertImageForm" method="post" action="" enctype="multipart/form-data">
+<table class="redactor_ruler">
+	<tr>
+		<td class="small">Width</td>
+		<td colspan="3">
+			<input id="redactor_form_width" name="w" size="20" type="text" value="0"/>
+		</td>
+	</tr>
+	<tr>
+		<td class="small">Height</td>
+		<td colspan="3">
+			<input id="redactor_form_height" name="h" size="20" type="text" value="0"/>
+		</td>
+	</tr>
+	<tr>
+		<td nowrap class="small">%RLANG.title%</td>
+		<td><input id="redactor_file_alt" size="20" /></td>
+	</tr>
+	<tr>
+		<td nowrap class="small">%RLANG.image_position%</td>
+		<td width="100%">
+			<select id="redactor_form_image_align">
+				<option value="0">%RLANG.none%</option>
+				<option value="left">%RLANG.left%</option>
+				<option value="right">%RLANG.right%</option>
+			</select>
+		</td>
+	</tr>
+</table>
+
+
+<p>
+<input type="button" name="save" id="redactorSaveBtn" value="%RLANG.save%" />&nbsp;&nbsp;
+<input type="button" name=""  id="redactor_image_edit_delete" value="%RLANG._delete%"  />&nbsp;&nbsp;
+<input type="button" name="" onclick="redactorActive.modalClose();" value="%RLANG.cancel%"  />
+</p>
+</form>

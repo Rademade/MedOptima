@@ -1,0 +1,48 @@
+<?php /*
+	$view = $this->Layout()->getView();
+?><div class="top_head"><?php
+	if ($view->back):
+		?><div class="back">
+			<a href="<?=$view->breadcrumbs->getBack()?>"><?php
+				?><img src="/s/admin/images/icon_back.gif" alt="Назад" title="Back" width="16" height="14"/>Back<?php
+			?></a>
+		</div><?php
+	endif;
+	?><div class="text"><?php
+			$last = sizeof($view->breadcrumbs);
+			$i = 0;
+			foreach ($view->breadcrumbs as $name => $url):
+				$i++;
+				if ($i === $last):
+					echo $name;
+				else:
+					if ($url !== ''):
+						?><a href="<?=$url?>"><?
+					endif;
+					echo $name;
+					if ($url !== ''):
+						?></a><?php
+					endif; ?> =&gt; <?
+				endif;
+
+			endforeach;
+	?></div>
+</div>
+<div class="top_links"><?php
+	if ($view->add) :
+		?><a href="<?=$view->add->link?>" class="add"><?php
+			?><img src="/s/admin/images/icon_add.gif" alt="<?=$view->add->alt?> " width="16" height="14"><?
+			?><span><?=$view->add->text?></span><?
+		?></a>
+		<span class="sep"></span><?php
+	 endif;
+	 foreach ($view->Top()->getOptions() as $option):
+		?><a href="<?=$this->url($option->getRouteData(), $option->getRouteName())?>" class="add"><?php
+			?><img src="/s/admin/images/option/<?=$option->getIcon()?>" alt="<?=$option->getAlt()?> " width="16" height="14"><?
+			?><span><?=$option->getAlt()?></span><?
+		?></a>
+		<span class="sep"></span><?php
+	endforeach;
+	?><div class="clear"></div>
+</div><?
+ */

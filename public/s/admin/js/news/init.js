@@ -1,0 +1,3 @@
+AdminkaWork.prototype.News = function() {
+
+};

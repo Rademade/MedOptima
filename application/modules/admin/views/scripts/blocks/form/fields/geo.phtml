@@ -1,0 +1,18 @@
+<?
+	$name = $this->name;
+	$postField = false;
+	if (isset($_POST[$name])) {
+		$postField = $_POST[$name];
+	}
+?><input <?php 
+	?>id="_<?=$name?>" <?
+	?>name="<?=$name?>" <?
+	?>type="text" <? 
+	?>class="field geoInput _<?=$name?>" <?
+	?>value="<?=($postField) ?  $postField : $this->value ?>" <?
+?>/><?
+$this->HeadScript()->captureStart();
+    ?>$(function(){
+        new AutoGeo($('#_<?=$name?>'));
+    });<?
+$this->HeadScript()->captureEnd();

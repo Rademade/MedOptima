@@ -1,0 +1,21 @@
+<?php
+$table = new RM_View_Table();
+$table->setEditRoute('admin-news-edit')
+    ->setStatusUrl($this->ajaxUrl)
+    ->setHead('News name', 'Restaurant', 'Add date')
+    ->addPaginator($this->pages);
+foreach ($this->pages as $news):
+    /* @var Application_Model_Page_News $news */
+    $row = $table
+        ->addRecord($news->getId(), $news->getContent()->getName())
+        ->addTd($news->getRestaurant() ? $news->getRestaurant()->getName() : '')
+        ->addTd($news->getAddDate()->getDate(RM_Date_Date::SEARCH_DATE))
+        ->setPreviewUrl($this->url(array(
+            'city-alias' => Application_Model_City::getFirst()->getAlias(),
+            'news-alias' => $news->getAlias()
+        ), 'news-show'))
+        ->setStatus($news->getStatus())
+        ->setHideble()
+        ->setDeletable();
+endforeach;
+echo $table;

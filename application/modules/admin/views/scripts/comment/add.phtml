@@ -1,0 +1,11 @@
+<?php
+$form = new RM_View_Form();
+
+$name = new RM_View_Form_Field_Text('Имя пользователя', 'user_name', '');
+$email = new RM_View_Form_Field_Text('Email пользователя', 'user_email', '');
+
+$form
+    ->add($name->disable())
+    ->add($email->disable())
+    ->add(new RM_View_Form_Field_Textarea('Текст комментрия', 'comment_text', ''));
+echo $form->render();

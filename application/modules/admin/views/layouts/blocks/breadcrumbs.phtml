@@ -1,0 +1,21 @@
+<div class="breadcrumbs"><?php
+	$breadcrumbs = RM_View_Top::getInstance()->getBreadcrumbs();
+	$last = sizeof($breadcrumbs);
+	$i = 0;
+	foreach ($breadcrumbs as $name => $url):
+        $i++;
+        if ($i === $last):
+            echo $name;
+        else:
+            if ($url !== ''):
+                ?><a href="<?=$url?>"><?php
+            endif;
+            echo $name;
+            if ($url !== ''):
+                ?></a><?php
+            endif;
+            ?><span>&#8594;</span><?
+        endif;
+
+    endforeach;
+?></div>

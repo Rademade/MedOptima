@@ -1,0 +1,70 @@
+<?php
+$view = Zend_Layout::getMvcInstance()->getView();
+?><tr data-index="<?=$this->row->getIndex()?>" id="row_<?=$this->row->getId()?>" class="<?php
+echo ($this->row->isGrey()) ? 'grey' : 'white';
+?>" data-id="<?=$this->row->getId()?>">
+    <td class="first"><?php
+        if ($this->row->isWithCheckBox()):
+            ?><input id="check_<?=$this->row->getId()?>" class="rowCheck" type="checkbox" value="<?=$this->row->getId()?>"/><?
+        endif;
+        if ($this->row->isUrlSeted()):
+            ?><a href="<?=$this->row->getUrl()?>"><?
+            echo $this->row->getName();
+            ?></a><?php
+        else:
+            ?><label for="check_<?=$this->row->getId()?>">
+            <b><?=$this->row->getName()?></b>
+        </label><?php
+        endif;
+        ?></td><?php
+    foreach ($this->row->getTds() as $text):
+        echo '<td>' . $text . '</td>';
+    endforeach;
+    if ($this->row->isManualSortable()):
+        echo join('', array(
+            '<td width="110">',
+            $this->partial('blocks/table/tr/manual-pos.phtml', array(
+                'id' => $this->row->getId(),
+                'min' => $this->row->getManualPositionMin(),
+                'max' => $this->row->getManualPositionMax(),
+                'position' => $this->row->getManualPosition()
+            )),
+            '</td>'
+        ));
+    endif;
+    ?><td>
+    <p class="item-control"><?php
+        if ($this->row->isEditble()):
+            ?><a href="<?=$this->row->getEditUrl()?>" title="Редактировать" class="edit-link"></a><?php
+        endif;
+        if ($this->row->isStockable()):
+            echo $this->partial('blocks/table/tr/stock.phtml', array(
+                'row' => $this->row
+            ));
+        endif;
+        foreach ($this->row->getIcons() as $icon):
+            ?><a href="<?=$icon->getUrl()?>" <?
+            ?> title="<?=$icon->getName()?>" <?
+            ?> class="icon-link"><?
+            ?><img src="/s/admin/images/icons/<?=$icon->getIcon()?>" alt="<?=$icon->getName()?>" width="16" height="16"/><?
+            ?></a><?
+        endforeach;
+        if ($this->row->hasPreview()):
+            ?><a href="<?=$this->row->getPreviewUrl()?>" target="__blank" class="preview-link"></a><?php
+        endif;
+        if ($this->row->isHideble()):
+            switch ($this->row->getStatus()):
+                case RM_Interface_Hideable::STATUS_SHOW:
+                    ?><a href="javascript:void(0);" class="statusLink hide-link" onclick="Adminka.Item(<?=$this->row->getId()?>).hide();"></a><?php
+                    break;
+                case RM_Interface_Hideable::STATUS_HIDE:
+                    ?><a href="javascript:void(0);" class="statusLink show-link" onclick="Adminka.Item(<?=$this->row->getId()?>).show();"></a><?php
+                    break;
+            endswitch;
+        endif;
+        if ($this->row->isDeletable()):
+            ?><a href="javascript:void(0);" title="Удалить" class="delete-link" onclick="Adminka.Item(<?=$this->row->getId()?>).drop();"></a><?php
+        endif;
+        ?></p>
+</td>
+</tr>

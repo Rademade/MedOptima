@@ -1,0 +1,74 @@
+.contact-info {
+    float: right;
+    padding-top: 19px;
+}
+
+.contact-info-phone-num {
+    float: left;
+    margin-right: 7px;
+    font-size: 30px;
+    color: #ffffff;
+
+    .phone-num-value {
+        position: relative;
+        @include helveticaneuecyrthin();
+
+        span {
+            top: 15px;
+            left: -45px;
+            position: absolute;
+            margin-top: -15px;
+            font-size: 16px;
+            @include helveticaneuecyrroman();
+        }
+    }
+}
+
+.contacts {
+    padding: 50px 0;
+}
+.contact-box {
+    float: left;
+    margin-right: 300px;
+}
+
+.contact-box-phone {
+    font-size: 16px;
+    color: #8d99a6;
+}
+.contact-box-mail {
+    margin-top: 8px;
+}
+
+.contact-box-adress {
+    width: 195px;
+    margin-top: 20px;
+    font-size: 16px;
+    line-height: 24px;
+    color: #8d99a6;
+}
+
+.contact-box-sign {
+    float: left;
+    width: 260px;
+
+    .simple-text {
+        h3 {
+            font-size: 14px;
+            color: #8d99a6;
+        }
+
+        ul {
+            li {
+                font-size: 14px;
+                color: #8d99a6;
+            }
+        }
+
+        p {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #8d99a6;
+        }
+    }
+}

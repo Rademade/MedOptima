@@ -13,7 +13,12 @@
         <![endif]-->
     </head>
     <body>
-        <h1>Index layout</h1><?php
-        echo $this->headScript();
+    <div class="wrapper"><?php
+        echo $this->render('blocks/elements/header.phtml');
+        echo $this->layout()->content;
+        ?><div class="h-footer"></div>
+    </div><?php
+    echo $this->render('blocks/elements/footer.phtml');
+    echo $this->headScript();
     ?></body>
 </html>

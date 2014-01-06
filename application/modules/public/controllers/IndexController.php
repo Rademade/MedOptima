@@ -7,4 +7,15 @@ class IndexController
 
     }
 
+    public function contactAction() {
+
+    }
+
+    public function tipsAction() {
+
+
+    }
+    public function clinicAction() {
+
+    }
 }

@@ -1,0 +1,7 @@
+.operation-item {
+    padding: 20px;
+    background-color: #fff;
+    @include border-radius(3px);
+    @include background-clip(padding-box);
+    @include box-shadow(0 2px 1px rgba(228,224,210,.5));
+}

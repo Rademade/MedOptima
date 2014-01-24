@@ -8,6 +8,7 @@ $form
     ->add(new RM_View_Form_Field_Image('Фото', 'id_photo', 0, 255, 175))
     ->add(new RM_View_Form_Field_Text('Имя', 'firstName', []))
     ->add(new RM_View_Form_Field_Text('Фамилия', 'secondName', []))
+    ->add(new RM_View_Form_Field_Textarea('Описание', 'description', []))
     ->add(new RM_View_Form_Field_Multiselect(
         'Должность',
         'id_posts',

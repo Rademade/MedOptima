@@ -14,3 +14,7 @@ CREATE TABLE IF NOT EXISTS `medicalAdvices` (
   `adviceStatus` int(11) NOT NULL,
   PRIMARY KEY (`idAdvice`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+ALTER TABLE  `medicalAdvices` ADD  `visitorName` VARCHAR( 255 ) NOT NULL AFTER  `idDoctor` ;
+
+ALTER TABLE  `medicalAdvices` ADD  `visitorEmail` VARCHAR( 255 ) NOT NULL AFTER  `visitorName` ;

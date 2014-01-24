@@ -19,6 +19,12 @@ class Application_Model_Medical_Advice
         'idDoctor' => array(
             'type' => 'int'
         ),
+        'visitorName' => array(
+            'type' => 'string'
+        ),
+        'visitorEmail' => array(
+            'type' => 'string'
+        ),
         'visitorQuestion' => array(
             'type' => 'string'
         ),
@@ -145,6 +151,26 @@ class Application_Model_Medical_Advice
     public function resetDoctor() {
         $this->_doctor = null;
         $this->__setIdDoctor(0);
+    }
+
+    public function getVisitorName() {
+        return $this->_dataWorker->getValue('visitorName');
+    }
+
+    public function setVisitorName($name) {
+        $this->_dataWorker->setValue('visitorName', trim($name));
+    }
+
+    public function setVisitorEmail($email) {
+        $filteredEmail = filter_var($email, FILTER_VALIDATE_EMAIL);
+        if (!($filteredEmail == '' || $filteredEmail)) {
+            throw new Exception('Неверный email');
+        }
+        $this->_dataWorker->setValue('visitorEmail', $email);
+    }
+
+    public function getVisitorEmail() {
+        return $this->_dataWorker->getValue('visitorEmail');
     }
 
     protected function __setIdDoctor($id) {

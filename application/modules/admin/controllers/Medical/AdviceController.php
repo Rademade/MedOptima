@@ -21,6 +21,7 @@ class Admin_Medical_AdviceController
         $this->view->assign(array(
             'menu' => 'medical-advices'
         ));
+        $this->_addButton = false;
     }
 
     public function listAction() {
@@ -79,12 +80,16 @@ class Admin_Medical_AdviceController
         $_POST['question'] = $this->_entity->getVisitorQuestion();
         $_POST['response'] = $this->_entity->getDoctorResponse();
         $_POST['id_doctor'] = $this->_entity->getIdDoctor();
+        $_POST['visitor_name'] = $this->_entity->getVisitorName();
+        $_POST['visitor_email'] = $this->_entity->getVisitorEmail();
     }
 
     protected function __setData(stdClass $data) {
         $this->__setContentFields();
         $this->_entity->setVisitorQuestion($data->question);
         $this->_entity->setDoctorResponse($data->response);
+        $this->_entity->setVisitorName($data->visitor_name);
+        $this->_entity->setVisitorEmail($data->visitor_email);
         $doctor = Application_Model_Medical_Doctor::getById($data->id_doctor);
         if ( $doctor instanceof Application_Model_Medical_Doctor ) {
             $this->_entity->setDoctor($doctor);

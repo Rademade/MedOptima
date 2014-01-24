@@ -27,9 +27,6 @@ class Application_Model_Medical_Doctor
         'idPost' => array(
             'type' => 'int'
         ),
-        'isHead' => array(
-            'type' => 'int'
-        ),
         'doctorStatus' => array(
             'type' => 'int',
             'default' => self::STATUS_UNDELETED
@@ -207,14 +204,6 @@ class Application_Model_Medical_Doctor
 
     public function getServices() {
         return $this->getServiceCollection()->getToItems();
-    }
-
-    public function isHead() {
-        return (bool)$this->_dataWorker->getValue('isHead');
-    }
-
-    public function setIsHead($value) {
-        $this->_dataWorker->setValue('isHead', $value);
     }
 
     public function getSchedule() {

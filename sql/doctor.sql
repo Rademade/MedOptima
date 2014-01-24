@@ -15,3 +15,5 @@ CREATE TABLE IF NOT EXISTS `medicalDoctors` (
   `doctorStatus` int(11) NOT NULL,
   PRIMARY KEY (`idDoctor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+ALTER TABLE  `medicalDoctors` DROP  `isHead` ;

@@ -1,0 +1,20 @@
+<?php
+$table = new RM_View_Table();
+
+$table
+    ->setStatusUrl($this->ajaxUrl)
+    ->setEditRoute($this->editRoute)
+    ->setHead('Посетитель', 'Телефон', 'Дата');
+
+foreach ($this->feedbacks as $feedback) :
+    /** @var Application_Model_Feedback $feedback */
+    $row = $table
+        ->addRecord($feedback->getId(), $feedback->getVisitorName())
+        ->addTd($feedback->getVisitorPhone())
+        ->addTd( MedOptima_Date_Time::toGostDate($feedback->getDatePosted()) )
+        ->setStatus($feedback->getStatus())
+        ->setHideble()
+        ->setDeletable();
+endforeach;
+
+echo $table;

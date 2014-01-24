@@ -16,9 +16,6 @@ class Zend_View_Helper_DoctorFormatter {
         foreach ($posts as &$post) {
             $post = $post->getName();
         }
-        if ( $this->_doctor->isHead() ) {
-            $posts[] = 'главный врач';
-        }
         return join(', ', $posts);
     }
 

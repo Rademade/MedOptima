@@ -22,11 +22,11 @@ if ($this->user instanceof RM_User_Interface) :
             'url' => $this->url(array(), 'admin-medical-doctor-list'),
             'menu' => 'medical-doctors'
         ),
-        array(
-            'name' => 'Города',
-            'url' => $this->url(array(), 'admin-city-list'),
-            'menu' => 'cities'
-        ),
+//        array(
+//            'name' => 'Города',
+//            'url' => $this->url(array(), 'admin-city-list'),
+//            'menu' => 'cities'
+//        ),
         array(
             'name' => 'Статические страницы',
             'subItems' => array(
@@ -75,13 +75,13 @@ if ($this->user instanceof RM_User_Interface) :
         ),
         array(
             'name' => 'Баннеры',
-            'url' => $this->url(array(), 'admin-banner-area-list'),
-            'menu' => 'bannerAreas'
+            'url' => $this->url(array(), 'admin-banner-list'),
+            'menu' => 'banners'
         ),
         array(
-            'name' => 'Комментарии',
-            'url' => $this->url(array(), 'admin-comment-list'),
-            'menu' => 'comments'
+            'name' => 'Отзывы',
+            'url' => $this->url(array(), 'admin-feedback-list'),
+            'menu' => 'feedbacks'
         ),
         array(
             'name' => 'Пользователи',

@@ -85,7 +85,6 @@ class Admin_Medical_DoctorController
         $_POST['id_services'] = array_map(function(Application_Model_Medical_Service $service) {
             return $service->getId();
         }, $this->_entity->getServices());
-        $_POST['is_head'] = $this->_entity->isHead();
         $_POST['schedule'] = $this->_entity->getSchedule()->toArray();
     }
 
@@ -99,7 +98,6 @@ class Admin_Medical_DoctorController
             throw new Exception('Не выбрана должность');
         }
         $this->_entity->setPhoto($photo);
-        $this->_entity->setIsHead($data->is_head);
         $postCollection = $this->_entity->getPostCollection();
         $postCollection->resetItems();
         foreach ($data->id_posts as $idPost) {

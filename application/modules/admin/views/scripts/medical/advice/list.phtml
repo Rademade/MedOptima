@@ -14,6 +14,7 @@ foreach ($this->medicalAdvices as $advice) :
             ? $this->cutText($advice->getDoctorResponse())
             : 'Без ответа')
         ->addTd( $advice->getDoctor() ? $advice->getDoctor()->getName() : '-' )
+        ->setStatus($advice->getStatus())
         ->setHideble()
         ->setDeletable();
 endforeach;

@@ -13,6 +13,8 @@ foreach ($this->medicalDoctors as $doctor) :
         ->addRecord($doctor->getId(), $doctor->getSecondName())
         ->addTd($doctor->getFirstName())
         ->addTd($doctorFormatter->getFormattedPosts())
+        ->setStatus($doctor->getStatus())
+        ->setHideble()
         ->setDeletable();
 endforeach;
 

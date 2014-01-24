@@ -1,14 +1,16 @@
 <?php
 $table = new RM_View_Table();
-$table->setEditRoute($this->editRoute)
-    ->setStatusUrl($this->ajaxUrl)
-    ->setHead('Название баннера')
-    ->addPaginator($this->banners)
-    ->setSortable();
+$table
+        ->setEditRoute($this->editRoute)
+        ->setStatusUrl($this->ajaxUrl)
+        ->setHead('Цитата', 'Автор')
+        ->setSortable();
+
 foreach ($this->banners as $banner) :
     /* @var $banner Application_Model_Banner */
     $row = $table
-        ->addRecord($banner->getId(), $banner->getContent()->getName())
+        ->addRecord($banner->getId(), $this->cutText($banner->getQuote(), 40))
+        ->addTd($banner->getQuoteAuthor())
         ->setStatus($banner->getStatus())
         ->setPosition($banner->getPosition())
         ->setHideble()

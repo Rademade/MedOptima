@@ -1,0 +1,21 @@
+<?php
+$table = new RM_View_Table();
+
+$table
+    ->setEditRoute($this->editRoute)
+    ->setStatusUrl($this->ajaxUrl)
+    ->setHead('Вопрос', 'Ответ', 'Специалист');
+
+foreach ($this->medicalAdvices as $advice) :
+    /** @var Application_Model_Medical_Advice $advice */
+    $row = $table
+        ->addRecord($advice->getId(), $this->cutText($advice->getVisitorQuestion(), 30))
+        ->addTd( $advice->responseGiven()
+            ? $this->cutText($advice->getDoctorResponse())
+            : 'Без ответа')
+        ->addTd( $advice->getDoctor() ? $advice->getDoctor()->getName() : '-' )
+        ->setHideble()
+        ->setDeletable();
+endforeach;
+
+echo $table;

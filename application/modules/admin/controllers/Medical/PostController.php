@@ -1,12 +1,12 @@
 <?php
-use Application_Model_Medical_Post as MedicalProfession;
+use Application_Model_Medical_Post as MedicalPost;
 
 class Admin_Medical_PostController
     extends
         MedOptima_Controller_Admin {
 
     /**
-     * @var MedicalProfession
+     * @var MedicalPost
      */
     protected $_entity;
 
@@ -26,7 +26,7 @@ class Admin_Medical_PostController
     public function listAction() {
         parent::listAction();
         $this->view->assign(array(
-            'medicalPosts' => MedicalProfession::getList()
+            'medicalPosts' => MedicalPost::getList()
         ));
     }
 
@@ -35,7 +35,7 @@ class Admin_Medical_PostController
         if ($this->getRequest()->isPost()) {
             try {
                 $data = (object)$this->getRequest()->getPost();
-                $this->_entity = MedicalProfession::create();
+                $this->_entity = MedicalPost::create();
                 $this->__setData($data);
                 $this->_entity->validate();
                 $this->_entity->save();
@@ -48,7 +48,7 @@ class Admin_Medical_PostController
 
     public function editAction() {
         parent::editAction();
-        $this->_entity = MedicalProfession::getById($this->_getParam('id'));
+        $this->_entity = MedicalPost::getById($this->_getParam('id'));
         if ($this->getRequest()->isPost()) {
             $data = (object)$this->getRequest()->getPost();
             try {

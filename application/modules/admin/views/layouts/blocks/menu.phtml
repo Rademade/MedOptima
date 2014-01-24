@@ -13,6 +13,11 @@ if ($this->user instanceof RM_User_Interface) :
             'menu' => 'medical-posts'
         ),
         array(
+            'name' => 'Медицинские советы',
+            'url' => $this->url(array(), 'admin-medical-advice-list'),
+            'menu' => 'medical-advices'
+        ),
+        array(
             'name' => 'Специалисты',
             'url' => $this->url(array(), 'admin-medical-doctor-list'),
             'menu' => 'medical-doctors'

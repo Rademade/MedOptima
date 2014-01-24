@@ -1,7 +1,7 @@
 <?php
 class Admin_LangController
     extends
-        Skeleton_Controller_Admin {
+        MedOptima_Controller_Admin {
 
     /**
      * @var RM_Lang

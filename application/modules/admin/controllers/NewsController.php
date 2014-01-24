@@ -1,7 +1,7 @@
 <?php
 class Admin_NewsController
     extends
-        Skeleton_Controller_Admin_Page {
+        MedOptima_Controller_Admin_Page {
 
     const PAGE_TYPE = Application_Model_Page::PAGE_TYPE_NEWS;
 

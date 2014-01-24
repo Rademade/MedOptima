@@ -1,7 +1,7 @@
 <?php
 class Admin_ErrorsController
     extends
-        Skeleton_Controller_Admin {
+        MedOptima_Controller_Admin {
 
     public function preDispatch() {
         $this->__onlyAdmin();

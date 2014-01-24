@@ -3,7 +3,7 @@ use Application_Model_Banner as Banner;
 
 class Admin_BannerController
     extends
-        Skeleton_Controller_Admin {
+        MedOptima_Controller_Admin {
 
     /**
      * @var Banner

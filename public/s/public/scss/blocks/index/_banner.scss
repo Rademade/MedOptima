@@ -1,0 +1,26 @@
+.banner {
+    position: relative;
+    height: 560px;
+}
+
+.banner-box {
+    position: absolute;
+    width: 1020px;
+    height: 100%;
+    top: 0;
+    left: -40px;
+}
+
+.banner-prev-ico,
+.banner-next-ico {
+    width: 18px;
+    height: 32px;
+}
+
+.banner-prev-ico {
+    background-position: -90px 0;
+}
+
+.banner-next-ico {
+    background-position: -120px 0;
+}

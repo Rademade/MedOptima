@@ -1,0 +1,14 @@
+.header-logo {
+    float: left;
+    position: relative;
+    width: 170px;
+    height: 65px;
+    margin: 0 35px 0 0;
+}
+
+.header-logo-img-container {
+    top: 0;
+    left: 0;
+    position: absolute;
+    z-index: 1;
+}

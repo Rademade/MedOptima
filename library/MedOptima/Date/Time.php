@@ -1,0 +1,164 @@
+<?php
+class MedOptima_Date_Time extends DateTime {
+
+    const DATE_FORMAT_GOST = 'd.m.Y';
+    const DATE_FORMAT_MYSQL = 'Y-m-d';
+
+    const DATETIME_FORMAT_GOST_SECONDS = 'd.m.Y H:i:s';
+    const DATETIME_FORMAT_GOST_NO_SECONDS = 'd.m.Y H:i';
+    const DATETIME_FORMAT_MYSQL = 'Y-m-d H:i:s';
+
+    const TIME_FORMAT_GOST_SECONDS = 'H:i:s';
+    const TIME_FORMAT_GOST_NO_SECONDS = 'H:i';
+
+    const TIME_FORMAT_MYSQL_SECONDS = 'H:i:s';
+    const TIME_FORMAT_MYSQL_NO_SECONDS = 'H:i';
+
+    const WEEK_DAY_MONDAY = 1;
+    const WEEK_DAY_TUESDAY = 2;
+    const WEEK_DAY_WEDNESDAY = 3;
+    const WEEK_DAY_THURSDAY = 4;
+    const WEEK_DAY_FRIDAY = 5;
+    const WEEK_DAY_SATURDAY = 6;
+    const WEEK_DAY_SUNDAY = 7;
+
+    private static $_monthNames = array(
+        1 => 'Январь',
+        2 => 'Февраль',
+        3 => 'Март',
+        4 => 'Апрель',
+        5 => 'Май',
+        6 => 'Июнь',
+        7 => 'Июль',
+        8 => 'Август',
+        9 => 'Сентябрь',
+        10 => 'Октябрь',
+        11 => 'Ноябрь',
+        12 => 'Декабрь'
+    );
+
+    private static $_weekDayNames = array(
+        self::WEEK_DAY_MONDAY => 'Понедельник',
+        self::WEEK_DAY_TUESDAY => 'Вторник',
+        self::WEEK_DAY_WEDNESDAY => 'Среда',
+        self::WEEK_DAY_THURSDAY => 'Четверг',
+        self::WEEK_DAY_FRIDAY => 'Пятница',
+        self::WEEK_DAY_SATURDAY => 'Суббота',
+        self::WEEK_DAY_SUNDAY => 'Воскресенье'
+    );
+    
+    public static function create($datetime = 'now') {
+        return self::constructDateTime($datetime);
+    }
+
+    public static function toGostDate($date) {
+        return self::constructDateTime($date)->format(self::DATE_FORMAT_GOST);
+    }
+
+    public static function toMysqlDate($date) {
+        return self::constructDateTime($date)->format(self::DATE_FORMAT_MYSQL);
+    }
+
+    public static function toGostDatetime($datetime, $seconds = false) {
+        $format = $seconds ? self::DATETIME_FORMAT_GOST_SECONDS : self::DATETIME_FORMAT_GOST_NO_SECONDS;
+        return self::constructDateTime($datetime)->format($format);
+    }
+
+    public static function toMysqlDatetime($datetime) {
+        return self::constructDateTime($datetime)->format(self::DATETIME_FORMAT_MYSQL);
+    }
+
+    public static function toGostTime($time, $seconds = false) {
+        $format = $seconds ? self::TIME_FORMAT_GOST_SECONDS : self::TIME_FORMAT_GOST_NO_SECONDS;
+        return self::constructDateTime($time)->format($format);
+    }
+
+    public static function toMySqlTime($time, $seconds = false) {
+        $format = $seconds ? self::TIME_FORMAT_MYSQL_SECONDS : self::TIME_FORMAT_MYSQL_NO_SECONDS;
+        return self::constructDateTime($time)->format($format);
+    }
+
+    public static function timeToSeconds($time, $delimiter = ':') {
+        $tokens = explode($delimiter, $time);
+        $seconds = 0;
+        $multiplier = 3600;
+        for ($idx = 0; $idx < count($tokens); ++$idx) {
+            $seconds += (int)$tokens[$idx] * $multiplier;
+            $multiplier /= 60;
+        }
+        return $seconds;
+    }
+
+    public static function secondsToTime($seconds, $delimiter = ':', $addSeconds = false) {
+        if ($seconds >= 24 * 3600 || $seconds < 0) {
+            return false;
+        }
+        $date = new DateTime(); //RM_TODO static attribute
+        $date->setTime(0, 0, $seconds);
+        return $date->format('H' . $delimiter . 'i' . ($addSeconds ? $delimiter . 's' : ''));
+    }
+
+    public static function getCurrentHoursOffset($offset) {
+        if ($offset < 0) {
+            return false;
+        } else {
+            return (new DateTime())->add(new DateInterval('PT' . $offset . 'H'))->format('H') . ':00';
+        }
+    }
+
+    public static function getMonthNames() {
+        return self::$_monthNames;
+    }
+    
+    public static function getWeekDayNames() {
+        return self::$_weekDayNames;
+    }
+    
+    public function getMonth() {
+        return $this->format('m');
+    }
+
+    public function getMonthName() {
+        $num = (int)$this->getMonth();
+        return self::$_monthNames[$num] ? self::$_monthNames[$num] : '';
+    }
+
+    public function getYear() {
+        return $this->format('Y');
+    }
+
+    public function getMysqlDate() {
+        return $this->format(self::DATE_FORMAT_MYSQL);
+    }
+
+    public function getGostDate() {
+        return $this->format(self::DATE_FORMAT_GOST);
+    }
+
+    /**
+     * @return MedOptima_Date_Time
+     */
+    public function addMonth() {
+        return $this->add(new DateInterval('P1M'));
+    }
+
+    private static function _checkTime($hours, $minutes, $seconds) {
+        $between = function ($value, $min, $max) {
+            return $min <= $value && $value <= $max;
+        };
+        if (!$between($hours, 0, 23)) {
+            throw new Exception('Wrong hours');
+        }
+        if (!$between($minutes, 0, 59)) {
+            throw new Exception('Wrong minutes');
+        }
+        if (!$between($seconds, 0, 59)) {
+            throw new Exception('Wrong seconds');
+        }
+    }
+
+    private static function constructDateTime($date) {
+        return new self($date);
+    }
+    
+}

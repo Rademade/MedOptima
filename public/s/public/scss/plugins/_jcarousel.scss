@@ -1,0 +1,208 @@
+@import "mixin/fonts";
+@import "typography/fonts";
+
+.photo-text-box {
+    display: block;
+    position: absolute;
+    width: 405px;
+    height: 295px;
+    padding: 25px 15px;
+    left: 60px;
+    top: 60px;
+    font-size: 13px;
+    color: #000;
+    opacity: .8;
+}
+
+.photo-text-box-title {
+    font-size: 30px;
+    line-height: 32px;
+    color: #fff;
+    @include helveticaneuecyrthin();
+}
+.photo-text-box-sign {
+    display: inline-block;
+    float: right;
+    margin: 50px 30px 0 0;
+    font-size: 16px;
+    color: #fff;
+    @include helveticaneuecyrroman();
+
+    .photo-text-box-doctor-status {
+        margin-top: 5px;
+        display: inline-block;
+        float: right;
+        font-size: 14px;
+    }
+}
+
+/** Stage container **/
+
+.connected-carousels .stage {
+    width: 1020px;
+    position: relative;
+}
+
+.connected-carousels .photo-credits {
+    position: absolute;
+    right: 15px;
+    bottom: 0;
+    font-size: 13px;
+    color: #fff;
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0.85);
+    opacity: .66;
+}
+
+.connected-carousels .photo-credits a {
+    color: #fff;
+}
+
+/** Navigation container **/
+
+.connected-carousels .navigation {
+    width: 1020px;
+    position: relative;
+}
+
+/** Shared carousel styles **/
+
+.connected-carousels .carousel {
+    overflow: hidden;
+    position: relative;
+}
+
+.connected-carousels .carousel ul {
+    width: 20000em;
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.connected-carousels .carousel li {
+    float: left;
+    position: relative;
+}
+
+/** Stage carousel specific styles **/
+
+.connected-carousels .carousel-stage {
+    height: 480px;
+}
+
+/** Navigation carousel specific styles **/
+
+.connected-carousels .carousel-navigation {
+    height: 85px;
+    width: 1020px;
+}
+
+.connected-carousels .carousel-navigation li {
+    cursor: pointer;
+    margin: 2px 1px;
+}
+
+.connected-carousels .carousel-navigation li img {
+    display: block;
+    width: 160px;
+    height: 80px;
+}
+
+.connected-carousels .carousel-navigation li.active img {
+    border-color: #ccc;
+    @include box-shadow(0px 0px 0px 2px rgba(0,163,223,1));
+}
+
+/** Stage carousel controls **/
+
+.connected-carousels .prev-stage,
+.connected-carousels .next-stage {
+    display: block;
+    position: absolute;
+    top: 0;
+    width: 305px;
+    height: 410px;
+    color: #fff;
+    
+    &:hover {
+        border: 0;
+    }
+}
+
+.connected-carousels .prev-stage {
+    left: 0;
+}
+
+.connected-carousels .next-stage {
+    right: 0;
+}
+
+.connected-carousels .prev-stage.inactive,
+.connected-carousels .next-stage.inactive {
+    display: none;
+}
+
+.connected-carousels .prev-stage span,
+.connected-carousels .next-stage span {
+    display: none;
+    position: absolute;
+    top: 50%;
+    width: 18px;
+    height: 32px;
+    text-align: center;
+    color: #fff;
+    text-decoration: none;
+}
+
+.connected-carousels .prev-stage span {
+    left: 20px;
+}
+
+.connected-carousels .next-stage span {
+    right: 20px;
+}
+
+.connected-carousels .prev-stage:hover span,
+.connected-carousels .next-stage:hover span {
+    display: block;
+}
+
+/** Navigation carousel controls **/
+
+.connected-carousels .prev-navigation,
+.connected-carousels .next-navigation {
+    display: block;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: #4E443C;
+    color: #fff;
+    text-decoration: none;
+    text-shadow: 0 0 1px #000;
+    font: 16px/29px Arial, sans-serif;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+    -webkit-box-shadow: 0 0 2px #999;
+    -moz-box-shadow: 0 0 2px #999;
+    box-shadow: 0 0 2px #999;
+}
+
+.connected-carousels .prev-navigation {
+    left: -15px;
+    top: 22px;
+    text-indent: 6px;
+}
+
+.connected-carousels .next-navigation {
+    right: -15px;
+    top: 22px;
+    text-indent: 20px;
+}
+
+.connected-carousels .prev-navigation.inactive,
+.connected-carousels .next-navigation.inactive {
+    opacity: .5;
+    cursor: default;
+}
+

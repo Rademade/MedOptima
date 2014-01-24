@@ -1,7 +1,7 @@
 <?php
 class Admin_BannerAreaController
     extends
-        Skeleton_Controller_Admin {
+        MedOptima_Controller_Admin {
 
     /**
      * @var Application_Model_Banner_Area

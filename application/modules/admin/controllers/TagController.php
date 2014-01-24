@@ -1,7 +1,7 @@
 <?php
 class Admin_TagController
     extends
-        Skeleton_Controller_Admin {
+        MedOptima_Controller_Admin {
 
     /**
      * @var Application_Model_Tag

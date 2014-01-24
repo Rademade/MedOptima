@@ -1,7 +1,7 @@
 <?php
 class Admin_ImageController
     extends
-        Skeleton_Controller_Admin {
+        MedOptima_Controller_Admin {
 
     public function preDispatch() {
         $this->_helper->layout()->disableLayout(true);

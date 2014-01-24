@@ -1,0 +1,50 @@
+//compass
+@import "compass";
+@import "compass/reset";
+
+//variables
+@import "var/path";
+@import "var/colors";
+@import "var/width";
+
+//plugins
+@import "plugins/jcarousel";
+
+//mixins
+@import "mixin/fonts";
+@import "typography/fonts";
+
+//main
+@import "main/main";
+
+
+//blocks
+@import "blocks/header/header";
+@import "blocks/header/logo/logo";
+
+@import "blocks/footer/footer";
+
+@import "blocks/operation-item/operation-item";
+
+@import "blocks/button/button";
+
+@import "blocks/input/input";
+
+@import "blocks/index/banner";
+@import "blocks/index/text-box";
+@import "blocks/index/callendar";
+@import "blocks/popup/main";
+@import "blocks/index/callendar-appointment";
+@import "blocks/index/map";
+
+@import "blocks/contacts/main";
+
+@import "blocks/comments/main";
+
+@import "blocks/quotes/main";
+
+@import "blocks/clinic/main";
+
+
+//typography
+@import "typography/simple-text";

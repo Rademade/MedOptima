@@ -1,7 +1,7 @@
 <?php
 class Admin_SettingsController
     extends
-        Skeleton_Controller_Admin {
+        MedOptima_Controller_Admin {
 
     public function preDispatch() {
         $this->_itemName = 'Настройки администратора';

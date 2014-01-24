@@ -1,0 +1,81 @@
+.index-quote {
+    padding-bottom: 45px;
+    background: url("#{$path}text-border.png") left bottom repeat-x;
+
+    .simple-text {
+        width: 815px;
+        margin: 0 auto;
+        color: #00a3df;
+        font-size: 30px;
+        line-height: 32px;
+        @include helveticaneuecyrthin();
+    }
+}
+
+.index-quote-text {
+    position: relative;
+
+}
+.quote-text-sign {
+    float: right;
+    margin: 0 70px 0 0;
+    color: #9ca7b2;
+    font-size: 16px;
+}
+
+.quote-top-ico,
+.quote-bottom-ico {
+    width: 70px;
+    height: 55px;
+}
+
+.quote-top-ico {
+    top: -20px;
+    left: -30px;
+    background-position: 0 -40px;
+}
+
+.quote-bottom-ico {
+    bottom: 0;
+    right: -10px;
+    background-position: -80px -40px;
+}
+
+.clinic-quote {
+    position: relative;
+    padding: 40px 0 55px 0;
+
+    .simple-text {
+        padding: 20px 0 0 60px;
+        color: #8d99a6;
+        font-size: 30px;
+        line-height: 32px;
+        @include helveticaneuecyrthin();
+    }
+
+    .quote-text-sign {
+        margin: 20px 0 35px 0;
+    }
+}
+
+.clinic-quote-text {
+    position: relative;
+}
+
+.quote-top-s-ico,
+.quote-bottom-s-ico{
+    width: 50px;
+    height: 38px;
+}
+
+.quote-top-s-ico {
+    top: 0;
+    left: 0;
+    background-position: -150px 0;
+}
+
+.quote-bottom-s-ico {
+    bottom: -15px;
+    right: -30px;
+    background-position: -150px -45px;
+}

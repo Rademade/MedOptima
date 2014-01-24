@@ -3,6 +3,21 @@ if ($this->user instanceof RM_User_Interface) :
     $menuHelper = new RM_View_Helper_Menu();
     echo $menuHelper->getMenuHTML($this->user, $this->menu, array(
         array(
+            'name' => 'Медицинские услуги',
+            'url' => $this->url(array(), 'admin-medical-service-list'),
+            'menu' => 'medical-services'
+        ),
+        array(
+            'name' => 'Медицинские должности',
+            'url' => $this->url(array(), 'admin-medical-post-list'),
+            'menu' => 'medical-posts'
+        ),
+        array(
+            'name' => 'Специалисты',
+            'url' => $this->url(array(), 'admin-medical-doctor-list'),
+            'menu' => 'medical-doctors'
+        ),
+        array(
             'name' => 'Города',
             'url' => $this->url(array(), 'admin-city-list'),
             'menu' => 'cities'

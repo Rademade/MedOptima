@@ -1,0 +1,11 @@
+<?php
+$form = new RM_View_Form();
+$form->getLangPanel()->allLangs();
+if ($this->user->getRole()->isProgrammer()) :
+    $form->add(new RM_View_Form_Field_Text('Алиас', 'alias', ''));
+endif;
+$form
+    ->add(new RM_View_Form_Field_Text('Название', 'name', []))
+    ->add(new RM_View_Form_Field_Editor('Текст', 'text', []));
+echo $form->render();
+

@@ -1,11 +1,12 @@
 <?php
 $table = new RM_View_Table();
-$table->setEditRoute('admin-block-edit')
+$table
+    ->setEditRoute($this->editRoute)
     ->setStatusUrl($this->ajaxUrl)
-    ->setHead('Block name')
-    ->addPaginator($this->blocks);
+    ->setHead('Название');
+
 foreach ($this->blocks as $block):
-    /* @var Application_Model_Block $block */
+    /* @var Application_Model_TextBlock $block */
     $row = $table
         ->addRecord($block->getId(), $block->getName())
         ->setStatus($block->getStatus())

@@ -13,8 +13,8 @@ class IndexController
 
     public function tipsAction() {
 
-
     }
+
     public function clinicAction() {
 
     }

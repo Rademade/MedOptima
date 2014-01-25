@@ -27,51 +27,40 @@ if ($this->user instanceof RM_User_Interface) :
 //            'url' => $this->url(array(), 'admin-city-list'),
 //            'menu' => 'cities'
 //        ),
+//        array(
+//            'name' => 'Статические страницы',
+//            'subItems' => array(
+//                array(
+//                    'name' => 'Новости',
+//                    'url' => $this->url(array(), 'admin-news-list'),
+//                    'menu' => 'news'
+//                ),
+//                array(
+//                    'name' => 'Текстовые страницы',
+//                    'url' => $this->url(array(), 'admin-page-list'),
+//                    'menu' => 'pages'
+//                ),
+//                array(
+//                    'name' => 'Авторы',
+//                    'url' => $this->url(array(), 'admin-author-list'),
+//                    'menu' => 'authors'
+//                )
+//            )
+//        ),
+//        array(
+//            'name' => 'Опции страниц',
+//            'subItems' => array(
+//                array(
+//                    'name' => 'Теги',
+//                    'url' => $this->url(array(), 'admin-tag-list'),
+//                    'menu' => 'tags'
+//                )
+//            )
+//        ),
         array(
-            'name' => 'Статические страницы',
-            'subItems' => array(
-                array(
-                    'name' => 'Новости',
-                    'url' => $this->url(array(), 'admin-news-list'),
-                    'menu' => 'news'
-                ),
-                array(
-                    'name' => 'Текстовые страницы',
-                    'url' => $this->url(array(), 'admin-page-list'),
-                    'menu' => 'pages'
-                ),
-                array(
-                    'name' => 'Авторы',
-                    'url' => $this->url(array(), 'admin-author-list'),
-                    'menu' => 'authors'
-                )
-            )
-        ),
-        array(
-            'name' => 'Опции страниц',
-            'subItems' => array(
-                array(
-                    'name' => 'Теги',
-                    'url' => $this->url(array(), 'admin-tag-list'),
-                    'menu' => 'tags'
-                )
-            )
-        ),
-        array(
-            'name' => 'Статические блоки',
-            'subItems' => array(
-                array(
-                    'name' => 'Блоки',
-                    'url' => $this->url(array(
-                                'idPage' => 0,
-                                'type' => RM_Block::TYPE_SIMPLE_NAME,
-                                'page' => 1,
-                                'searchType' => RM_Block::SEARCH_TYPE_BLOCK,
-                                'textType' => RM_Content_Field_Process::PROCESS_TYPE_HTML
-                            ), 'admin-block-list'),
-                    'menu' => 'blocks'
-                )
-            )
+            'name' => 'Текстовые блоки',
+            'url' => $this->url(array(), 'admin-text-block-list'),
+            'menu' => 'blocks'
         ),
         array(
             'name' => 'Баннеры',
@@ -84,6 +73,11 @@ if ($this->user instanceof RM_User_Interface) :
             'menu' => 'feedbacks'
         ),
         array(
+            'name' => 'Опции',
+            'url' => $this->url(array(), 'admin-option-list'),
+            'menu' => 'options'
+        ),
+        array(
             'name' => 'Пользователи',
             'url' => $this->url(array(), 'admin-user-index'),
             'menu' => 'users'
@@ -94,7 +88,7 @@ if ($this->user instanceof RM_User_Interface) :
             'menu' => 'lang'
         ),
         array(
-            'name' => 'Найстройки',
+            'name' => 'Настройки',
             'url' => $this->url(array(), 'admin-settings-list'),
             'menu' => 'settings'
         ),

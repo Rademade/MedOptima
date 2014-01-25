@@ -48,6 +48,7 @@ class Admin_FeedbackController
             $_POST['visitor_phone'] = $this->_entity->getVisitorPhone();
             $_POST['feedback_content'] = $this->_entity->getContent();
             $_POST['date_posted'] = MedOptima_Date_Time::toGostDate($this->_entity->getDatePosted());
+            $_POST['show_on_main'] = $this->_entity->isShownOnMain();
         }
     }
 
@@ -61,6 +62,7 @@ class Admin_FeedbackController
 
     protected function __setData(stdClass $data) {
         $this->__setContentFields();
+        $this->_entity->setShownOnMain( (bool)$data->show_on_main );
     }
 
 }

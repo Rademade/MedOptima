@@ -68,7 +68,7 @@ class Admin_BannerController
     protected function __setData($data) {
         $photo = RM_Photo::getById($data->id_photo);
         if (!$photo instanceof RM_Photo) {
-//            throw new Exception('Загрузите фото');
+            throw new Exception('Загрузите фото');
         } else {
             $this->_entity->setPhoto($photo);
         }

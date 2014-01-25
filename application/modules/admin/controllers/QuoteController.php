@@ -58,11 +58,13 @@ class Admin_QuoteController
             }
         } else {
             $this->__postContentFields();
+            $_POST['show_on_clinic'] = $this->_entity->isShownOnClinic();
         }
     }
 
     protected function __setData($data) {
         $this->__setContentFields();
+        $this->_entity->setShownOnClinic($data->show_on_clinic);
     }
 
     protected function getListCrumbName() {

@@ -1,0 +1,19 @@
+<?php
+$advice = $this->advice;
+if ($advice instanceof Application_Model_Medical_Advice
+    && ($doctor = $advice->getDoctor()) instanceof Application_Model_Medical_Doctor
+) : ?><div class="comments-item">
+        <div class="comments-item-name"><?=$advice->getVisitorQuestion()?></div>
+        <div class="comments-item-author">
+            <div class="comments-item-author-name"><?=$doctor->getName()?></div>
+            <div class="comments-item-author-post"><?
+                echo $this->DoctorFormatter($doctor)->getFormattedPosts()?></div>
+        </div>
+        <div class="comments-item-text">
+            <div class="simple-text">
+                <p><?=$advice->getDoctorResponse()?></p>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div><?
+endif;

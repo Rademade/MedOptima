@@ -37,6 +37,21 @@ class MedOptima_Date_Time extends DateTime {
         12 => 'Декабрь'
     );
 
+    private static $_prettyMonthNames = array(
+        1 => 'января',
+        2 => 'февраля',
+        3 => 'марта',
+        4 => 'апреля',
+        5 => 'мая',
+        6 => 'июня',
+        7 => 'июля',
+        8 => 'августа',
+        9 => 'сентября',
+        10 => 'октября',
+        11 => 'ноября',
+        12 => 'декабря'
+    );
+
     private static $_weekDayNames = array(
         self::WEEK_DAY_MONDAY => 'Понедельник',
         self::WEEK_DAY_TUESDAY => 'Вторник',
@@ -53,6 +68,15 @@ class MedOptima_Date_Time extends DateTime {
 
     public static function toGostDate($date) {
         return self::constructDateTime($date)->format(self::DATE_FORMAT_GOST);
+    }
+
+    public static function toGostPrettyDate($date) {
+        $datetime = self::constructDateTime($date);
+        return join(' ', [
+            $datetime->format('j'),
+            self::getPrettyMonthNames()[$datetime->format('n')],
+            $datetime->format('Y')
+        ]);
     }
 
     public static function toMysqlDate($date) {
@@ -109,11 +133,15 @@ class MedOptima_Date_Time extends DateTime {
     public static function getMonthNames() {
         return self::$_monthNames;
     }
+
+    public static function getPrettyMonthNames() {
+        return self::$_prettyMonthNames;
+    }
     
     public static function getWeekDayNames() {
         return self::$_weekDayNames;
     }
-    
+
     public function getMonth() {
         return $this->format('m');
     }

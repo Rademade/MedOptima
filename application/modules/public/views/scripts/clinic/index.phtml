@@ -8,20 +8,13 @@ $vacancy = Block::getByAlias('opened-vacancies');
             if ($aboutClinic instanceof Block) : ?>
                 <div class="main-title"><?=$aboutClinic->getName()?></div>
                 <div class="clinic-text-box"><?=$aboutClinic->getText()?></div><?
-            endif
-            ?><div class="clinic-quote">
-                <div class="clinic-quote-text">
-                    <i class="ico quote-top-s-ico"></i>
-                    <div class="simple-text">
-                        <p>
-                            Мы так хотели запустит сайт к новому году, что забыли о выходных.
-                        </p>
-                    </div>
-                    <i class="ico quote-bottom-s-ico"></i>
-                </div>
-                <div class="quote-text-sign">— Илья Сергеевич</div>
-            </div>
-        </div><?
+            endif;
+            foreach ($this->quotes as $quote) :
+                echo $this->partial('blocks/clinic/quote.phtml', array(
+                    'quote' => $quote
+                ));
+            endforeach
+        ?></div><?
         if ($vacancy instanceof Block) : ?>
             <div class="clinic-right-box">
                 <div class="main-title"><?=$vacancy->getName()?></div>
@@ -40,21 +33,14 @@ $vacancy = Block::getByAlias('opened-vacancies');
         <div class="clinic-comments">
             <div class="fix">
                 <div class="main-title">Отзывы</div>
-                <div class="comments-item-list">
-                    <div class="comments-item">
-                        <div class="comments-item-author">
-                            <div class="comments-item-author-name">Коляновна</div>
-                            <div class="comments-item-author-post">28 января 2014</div>
-                        </div>
-                        <div class="comments-item-text">
-                            <div class="simple-text">
-                                <p>Достаточно чистить зубы два-три раза в день и использовать для чистки зубную нить. Ополаскиватель для рта также иммеет хорошие рекомендации.</p>
-                            </div>
-                        </div>
-                        <div class="clear"></div>
-                    </div>
-                </div>
-                <div class="comment-btn-box">
+                <div class="comments-item-list"><?
+                    foreach ($this->feedbacks as $feedback) :
+                        echo $this->partial('blocks/clinic/feedback.phtml', array(
+                            'feedback' => $feedback
+                        ));
+                    endforeach
+                ?></div>
+                <div class="comment-btn-box" style="display: none">
                     <a class="button comments-btn" href="#">Напиcать отзыв...</a>
                     <div class="popup-box up-show">
                         <i class="ico popup-tile"></i>

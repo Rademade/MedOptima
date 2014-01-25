@@ -12,3 +12,5 @@ INSERT INTO routing (idRoute, type, name, module, controller, action, url, defau
 (146+1, 1, 'admin-quote-add', 'admin', 'quote', 'add', '/admin/quotes/:page/add', '{}', 1),
 (146+2, 1, 'admin-quote-edit', 'admin', 'quote', 'edit', '/admin/quote/:page/edit/:id', '{}', 1),
 (146+3, 1, 'admin-quote-ajax', 'admin', 'quote', 'ajax', '/admin/quote/ajax', '{}', 1);
+
+ALTER TABLE  `quotes` ADD  `showOnClinic` INT NOT NULL AFTER  `idContent` ;

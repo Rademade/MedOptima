@@ -20,3 +20,5 @@ INSERT INTO routing (idRoute, type, name, module, controller, action, url, defau
 (135, 1, 'admin-feedback-list', 'admin', 'feedback', 'list', '/admin/feedbacks/:page', '{"page":1}', 1),
 (135+1, 1, 'admin-feedback-ajax', 'admin', 'feedback', 'ajax', '/admin/feedback/ajax', '{}', 1),
 (135+2, 1, 'admin-feedback-edit', 'admin', 'feedback', 'edit', '/admin/feedback/edit/:id', '{}', 1);
+
+ALTER TABLE  `feedbacks` ADD  `showOnMain` INT NOT NULL AFTER  `datePosted` ;

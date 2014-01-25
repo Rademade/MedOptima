@@ -19,6 +19,9 @@ class Application_Model_Quote
         'idContent' => array(
             'type' => 'int'
         ),
+        'showOnClinic' => array(
+            'type' => 'int'
+        ),
         'quoteStatus' => array(
             'type' => 'int',
             'default' => self::STATUS_UNDELETED
@@ -96,6 +99,14 @@ class Application_Model_Quote
 
     public function getAuthorPost() {
         return $this->getContent()->getQuoteAuthorPost();
+    }
+
+    public function isShownOnClinic() {
+        return $this->_dataWorker->getValue('showOnClinic');
+    }
+
+    public function setShownOnClinic($val) {
+        $this->_dataWorker->setValue('showOnClinic', $val);
     }
 
     protected function __setIdContent($idContent) {

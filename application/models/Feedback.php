@@ -26,6 +26,9 @@ class Application_Model_Feedback
         'datePosted' => array(
             'type' => 'string'
         ),
+        'showOnMain' => array(
+            'type' => 'int'
+        ),
         'feedbackStatus' => array(
             'type' => 'int',
             'default' => self::STATUS_HIDE
@@ -137,6 +140,14 @@ class Application_Model_Feedback
 
     public function setDatePosted($date) {
         $this->_dataWorker->setValue('datePosted', MedOptima_Date_Time::toMysqlDate($date));
+    }
+
+    public function isShownOnMain() {
+        return $this->_dataWorker->getValue('showOnMain');
+    }
+
+    public function setShownOnMain($val) {
+        $this->_dataWorker->setValue('showOnMain', $val);
     }
 
 }

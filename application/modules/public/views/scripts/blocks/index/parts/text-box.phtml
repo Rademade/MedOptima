@@ -1,20 +1,10 @@
-<div class="index-text-box">
-    <div class="index-quote">
-        <div class="index-quote-text">
-            <i class="ico quote-top-ico"></i>
-            <div class="simple-text">
-                <p>
-                    Один, гад такой, взял и выдрал мне зуб. Сразу написала отзыв на сайте.
-                    На следующий день позвонил главный врач, хороший такой с манерами. Вставили бесплатно коронку,
-                    угостили чаем.
-                </p>
-            </div>
-            <i class="ico quote-bottom-ico"></i>
-        </div>
-        <div class="quote-text-sign">— Наталья Матвеевна</div>
-        <div class="clear"></div>
-    </div>
-    <div class="text-box-item">
+<div class="index-text-box"><?
+    foreach ($this->feedbacks as $feedback) :
+        echo $this->partial('blocks/index/parts/feedback.phtml', array(
+            'feedback' => $feedback
+        ));
+    endforeach
+    ?><div class="text-box-item">
         <div class="simple-text">
             <h3>Как долго делается коронка?</h3>
             <p>

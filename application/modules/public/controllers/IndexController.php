@@ -3,6 +3,11 @@ class IndexController
     extends
         MedOptima_Controller_Public {
 
+    public function preDispatch() {
+        parent::preDispatch();
+        RM_Head::getInstance()->getJS()->add('map');
+    }
+
     public function indexAction() {
         RM_Head::getInstance()->getJS()->add('banner');
         $this->_currentMenuAlias = 'index';

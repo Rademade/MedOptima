@@ -1,21 +1,22 @@
-<div class="contacts">
+<?php
+use Application_Model_Option as Option;
+$howToGet = Application_Model_TextBlock::getByAlias('how-to-get');
+$email = Option::getValueByKey('email');
+?><div class="contacts">
     <div class="main-title">Контактная информация</div>
     <div class="contact-box">
-        <div class="contact-box-phone">(8452) 47-77-88</div>
+        <div class="contact-box-phone"><?=Option::getValueByKey('phone-with-prefix')?></div>
         <div class="contact-box-mail">
-            <a href="mailto:medoptima-s@yandex.ru">medoptima-s@yandex.ru</a>
+            <a href="mailto:<?=$email?>"><?=$email?></a>
         </div>
-        <div class="contact-box-adress">улица Тархова 39, Саратов, Россия, 162539</div>
+        <div class="contact-box-adress"><?=Option::getValueByKey('address')?></div>
     </div>
     <div class="contact-box-sign">
-        <div class="simple-text">
-            <h3> Остановки «6-ой микрорайон»:</h3>
-            <ul>
-                <li>— 8-я маршрутка;</li>
-                <li>— 74-й автобус;</li>
-            </ul>
-            <p>и «ул. Топольчанская» — 53-й автобус.</p>
-        </div>
+        <div class="simple-text"><?
+            if ($howToGet) :
+                echo $howToGet->getText();
+            endif
+        ?></div>
     </div>
     <div class="clear"></div>
 </div>

@@ -1,0 +1,11 @@
+<ul class="header-menu"><?
+    foreach ($this->GetMenu() as $alias => $params) : ?>
+        <li<?if ($alias === $this->currentMenuAlias) : ?>
+            class="current"<?
+        endif
+        ?>>
+            <a href="<?=$params['url']?>
+            "><?=$params['name']?></a>
+        </li><?
+    endforeach
+?></ul>

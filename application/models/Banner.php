@@ -1,14 +1,13 @@
 <?php
+use Application_Model_Quote as Quote;
+
 class Application_Model_Banner
     extends
         RM_Entity
     implements
-        RM_Interface_Contentable,
         RM_Interface_Hideable,
         RM_Interface_Deletable,
         RM_Interface_Sortable {
-
-    use RM_Trait_Content;
 
     const TABLE_NAME = 'banners';
     const CACHE_NAME = 'banners';
@@ -18,7 +17,16 @@ class Application_Model_Banner
             'id' => true,
             'type' => 'int'
         ),
-        'idContent' => array(
+        'idQuote' => array(
+            'type' => 'int'
+        ),
+        'bannerName' => array(
+            'type' => 'string'
+        ),
+        'showOnMain' => array(
+            'type' => 'int'
+        ),
+        'showOnClinic' => array(
             'type' => 'int'
         ),
         'idPhoto' => array(
@@ -48,9 +56,13 @@ class Application_Model_Banner
      */
     private $_photo;
 
+    /**
+     * @var Quote
+     */
+    private $_quote;
+
     public static function create() {
         $banner = new self(new RM_Compositor(array()));
-        $banner->setContentManager(RM_Content::create());
         $banner->setPosition(self::_getMaxPosition());
         return $banner;
     }
@@ -66,10 +78,6 @@ class Application_Model_Banner
 
     public function getId() {
         return $this->_dataWorker->_getKey()->getValue();
-    }
-
-    public function getIdContent() {
-        return $this->_dataWorker->getValue('idContent');
     }
 
     public function setPhoto(RM_Photo $photo) {
@@ -89,8 +97,8 @@ class Application_Model_Banner
     }
 
     public function save() {
-        $this->_dataWorker->setValue('idContent', $this->getContentManager()->save()->getId());
-        $this->_dataWorker->setValue('idPhoto', $this->getPhoto()->save()->getId());
+//        $this->_dataWorker->setValue('idPhoto', $this->getPhoto()->save()->getId());
+        $this->_dataWorker->setValue('idQuote', $this->getQuote() ? $this->getQuote()->getId() : 0);
         $this->_dataWorker->save();
         $this->__refreshCache();
     }
@@ -129,7 +137,6 @@ class Application_Model_Banner
     public function remove() {
         $this->setStatus( self::STATUS_DELETED );
         $this->save();
-        $this->getContentManager()->remove();
         $this->__cleanCache();
     }
 
@@ -141,20 +148,52 @@ class Application_Model_Banner
         return $this->_dataWorker->getValue('bannerPosition');
     }
 
-    public function getQuote() {
-        return $this->getContent()->getQuote();
+    public function getName() {
+        return $this->_dataWorker->getValue('bannerName');
     }
 
-    public function getQuoteAuthor() {
-        return $this->getContent()->getQuoteAuthor();
+    public function setName($name) {
+        $this->_dataWorker->setValue('bannerName', $name);
     }
-    
-    protected function __setIdContent($idContent) {
-        $this->_dataWorker->setValue('idContent', $idContent);
+
+    public function setQuote(Quote $quote) {
+        $this->_photo = $quote;
+        $this->_dataWorker->setValue('idQuote', $quote->getId());
+    }
+
+    public function getQuote() {
+        if (!$this->_quote instanceof Quote) {
+            $this->_quote = Quote::getById( $this->getIdQuote() );
+        }
+        return $this->_quote;
+    }
+
+    public function getIdQuote() {
+        return $this->_dataWorker->getValue('idQuote');
+    }
+
+    public function hasQuote() {
+        return $this->getQuote() != null;
+    }
+
+    public function isShownOnMain() {
+        return $this->_dataWorker->getValue('showOnMain');
+    }
+
+    public function setShownOnMain($val) {
+        $this->_dataWorker->setValue('showOnMain', $val);
+    }
+
+    public function isShownOnClinic() {
+        return $this->_dataWorker->getValue('showOnClinic');
+    }
+
+    public function setShownOnClinic($val) {
+        $this->_dataWorker->setValue('showOnClinic', $val);
     }
 
     private static function _getMaxPosition() {
-        $banner = self::getFirst();
+        $banner = self::getLast();
         return $banner instanceof self ? $banner->getPosition() : 0;
     }
     

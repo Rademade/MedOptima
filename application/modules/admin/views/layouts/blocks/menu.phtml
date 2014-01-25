@@ -68,6 +68,11 @@ if ($this->user instanceof RM_User_Interface) :
             'menu' => 'banners'
         ),
         array(
+            'name' => 'Цитаты',
+            'url' => $this->url(array(), 'admin-quote-list'),
+            'menu' => 'quotes'
+        ),
+        array(
             'name' => 'Отзывы',
             'url' => $this->url(array(), 'admin-feedback-list'),
             'menu' => 'feedbacks'

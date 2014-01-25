@@ -26,7 +26,7 @@ class Admin_BannerController
     public function listAction() {
         parent::listAction();
         $this->view->assign(array(
-            'banners' => Banner::getList()
+            'banners' => (new Application_Model_Banner_Search_Repository())->getAllBanners()
         ));
     }
 
@@ -57,19 +57,28 @@ class Admin_BannerController
                 $this->view->showMessage($e);
             }
         } else {
-            $this->__postContentFields();
             $_POST['id_photo'] = $this->_entity->getIdPhoto();
+            $_POST['name'] = $this->_entity->getName();
+            $_POST['id_quote'] = $this->_entity->getIdQuote();
+            $_POST['show_on_main'] = $this->_entity->isShownOnMain();
+            $_POST['show_on_clinic'] = $this->_entity->isShownOnClinic();
         }
     }
 
     protected function __setData($data) {
         $photo = RM_Photo::getById($data->id_photo);
         if (!$photo instanceof RM_Photo) {
-            throw new Exception('Загрузите фото');
+//            throw new Exception('Загрузите фото');
         } else {
             $this->_entity->setPhoto($photo);
         }
-        $this->__setContentFields();
+        $this->_entity->setName($data->name);
+        $quote = Application_Model_Quote::getById($data->id_quote);
+        if ($quote) {
+            $this->_entity->setQuote($quote);
+        }
+        $this->_entity->setShownOnMain( (bool)$data->show_on_main );
+        $this->_entity->setShownOnClinic( (bool)$data->show_on_clinic );
     }
 
     protected function getListCrumbName() {

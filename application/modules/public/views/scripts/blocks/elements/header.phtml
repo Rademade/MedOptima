@@ -5,23 +5,11 @@
                 <img src="/s/public/images/header-logo.png" alt="Мед Оптима" width="170" height="100"/>
             </div>
         </div>
-        <ul class="header-menu">
-            <li class="current">
-                <a href="#">Главная</a>
-            </li>
-            <li>
-                <a href="#">Клиника</a>
-            </li>
-            <li>
-                <a href="#">Советы</a>
-            </li>
-            <li>
-                <a href="#">Контактная информация</a>
-            </li>
-        </ul>
+        <?=$this->render('blocks/elements/header-parts/menu.phtml')?>
         <div class="contact-info">
             <div class="contact-info-phone-num">
-                <span class="phone-num-value"><span>(8452)</span>44-77-88</span>
+                <span class="phone-num-value"><span><?=$this->phonePrefix
+                        ?></span><?=$this->phoneWithoutPrefix?></span>
             </div>
         </div>
         <div class="clear"></div>

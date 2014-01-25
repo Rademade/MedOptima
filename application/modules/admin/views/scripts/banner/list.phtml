@@ -3,14 +3,15 @@ $table = new RM_View_Table();
 $table
         ->setEditRoute($this->editRoute)
         ->setStatusUrl($this->ajaxUrl)
-        ->setHead('Цитата', 'Автор')
+        ->setHead('Название', 'На главной', 'На странице клиники')
         ->setSortable();
 
 foreach ($this->banners as $banner) :
     /* @var $banner Application_Model_Banner */
     $row = $table
-        ->addRecord($banner->getId(), $this->cutText($banner->getQuote(), 40))
-        ->addTd($banner->getQuoteAuthor())
+        ->addRecord($banner->getId(), $banner->getName())
+        ->addTd($banner->isShownOnMain() ? 'Да' : 'Нет')
+        ->addTd($banner->isShownOnClinic() ? 'Да' : 'Нет')
         ->setStatus($banner->getStatus())
         ->setPosition($banner->getPosition())
         ->setHideble()

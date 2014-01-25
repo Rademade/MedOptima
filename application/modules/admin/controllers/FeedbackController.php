@@ -26,7 +26,7 @@ class Admin_FeedbackController
     public function listAction() {
         parent::listAction();
         $this->view->assign(array(
-            'feedbacks' => Feedback::getList()
+            'feedbacks' => (new Application_Model_Feedback_Search_Repository())->getAll()
         ));
     }
 

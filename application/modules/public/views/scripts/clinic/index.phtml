@@ -40,27 +40,42 @@ $vacancy = Block::getByAlias('opened-vacancies');
                         ));
                     endforeach
                 ?></div>
-                <div class="comment-btn-box" style="display: none">
-                    <a class="button comments-btn" href="#">Напиcать отзыв...</a>
-                    <div class="popup-box up-show">
+                <div class="comment-btn-box">
+                    <span id="form-activate-button" class="button comments-btn">Напиcать отзыв...</span>
+                    <div id="form-container" class="popup-box up-show" style="display: none">
                         <i class="ico popup-tile"></i>
-                        <div class="popup-client-box">
-                            <div class="popup-client-box-item">
-                                <input type="text" placeholder="Имя"/>
+                        <form action="">
+                            <div class="popup-client-box">
+                                <div class="popup-client-box-item">
+                                    <input id="visitor-name" name="visitor-name" data-alias="visitor_name" type="text" placeholder="Имя"/>
+                                </div>
+                                <div class="popup-client-box-item">
+                                    <input id="visitor-phone" name="visitor-phone" data-alias="visitor_phone" type="text" placeholder="Телефон"/>
+                                </div>
+                                <div><textarea id="visitor-feedback" name="visitor-feedback" data-alias="visitor_feedback"></textarea></div>
+                                <div class="popup-client-box-item">
+                                    <input id="form-submit-button" class="button popup-send-btn" type="button" value="Отправить"/>
+                                </div>
                             </div>
-                            <div class="popup-client-box-item">
-                                <input type="text" placeholder="Телефон"/>
-                            </div>
-                            <textarea></textarea>
-                            <div class="popup-client-box-item">
-                                <input class="button popup-send-btn" type="button" value="Записатся"/>
-                            </div>
+                        </form>
+                        <div id="error-box" class="popup-client-box" style="display: none">
+                            <span class="error-message"></span>
+                            <span id="form-try-again-button">Попробовать еще раз</span>
                         </div>
                     </div>
                 </div>
-                <div class="popup-thx">Благодарим вас. <br/> Отзыв будет опубликован через 1—2 дня.</div>
+                <div id="thank-you-box" class="popup-thx" style="display: none">Благодарим вас. <br/> Отзыв будет опубликован через 1—2 дня.</div>
                 <div class="clear"></div>
             </div>
         </div>
     </div>
-</div>
+</div><?
+echo $this->headScript()->captureStart();
+?>$(function() {
+    Med.SimplePopupForm.init('<?=$this->url([], 'post-feedback-ajax')?>', {
+        "name": '#visitor-name',
+        "phone": '#visitor-phone',
+        "text": '#visitor-feedback'
+    });
+});<?
+echo $this->headScript()->captureEnd();

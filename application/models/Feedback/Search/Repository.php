@@ -6,6 +6,7 @@ class Application_Model_Feedback_Search_Repository
     public function getShownFeedbacks() {
         $conditions = $this->__getConditionClass();
         $conditions->onlyShown();
+        $conditions->sortLastAdded();
         return $this->__getEntitySearch($conditions)->getResults();
     }
 
@@ -13,6 +14,13 @@ class Application_Model_Feedback_Search_Repository
         $conditions = $this->__getConditionClass();
         $conditions->onlyShown();
         $conditions->shownOnMain();
+        $conditions->sortLastAdded();
+        return $this->__getEntitySearch($conditions)->getResults();
+    }
+
+    public function getAll() {
+        $conditions = $this->__getConditionClass();
+        $conditions->sortLastAdded();
         return $this->__getEntitySearch($conditions)->getResults();
     }
 

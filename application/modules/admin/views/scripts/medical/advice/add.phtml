@@ -3,8 +3,8 @@ $form = new RM_View_Form();
 $form->getLangPanel()->allLangs();
 
 $form
-    ->add( (new RM_View_Form_Field_Text('Имя посетителя', 'visitor_name', ''))->disable() )
-    ->add( (new RM_View_Form_Field_Text('Email посетителя', 'visitor_email', ''))->disable() )
+    ->add(new RM_View_Form_Field_Text('Имя посетителя', 'visitor_name', ''))
+    ->add(new RM_View_Form_Field_Text('Email посетителя', 'visitor_email', ''))
     ->add(new RM_View_Form_Field_Textarea('Вопрос', 'question', ''))
     ->add(new RM_View_Form_Field_Textarea('Ответ', 'response', ''))
     ->add(new RM_View_Form_Field_Select('Кто ответил', 'id_doctor', array_merge(

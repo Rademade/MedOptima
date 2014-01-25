@@ -27,7 +27,7 @@ class Admin_Medical_AdviceController
     public function listAction() {
         parent::listAction();
         $this->view->assign(array(
-            'medicalAdvices' => Advice::getList()
+            'medicalAdvices' => (new Application_Model_Medical_Advice_Search_Repository())->getAllAdvices()
         ));
     }
 

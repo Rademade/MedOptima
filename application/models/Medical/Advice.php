@@ -145,6 +145,9 @@ class Application_Model_Medical_Advice
     }
 
     public function setVisitorQuestion($question) {
+        if (empty($question)) {
+            throw new Exception('Invalid question');
+        }
         $this->_dataWorker->setValue('visitorQuestion', $question);
     }
 
@@ -158,13 +161,16 @@ class Application_Model_Medical_Advice
     }
 
     public function setVisitorName($name) {
+        if (empty($name)) {
+            throw new Exception('Invalid name');
+        }
         $this->_dataWorker->setValue('visitorName', trim($name));
     }
 
     public function setVisitorEmail($email) {
         $filteredEmail = filter_var($email, FILTER_VALIDATE_EMAIL);
-        if (!($filteredEmail == '' || $filteredEmail)) {
-            throw new Exception('Неверный email');
+        if ( !$filteredEmail ) {
+            throw new Exception('Invalid email');
         }
         $this->_dataWorker->setValue('visitorEmail', $email);
     }

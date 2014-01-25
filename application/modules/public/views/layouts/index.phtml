@@ -13,12 +13,24 @@
         <![endif]-->
     </head>
     <body>
-    <div class="wrapper"><?php
-        echo $this->render('blocks/elements/header.phtml');
-        echo $this->layout()->content;
-        ?><div class="h-footer"></div>
-    </div><?php
-    echo $this->render('blocks/elements/footer.phtml');
-    echo $this->headScript();
-    ?></body>
+        <div class="wrapper"><?
+            echo $this->render('blocks/elements/header.phtml');
+            echo $this->layout()->content;
+            ?><div class="h-footer"></div>
+        </div><?
+        echo $this->render('blocks/elements/footer.phtml');
+        ?><script type="text/javascript" src="<?=$this->url(array(), 'translation')?>"></script>
+        <script type="text/javascript">
+            var config = {
+                "phoneRegex": <?=Zend_Registry::get('cfg')['validation']['regex']['phone']?>,
+                "phoneMask": '<?=Zend_Registry::get('cfg')['validation']['mask']['phone']?>'
+            };
+        </script><?
+        echo $this->headScript();
+        echo $this->render('blocks/loader/ajax.phtml');
+        ?><script type="text/javascript">
+            $(function() {
+                Med.setAjaxLoader('#ajax-loader');
+        });</script>
+    </body>
 </html>

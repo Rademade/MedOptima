@@ -27,7 +27,8 @@ class Application_Model_Feedback
             'type' => 'string'
         ),
         'showOnMain' => array(
-            'type' => 'int'
+            'type' => 'int',
+            'default' => 0
         ),
         'feedbackStatus' => array(
             'type' => 'int',

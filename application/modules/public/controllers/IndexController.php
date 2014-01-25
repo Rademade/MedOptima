@@ -4,6 +4,7 @@ class IndexController
         MedOptima_Controller_Public {
 
     public function indexAction() {
+        RM_Head::getInstance()->getJS()->add('banner');
         $this->_currentMenuAlias = 'index';
         $this->view->assign(array(
             'banners' => (new Application_Model_Banner_Search_Repository())->getShownOnMainBanners(),

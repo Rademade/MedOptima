@@ -76,6 +76,8 @@ class Admin_BannerController
         $quote = Application_Model_Quote::getById($data->id_quote);
         if ($quote) {
             $this->_entity->setQuote($quote);
+        } else {
+            $this->_entity->resetQuote();
         }
         $this->_entity->setShownOnMain( (bool)$data->show_on_main );
         $this->_entity->setShownOnClinic( (bool)$data->show_on_clinic );

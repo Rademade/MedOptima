@@ -1,13 +1,15 @@
-<div class="clinic">
+<?php
+use Application_Model_TextBlock as Block;
+$aboutClinic = Block::getByAlias('about-clinic');
+$vacancy = Block::getByAlias('opened-vacancies');
+?><div class="clinic">
     <div class="fix">
-        <div class="clinic-left-box">
-            <div class="main-title">Клиника</div>
-            <div class="clinic-text-box">
-                В нашей клинике 183 м2 это как две трёхкомнатных квартиры в спальном районе.
-                У каждого врача свой кабинет. Открылись мы в 2011 году, поэтому оборудование новое
-                и современное (Chirana-dental, Kodak-trophy, NSK, VDW, Ems, W&H, Mocom, Euronda).
-            </div>
-            <div class="clinic-quote">
+        <div class="clinic-left-box"><?
+            if ($aboutClinic instanceof Block) : ?>
+                <div class="main-title"><?=$aboutClinic->getName()?></div>
+                <div class="clinic-text-box"><?=$aboutClinic->getText()?></div><?
+            endif
+            ?><div class="clinic-quote">
                 <div class="clinic-quote-text">
                     <i class="ico quote-top-s-ico"></i>
                     <div class="simple-text">
@@ -19,65 +21,22 @@
                 </div>
                 <div class="quote-text-sign">— Илья Сергеевич</div>
             </div>
-        </div>
-        <div class="clinic-right-box">
-            <div class="main-title">Вакансии</div>
-            <div class="clinic-text-box">
-                Врач терапевт. <br/> Напишите нам <a href="#">job@optima.ru</a>
-            </div>
-        </div>
-        <div class="clear"></div>
-        <?=$this->partial('blocks/index/parts/banner.phtml')?>
-        <div class="doctor-box">
-            <div class="doctor-box-item">
-                <div class="doctor-box-item-img">
-                    <img src="/s/public/images/big-doctor-1.png" alt=""/>
-                </div>
-                <div class="doctor-box-item-info">
-                    <div class="doctor-box-item-name">
-                        Павел Дьяченко
-                    </div>
-                    <div class="doctor-box-item-text">
-                        Павел наш ортодонт. Он отвечает за красивую улыбку.
-                        Закончил Саратовский Мед и проходил курс об имлантации
-                        в Израиле.
-                    </div>
-                </div>
-                <div class="clear"></div>
-            </div>
-            <div class="doctor-box-item">
-                <div class="doctor-box-item-img">
-                    <img src="/s/public/images/big-doctor-1.png" alt=""/>
-                </div>
-                <div class="doctor-box-item-info">
-                    <div class="doctor-box-item-name">
-                        Павел Дьяченко
-                    </div>
-                    <div class="doctor-box-item-text">
-                        Павел наш ортодонт. Он отвечает за красивую улыбку.
-                        Закончил Саратовский Мед и проходил курс об имлантации
-                        в Израиле.
-                    </div>
-                </div>
-                <div class="clear"></div>
-            </div>
-            <div class="doctor-box-item">
-                <div class="doctor-box-item-img">
-                    <img src="/s/public/images/big-doctor-1.png" alt=""/>
-                </div>
-                <div class="doctor-box-item-info">
-                    <div class="doctor-box-item-name">
-                        Павел Дьяченко
-                    </div>
-                    <div class="doctor-box-item-text">
-                        Павел наш ортодонт. Он отвечает за красивую улыбку.
-                        Закончил Саратовский Мед и проходил курс об имлантации
-                        в Израиле.
-                    </div>
-                </div>
-                <div class="clear"></div>
-            </div>
-        </div>
+        </div><?
+        if ($vacancy instanceof Block) : ?>
+            <div class="clinic-right-box">
+                <div class="main-title"><?=$vacancy->getName()?></div>
+                <div class="clinic-text-box"><?=$vacancy->getText()?></div>
+            </div><?
+        endif
+        ?><div class="clear"></div>
+        <?=$this->render('blocks/index/parts/banner.phtml')?>
+        <div class="doctor-box"><?
+            foreach ($this->doctors as $doctor) :
+                echo $this->partial('blocks/clinic/doctor.phtml', array(
+                    'doctor' => $doctor
+                ));
+            endforeach
+        ?></div>
         <div class="clinic-comments">
             <div class="fix">
                 <div class="main-title">Отзывы</div>

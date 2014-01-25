@@ -192,6 +192,11 @@ class Application_Model_Banner
         $this->_dataWorker->setValue('showOnClinic', $val);
     }
 
+    public function resetQuote() {
+        $this->_quote = null;
+        $this->_dataWorker->setValue('idQuote', 0);
+    }
+
     private static function _getMaxPosition() {
         $banner = self::getLast();
         return $banner instanceof self ? $banner->getPosition() : 0;

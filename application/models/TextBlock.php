@@ -87,7 +87,7 @@ class Application_Model_TextBlock
     }
 
     public function getText() {
-        return $this->getContent()->getText();
+        return html_entity_decode($this->getContent()->getText());
     }
 
     public function getStatus() {

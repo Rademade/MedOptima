@@ -60,7 +60,6 @@ MedOptima.prototype.SimplePopupForm = function() {
         $activateButton.click(function() {
             if (!$formContainer.is(":visible")) {
                 $formContainer.fadeIn(200);
-                self.resetDisplayState();
             } else {
                 $formContainer.fadeOut(200);
             }
@@ -98,14 +97,17 @@ MedOptima.prototype.SimplePopupForm = function() {
 
     this.showError = function() {
         Med.hideAjaxLoader(_blocks['formContainer']);
+        _blocks['errorBox'].find('.error-message').text(_tr.unknownError);
         _blocks['errorBox'].show();
     };
 
     this.showThank = function() {
         this.clearFields();
         _blocks['formContainer'].fadeOut(200);
-        _buttons['activateButton'].fadeOut(200);
-        _blocks['thankYouBox'].show();
+        _buttons['activateButton'].slideUp();
+        setTimeout(function() {
+            _blocks['thankYouBox'].slideDown()
+        }, 500);
     };
 
     this.clearFields = function() {

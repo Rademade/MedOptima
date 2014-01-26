@@ -19,7 +19,7 @@ $form
         'type' => 'option',
         'url' => $this->url([], 'admin-medical-service-ajax')
     )))
-    ->add(new RM_View_Form_Field_MultiListSelect('График работы', 'schedule', 3, array(
+    ->add(new MedOptima_Admin_View_Form_Field_MultiListSelect('График работы', 'schedule', 3, array(
         MedOptima_Date_Time::getWeekDayNames(),
         $time, $time
     )));

@@ -9,7 +9,7 @@ AdminkaWork.prototype.MultiList = function() {
     this.bindAddButton = function(onAddCallback) {
         this._bindButton('add-one', function() {
             var $listItem = _$multiList.find('.list-item:last').clone();
-            $listItem.find('input').removeClass('hasDatepicker').val('');
+            $listItem.find('input').removeClass('hasDatepicker');
             _$multiList.append($listItem);
             $.isFunction(onAddCallback) ? onAddCallback.apply() : undefined;
         });

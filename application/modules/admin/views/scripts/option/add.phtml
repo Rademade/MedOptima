@@ -1,0 +1,10 @@
+<?php
+$form = new RM_View_Form();
+$form->getLangPanel()->allLangs();
+if ($this->user->getRole()->isProgrammer()) :
+    $form->add(new RM_View_Form_Field_Text('Ключ', 'key', ''));
+endif;
+$form
+    ->add(new RM_View_Form_Field_Text('Название', 'name', array()))
+    ->add(new RM_View_Form_Field_Textarea('Значение', 'value', array()));
+echo $form->render();

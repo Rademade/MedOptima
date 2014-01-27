@@ -1,0 +1,14 @@
+<?php
+$quote = $this->quote;
+if ( $quote instanceof Application_Model_Quote ) : ?>
+    <div class="clinic-quote">
+        <div class="clinic-quote-text">
+            <i class="ico quote-top-s-ico"></i>
+            <div class="simple-text">
+                <p><?=$quote->getText()?></p>
+            </div>
+            <i class="ico quote-bottom-s-ico"></i>
+        </div>
+        <div class="quote-text-sign">— <?=$quote->getAuthor()?></div>
+    </div><?
+endif;

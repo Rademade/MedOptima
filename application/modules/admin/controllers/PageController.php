@@ -1,7 +1,7 @@
 <?php
 class Admin_PageController
     extends
-        Skeleton_Controller_Admin {
+        MedOptima_Controller_Admin {
 
     /**
      * @var Application_Model_TextPage

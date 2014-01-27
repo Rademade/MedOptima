@@ -1,7 +1,7 @@
 <?php
 class Admin_IndexController
     extends
-        Skeleton_Controller_Admin {
+        MedOptima_Controller_Admin {
 
     const INDEX_ROUTE = 'admin-user-index';
 

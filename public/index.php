@@ -28,3 +28,12 @@ $application = new Zend_Application(
 
 $application->bootstrap()
     ->run();
+//
+//$f = Application_Model_Feedback::create();
+//$f->setVisitorName('Ярослав');
+//$f->setVisitorPhone('+79261234567');
+//$f->setContent('Контент отзыва');
+//$f->setDatePosted(date(''));
+//$f->save();
+//
+//var_dump($f->getId());

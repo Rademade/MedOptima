@@ -1,0 +1,98 @@
+html,body {
+    height: 100%;
+    background: #ffffff;
+    font-size: 16px;
+    color: #8d99a6;
+    @include helveticaneuecyrroman();
+}
+
+hr {
+    height: 1px;
+    margin: 0 0 15px 0;
+    background: #ececec;
+    border: none;
+    clear: both;
+}
+
+a {
+    color: #00a3df;
+    font-size: 16px;
+    text-decoration: none;
+    outline: none;
+
+    &:hover {
+        border-bottom: 1px solid #00a3df;
+    }
+
+    &:active {
+
+    }
+
+    &:visited {
+
+    }
+}
+
+::-webkit-input-placeholder {
+}
+
+:-moz-placeholder {
+}
+
+.placeholder {
+}
+
+.fix {
+    width: $main-fix-width;
+    padding: 0 20px;
+    margin: 0 auto;
+}
+
+.clear {
+    display: block;
+    clear: both;
+    float: none !important;
+}
+
+.wrapper {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+}
+
+.fl-l {
+    float: left;
+}
+
+.fl-r {
+    float: right;
+}
+
+.hide {
+    display: none !important;
+}
+
+.ico {
+    display: block;
+    background: url("#{$sprite}") no-repeat;
+    position: absolute;
+}
+
+.main-title {
+    margin-bottom: 25px;
+    font-size: 30px;
+    color: #8d99a6;
+    @include helveticaneuecyrthin();
+}
+
+textarea {
+    width: 310px;
+    height: 195px;
+    margin: 20px 0 0 0;
+    border: 1px solid #b7bfc7;
+    outline: none;
+    padding: 15px;
+    resize: none;
+    background-color: transparent;
+    @include border-radius(6px);
+}

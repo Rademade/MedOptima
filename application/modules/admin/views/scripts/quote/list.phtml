@@ -1,0 +1,17 @@
+<?php
+$table = new RM_View_Table();
+$table
+        ->setEditRoute($this->editRoute)
+        ->setStatusUrl($this->ajaxUrl)
+        ->setHead('Цитата', 'Автор', 'На странице клиники');
+
+foreach ($this->quotes as $quote) :
+    /* @var $quote Application_Model_Quote */
+    $row = $table
+        ->addRecord($quote->getId(), $this->cutText($quote->getText(), 40))
+        ->addTd($quote->getAuthor())
+        ->addTd($quote->isShownOnClinic() ? 'Да' : 'Нет')
+        ->setStatus($quote->getStatus())
+        ->setDeletable();
+endforeach;
+echo $table;

@@ -6,45 +6,28 @@ class Application_Model_Banner_Search_Repository
     /**
      * @return Application_Model_Banner[]
      */
-    public function getAllListBanners() {
+    public function getAllBanners() {
         $conditions = $this->__getConditionClass();
-        $conditions->onlyDisplayed();
         $conditions->sortByPosition();
-        $conditions->setBannerType( Application_Model_Banner::TYPE_LIST );
         return $this->__getEntitySearch($conditions)->getResults();
     }
 
-    public function getFirstBanner(Application_Model_Banner_Area $bannerArea) {
-        $conditions = $this->__getConditionClass();
-        $conditions->sortByPosition();
-        $conditions->setBannerArea($bannerArea);
-        return $this->__getEntitySearch($conditions)->getFirst();
-    }
-
-    public function getFirstShowedBanner(Application_Model_Banner_Area $bannerArea) {
-        $conditions = $this->__getConditionClass();
-        $conditions->sortByPosition();
-        $conditions->setBannerArea($bannerArea);
-        $conditions->onlyDisplayed();
-        return $this->__getEntitySearch($conditions)->getFirst();
-    }
-
-    public function getLastBanners(Application_Model_Banner_Area $bannerArea, RM_Query_Limits $limit) {
-        $conditions = $this->__getConditionClass();
-        $conditions->sortByPosition();
-        $conditions->setBannerArea($bannerArea);
-        return $this->__getEntitySearch($conditions)->getResults($limit);
-    }
-
     /**
-     * @param Application_Model_Banner_Area $bannerArea
      * @return Application_Model_Banner[]
      */
-    public function getShowedBannersOfArea(Application_Model_Banner_Area $bannerArea) {
+    public function getShownOnMainBanners() {
         $conditions = $this->__getConditionClass();
+        $conditions->onlyShown();
         $conditions->sortByPosition();
-        $conditions->setBannerArea($bannerArea);
-        $conditions->onlyDisplayed();
+        $conditions->shownOnMain();
+        return $this->__getEntitySearch($conditions)->getResults();
+    }
+
+    public function getShownOnClinicBanners() {
+        $conditions = $this->__getConditionClass();
+        $conditions->onlyShown();
+        $conditions->sortByPosition();
+        $conditions->shownOnClinic();
         return $this->__getEntitySearch($conditions)->getResults();
     }
 

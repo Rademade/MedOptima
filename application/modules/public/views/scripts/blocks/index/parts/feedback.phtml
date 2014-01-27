@@ -1,0 +1,15 @@
+<?php
+$feedback = $this->feedback;
+if ($feedback instanceof Application_Model_Feedback) : ?>
+    <div class="index-quote">
+        <div class="index-quote-text">
+            <i class="ico quote-top-ico"></i>
+            <div class="simple-text">
+                <p><?=$feedback->getContent()?></p>
+            </div>
+            <i class="ico quote-bottom-ico"></i>
+        </div>
+        <div class="quote-text-sign">— <?=$feedback->getVisitorName()?></div>
+        <div class="clear"></div>
+    </div><?
+endif;

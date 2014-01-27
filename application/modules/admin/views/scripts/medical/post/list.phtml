@@ -1,0 +1,16 @@
+<?php
+$table = new RM_View_Table();
+
+$table
+    ->setEditRoute($this->editRoute)
+    ->setStatusUrl($this->ajaxUrl)
+    ->setHead('Название должности');
+
+foreach ($this->medicalPosts as $post) :
+    /** @var Application_Model_Medical_Post $post */
+    $row = $table
+        ->addRecord($post->getId(), $post->getName())
+        ->setDeletable();
+endforeach;
+
+echo $table;

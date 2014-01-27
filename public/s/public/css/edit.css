@@ -1,0 +1,14 @@
+.error-message {
+    color: white;
+}
+.success .error-message {
+    display: none;
+}
+
+.error .error-message {
+    display: block;
+}
+#ajax-loader {
+    background: url('/s/public/images/loader.gif') 50% 50% no-repeat;
+    min-height: inherit;
+}

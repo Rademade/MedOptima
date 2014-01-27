@@ -1,0 +1,45 @@
+.header {
+    min-width: $main-fix-width;
+    height: 65px;
+    background-color: #00a3df;
+}
+
+.header-menu {
+    float: left;
+    padding-top: 25px;
+
+    li {
+        float: left;
+        margin-right: 30px;
+
+        &.current {
+            a {
+                @include helveticaneuecyrroman();
+                border-bottom: 3px solid #ffffff;
+            }
+        }
+
+        a {
+            padding-bottom: 3px;
+            color: #fff;
+        }
+    }
+}
+
+.header-contact-info-appointments {
+    float: right;
+    padding-top: 7px;
+}
+
+.header-appointments-link {
+    display: block;
+    position: relative;
+    width: 13px;
+    height: 13px;
+
+    .appointments-ico {
+        width: 13px;
+        height: 13px;
+        background-position: 0 0;
+    }
+}

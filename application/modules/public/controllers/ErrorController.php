@@ -1,7 +1,7 @@
 <?php
 class ErrorController
     extends
-        Skeleton_Controller_Public {
+        MedOptima_Controller_Public {
 
     public function errorAction() {
         $errors = $this->_getParam('error_handler');

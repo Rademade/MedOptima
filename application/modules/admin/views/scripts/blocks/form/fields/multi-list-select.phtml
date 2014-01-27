@@ -1,0 +1,56 @@
+<?php
+$name = $this->name;
+$selectCount = $this->selectCount;
+$selectData = $this->selectData;
+if ( empty($selectData) ) {
+    $selectData = array_fill(0, $selectCount, array(0));
+}
+
+if ( isset($_POST[$name]) && sizeof($_POST[$name])) {
+    $values = $_POST[$name];
+} else {
+    $values = array();
+    $values['key'] = array(array_keys($selectData[0])[0]);
+    foreach (range(1, $selectCount - 1) as $i) {
+        $values["value$i"] = array(array_keys($selectData[$i])[0]);
+    }
+}
+
+$rows = array();
+foreach ($values['key'] as $rowIndex => $keyValue) {
+    $rowValues = array($keyValue);
+    foreach (range(1, sizeof($values) - 1) as $i) {
+        $rowValues[] = $values["value$i"][$rowIndex];
+    }
+    $rows[$rowIndex] = $rowValues;
+}
+
+$onlyOne = sizeof($rows) == 1;
+?><div id="multi_list_<?= $name ?>" class="multi-list-item-container"><?
+foreach ($rows as $rowValues) : ?>
+    <div class="list-item"><?
+        foreach ($rowValues as $selectIndex => $selectedValue) :
+            echo $this->partial('blocks/form/fields/multi-list-select-item.phtml', array(
+                'inputName' => $name . ($selectIndex ? "[value$selectIndex][]" : '[key][]'),
+                'selectedName' => $selectData[$selectIndex][$selectedValue],
+                'selectedValue' => $selectedValue,
+                'data' => $selectData[$selectIndex]
+            ));
+        endforeach;
+        ?><button class="add-one" title="Добавить ещё"></button>
+        <button class="del-one"<?
+            if ($onlyOne) : ?>
+                style="display: none;"<?
+            endif;
+        ?>title="Удалить"></button>
+    </div><?
+endforeach;
+?></div><?
+$this->HeadScript()->captureStart();
+?>$(function() {
+    $('.select').rmSelect();
+    Adminka.MultiList.init($('#multi_list_<?= $name ?>'), function() {
+        $('.select').rmSelect();
+    });
+});<?
+$this->HeadScript()->captureEnd();

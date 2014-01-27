@@ -1,0 +1,16 @@
+<?php
+$table = new RM_View_Table();
+
+$table
+    ->setEditRoute($this->editRoute)
+    ->setStatusUrl($this->ajaxUrl)
+    ->setHead('Название услуги');
+
+foreach ($this->medicalServices as $service) :
+    /** @var Application_Model_Medical_Service $service */
+    $row = $table
+        ->addRecord($service->getId(), $service->getName())
+        ->setDeletable();
+endforeach;
+
+echo $table;

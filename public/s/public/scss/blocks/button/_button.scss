@@ -1,0 +1,52 @@
+button::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+
+button {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.button {
+    cursor: pointer;
+    width: 340px;
+    padding: 6px 0;
+    font-size: 16px;
+    outline: none;
+}
+
+.popup-send-btn {
+    color: #fff;
+    border: 1px solid rgba(255,255,255,.7);
+    background-color: transparent;
+    @include border-radius(7px);
+
+    &:hover {
+        color: #8d99a6;
+        background-color: #fff;
+    }
+
+    &:active {
+        color: #fff;
+        background-color: transparent;
+    }
+}
+
+.comments-btn {
+    display: block;
+    text-align: center;
+    color: #00a3df;
+    padding: 9px 0 8px 0;
+    border: 1px solid #00a3df;
+    @include border-radius(7px);
+
+    &.clicked {
+        color: #fff;
+        background-color: #00a3df;
+    }
+}

@@ -13,7 +13,24 @@
         <![endif]-->
     </head>
     <body>
-        <h1>Index layout</h1><?php
+        <div class="wrapper"><?
+            echo $this->render('blocks/elements/header.phtml');
+            echo $this->layout()->content;
+            ?><div class="h-footer"></div>
+        </div><?
+        echo $this->render('blocks/elements/footer.phtml');
+        ?><script type="text/javascript" src="<?=$this->url(array(), 'translation')?>"></script>
+        <script type="text/javascript">
+            var config = {
+                "phoneRegex": <?=Zend_Registry::get('cfg')['validation']['regex']['phone']?>,
+                "phoneMask": '<?=Zend_Registry::get('cfg')['validation']['mask']['phone']?>'
+            };
+        </script><?
         echo $this->headScript();
-    ?></body>
+        echo $this->render('blocks/loader/ajax.phtml');
+        ?><script type="text/javascript">
+            $(function() {
+                Med.setAjaxLoader('#ajax-loader');
+        });</script>
+    </body>
 </html>

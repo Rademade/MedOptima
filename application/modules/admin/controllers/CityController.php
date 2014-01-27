@@ -1,7 +1,7 @@
 <?php
 class Admin_CityController
     extends
-        Skeleton_Controller_Admin {
+        MedOptima_Controller_Admin {
 
     /**
      * @var Application_Model_City

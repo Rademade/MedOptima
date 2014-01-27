@@ -1,0 +1,9 @@
+<?php
+$form = new RM_View_Form();
+$form->getLangPanel()->allLangs();
+$form
+    ->add(new RM_View_Form_Field_Text('Цитата', 'quote', []))
+    ->add(new RM_View_Form_Field_Text('Автор', 'quoteAuthor', []))
+    ->add(new RM_View_Form_Field_Text('Должность', 'quoteAuthorPost', []))
+    ->add(new RM_View_Form_Field_Checkbox('Отображать на странице клиники', 'show_on_clinic', false));
+echo $form->render();

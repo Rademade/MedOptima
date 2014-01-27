@@ -1,0 +1,12 @@
+<?php
+$table = new RM_View_Table();
+$table
+    ->setEditRoute($this->editRoute)
+    ->setHead('Название', 'Значение');
+foreach ($this->options as $option) :
+    /* @var Application_Model_Option $option */
+    $table
+        ->addRecord($option->getId(), $option->getContent()->getName())
+        ->addTd($option->getValue());
+endforeach;
+echo $table;

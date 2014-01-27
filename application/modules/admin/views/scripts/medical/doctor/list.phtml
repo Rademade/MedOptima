@@ -1,0 +1,21 @@
+<?php
+$table = new RM_View_Table();
+
+$table
+    ->setEditRoute($this->editRoute)
+    ->setStatusUrl($this->ajaxUrl)
+    ->setHead('Фамилия', 'Имя', 'Должность');
+
+foreach ($this->medicalDoctors as $doctor) :
+    /** @var Application_Model_Medical_Doctor $doctor */
+    $doctorFormatter = $this->DoctorFormatter($doctor);
+    $row = $table
+        ->addRecord($doctor->getId(), $doctor->getSecondName())
+        ->addTd($doctor->getFirstName())
+        ->addTd($doctorFormatter->getFormattedPosts())
+        ->setStatus($doctor->getStatus())
+        ->setHideble()
+        ->setDeletable();
+endforeach;
+
+echo $table;

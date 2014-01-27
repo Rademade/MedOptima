@@ -3,65 +3,84 @@ if ($this->user instanceof RM_User_Interface) :
     $menuHelper = new RM_View_Helper_Menu();
     echo $menuHelper->getMenuHTML($this->user, $this->menu, array(
         array(
-            'name' => 'Города',
-            'url' => $this->url(array(), 'admin-city-list'),
-            'menu' => 'cities'
+            'name' => 'Медицинские услуги',
+            'url' => $this->url(array(), 'admin-medical-service-list'),
+            'menu' => 'medical-services'
         ),
         array(
-            'name' => 'Статические страницы',
-            'subItems' => array(
-                array(
-                    'name' => 'Новости',
-                    'url' => $this->url(array(), 'admin-news-list'),
-                    'menu' => 'news'
-                ),
-                array(
-                    'name' => 'Текстовые страницы',
-                    'url' => $this->url(array(), 'admin-page-list'),
-                    'menu' => 'pages'
-                ),
-                array(
-                    'name' => 'Авторы',
-                    'url' => $this->url(array(), 'admin-author-list'),
-                    'menu' => 'authors'
-                )
-            )
+            'name' => 'Медицинские должности',
+            'url' => $this->url(array(), 'admin-medical-post-list'),
+            'menu' => 'medical-posts'
         ),
         array(
-            'name' => 'Опции страниц',
-            'subItems' => array(
-                array(
-                    'name' => 'Теги',
-                    'url' => $this->url(array(), 'admin-tag-list'),
-                    'menu' => 'tags'
-                )
-            )
+            'name' => 'Медицинские советы',
+            'url' => $this->url(array(), 'admin-medical-advice-list'),
+            'menu' => 'medical-advices'
         ),
         array(
-            'name' => 'Статические блоки',
-            'subItems' => array(
-                array(
-                    'name' => 'Блоки',
-                    'url' => $this->url(array(
-                                'idPage' => 0,
-                                'type' => RM_Block::TYPE_SIMPLE_NAME,
-                                'page' => 1,
-                                'searchType' => RM_Block::SEARCH_TYPE_BLOCK,
-                                'textType' => RM_Content_Field_Process::PROCESS_TYPE_HTML
-                            ), 'admin-block-list'),
-                    'menu' => 'blocks'
-                )
-            )
+            'name' => 'Специалисты',
+            'url' => $this->url(array(), 'admin-medical-doctor-list'),
+            'menu' => 'medical-doctors'
+        ),
+//        array(
+//            'name' => 'Города',
+//            'url' => $this->url(array(), 'admin-city-list'),
+//            'menu' => 'cities'
+//        ),
+//        array(
+//            'name' => 'Статические страницы',
+//            'subItems' => array(
+//                array(
+//                    'name' => 'Новости',
+//                    'url' => $this->url(array(), 'admin-news-list'),
+//                    'menu' => 'news'
+//                ),
+//                array(
+//                    'name' => 'Текстовые страницы',
+//                    'url' => $this->url(array(), 'admin-page-list'),
+//                    'menu' => 'pages'
+//                ),
+//                array(
+//                    'name' => 'Авторы',
+//                    'url' => $this->url(array(), 'admin-author-list'),
+//                    'menu' => 'authors'
+//                )
+//            )
+//        ),
+//        array(
+//            'name' => 'Опции страниц',
+//            'subItems' => array(
+//                array(
+//                    'name' => 'Теги',
+//                    'url' => $this->url(array(), 'admin-tag-list'),
+//                    'menu' => 'tags'
+//                )
+//            )
+//        ),
+        array(
+            'name' => 'Текстовые блоки',
+            'url' => $this->url(array(), 'admin-text-block-list'),
+            'menu' => 'blocks'
         ),
         array(
             'name' => 'Баннеры',
-            'url' => $this->url(array(), 'admin-banner-area-list'),
-            'menu' => 'bannerAreas'
+            'url' => $this->url(array(), 'admin-banner-list'),
+            'menu' => 'banners'
         ),
         array(
-            'name' => 'Комментарии',
-            'url' => $this->url(array(), 'admin-comment-list'),
-            'menu' => 'comments'
+            'name' => 'Цитаты',
+            'url' => $this->url(array(), 'admin-quote-list'),
+            'menu' => 'quotes'
+        ),
+        array(
+            'name' => 'Отзывы',
+            'url' => $this->url(array(), 'admin-feedback-list'),
+            'menu' => 'feedbacks'
+        ),
+        array(
+            'name' => 'Опции',
+            'url' => $this->url(array(), 'admin-option-list'),
+            'menu' => 'options'
         ),
         array(
             'name' => 'Пользователи',
@@ -74,7 +93,7 @@ if ($this->user instanceof RM_User_Interface) :
             'menu' => 'lang'
         ),
         array(
-            'name' => 'Найстройки',
+            'name' => 'Настройки',
             'url' => $this->url(array(), 'admin-settings-list'),
             'menu' => 'settings'
         ),

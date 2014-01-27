@@ -1,0 +1,22 @@
+<?php
+use Application_Model_Option as Option;
+$howToGet = Application_Model_TextBlock::getByAlias('how-to-get');
+$email = Option::getValueByKey('email');
+?><div class="contacts">
+    <div class="main-title">Контактная информация</div>
+    <div class="contact-box">
+        <div class="contact-box-phone"><?=Option::getValueByKey('phone-with-prefix')?></div>
+        <div class="contact-box-mail">
+            <a href="mailto:<?=$email?>"><?=$email?></a>
+        </div>
+        <div class="contact-box-adress"><?=Option::getValueByKey('address')?></div>
+    </div>
+    <div class="contact-box-sign">
+        <div class="simple-text"><?
+            if ($howToGet) :
+                echo $howToGet->getText();
+            endif
+        ?></div>
+    </div>
+    <div class="clear"></div>
+</div>

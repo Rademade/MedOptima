@@ -1,0 +1,16 @@
+input[type="submit"]::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+
+input[type="password"],
+input[type="text"] {
+    width: 100%;
+    font-size: 30px;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+    @include helveticaneuecyrthin();
+}

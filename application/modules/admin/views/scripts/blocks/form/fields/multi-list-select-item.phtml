@@ -1,0 +1,12 @@
+<div class="select">
+    <a href="javascript:void(0);" class="selectedLi"><?=$this->selectedName?></a><span class="selectUlMarker"><i></i></span>
+    <div class="clear"></div>
+    <ul class="selectUl selectMonthUl"><?
+        foreach ($this->data as $value => $name):
+            ?><li><?
+                ?><a data-val="<?=$value?>" href="javascript:void(0);"><?=$name?></a><?
+            ?></li><?
+        endforeach;
+    ?></ul>
+    <input type="hidden" name="<?=$this->inputName?>" value="<?=$this->selectedValue?>"/>
+</div>

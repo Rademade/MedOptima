@@ -4,16 +4,16 @@ MedOptima.prototype.SimplePopupForm = function() {
 
     var _ajaxUrl;
 
-    var _blocks = {};
+    var _$blocks = {};
     var _fields = {};
-    var _buttons = {};
+    var _$buttons = {};
 
     this.setAjaxUrl = function(ajaxUrl) {
         _ajaxUrl = ajaxUrl;
     };
 
     this.setBlocks = function(blocks) {
-        _blocks = blocks;
+        _$blocks = blocks;
     };
 
     this.setFields = function(fields) {
@@ -21,7 +21,7 @@ MedOptima.prototype.SimplePopupForm = function() {
     };
 
     this.setButtons = function(buttons) {
-        _buttons = buttons;
+        _$buttons = buttons;
         _.each(buttons, function($button, buttonName) {
             var method = ['bind', Med.capitilizeFirst(buttonName)].join('');
             self[method]($button);
@@ -44,12 +44,12 @@ MedOptima.prototype.SimplePopupForm = function() {
                 validator[method]($field.attr('id'));
             }
         });
-        _blocks['form'].validate(validate);
+        _$blocks.form.validate(validate);
     };
 
     this.bindActivateButton = function() {
-        var $activateButton = _buttons['activateButton'];
-        var $formContainer = _blocks['formContainer'];
+        var $activateButton = _$buttons.activateButton;
+        var $formContainer = _$blocks.formContainer;
         $(document).mouseup(function(e) {
             if (!$formContainer.is(e.target)
                 && $formContainer.has(e.target).length === 0
@@ -67,20 +67,20 @@ MedOptima.prototype.SimplePopupForm = function() {
     };
 
     this.bindSubmitButton = function() {
-        _buttons['submitButton'].click(function() {
-            _blocks['form'].submit();
+        _$buttons.submitButton.click(function() {
+            _$blocks.form.submit();
         });
     };
 
     this.bindTryAgainButton = function() {
-        _buttons['tryAgainButton'].click(function() {
+        _$buttons.tryAgainButton.click(function() {
             self.resetDisplayState();
         });
     };
 
     this.submitForm = function() {
-        _blocks['form'].hide();
-        Med.showAjaxLoader(_blocks['formContainer']);
+        _$blocks.form.hide();
+        Med.showAjaxLoader(_$blocks.formContainer);
         $.ajax({
             url : _ajaxUrl,
             dataType : 'json',
@@ -96,17 +96,17 @@ MedOptima.prototype.SimplePopupForm = function() {
     };
 
     this.showError = function() {
-        Med.hideAjaxLoader(_blocks['formContainer']);
-        _blocks['errorBox'].find('.error-message').text(_tr.unknownError);
-        _blocks['errorBox'].show();
+        Med.hideAjaxLoader(_$blocks.formContainer);
+        _$blocks.errorBox.find('.error-message').text(_tr.unknownError);
+        _$blocks.errorBox.show();
     };
 
     this.showThank = function() {
         this.clearFields();
-        _blocks['formContainer'].fadeOut(200);
-        _buttons['activateButton'].slideUp();
+        _$blocks.errorBox.fadeOut(200);
+        _$buttons.activateButton.slideUp();
         setTimeout(function() {
-            _blocks['thankYouBox'].slideDown()
+            _$blocks.thankYouBox.slideDown()
         }, 500);
     };
 
@@ -129,11 +129,11 @@ MedOptima.prototype.SimplePopupForm = function() {
     };
 
     this.resetDisplayState = function() {
-        _blocks['thankYouBox'].hide();
-        _blocks['errorBox'].hide();
-        Med.hideAjaxLoader(_blocks['formContainer']);
-        _blocks['form'].show();
-        _blocks['formContainer'].show();
+        _$blocks.thankYouBox.hide();
+        _$blocks.errorBox.hide();
+        Med.hideAjaxLoader( _$blocks.formContainer );
+        _$blocks.form.show();
+        _$blocks.formContainer.show();
     };
 
 };
@@ -145,18 +145,18 @@ MedOptima.prototype.SimplePopupForm.init = function(ajaxUrl, fieldSelectors) {
     var $form = $formContainer.find('form');
     var $errorBox = $formContainer.find('#error-box');
 
-    var blocks = {
-        "formContainer": $formContainer,
-        "form": $form,
-        "errorBox": $errorBox,
-        "thankYouBox": $('#thank-you-box')
-    };
     var fields = {};
     _.each(fieldSelectors, function(fieldSelector, fieldName) {
         fields[fieldName] = $form.find(fieldSelector);
     });
+
     form.setAjaxUrl(ajaxUrl);
-    form.setBlocks(blocks);
+    form.setBlocks({
+        "formContainer": $formContainer,
+        "form": $form,
+        "errorBox": $errorBox,
+        "thankYouBox": $('#thank-you-box')
+    });
     form.setFields(fields);
     form.setButtons({
         "submitButton": $form.find('#form-submit-button'),

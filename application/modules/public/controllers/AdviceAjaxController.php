@@ -16,7 +16,9 @@ class AdviceAjaxController
                 $advice->setStatus(Application_Model_Medical_Advice::STATUS_HIDE);
                 $advice->save();
                 $this->_result->status = 1;
-            } catch (Exception $e) {}
+            } catch (Exception $e) {
+                RM_Error::addLogRow('Advice request', $e);
+            }
         }
     }
 

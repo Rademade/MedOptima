@@ -17,7 +17,9 @@ class ClinicAjaxController
                 $feedback->setStatus(Application_Model_Feedback::STATUS_HIDE);
                 $feedback->save();
                 $this->_result->status = 1;
-            } catch (Exception $e) {}
+            } catch (Exception $e) {
+                RM_Error::addLogRow('Clinic request', $e);
+            }
         }
     }
 

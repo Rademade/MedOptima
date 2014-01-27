@@ -10,8 +10,7 @@ class ErrorController
             die();
         }
         RM_Error::addLogRow('Critical', $errors);
-//        $this->view->layout()->setLayout('not-found');
-        $this->view->headTitle()->prepend($this->view->translate->_('Ошибка 404'));
+        $this->view->headTitle()->prepend('Ошибка 404');
     }
 
 }

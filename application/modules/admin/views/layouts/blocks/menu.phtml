@@ -15,7 +15,8 @@ if ($this->user instanceof RM_User_Interface) :
         array(
             'name' => 'Медицинские советы',
             'url' => $this->url(array(), 'admin-medical-advice-list'),
-            'menu' => 'medical-advices'
+            'menu' => 'medical-advices',
+            'count' => (new Application_Model_Medical_Advice_Search())->getNotProcessedCount()
         ),
         array(
             'name' => 'Специалисты',
@@ -75,7 +76,8 @@ if ($this->user instanceof RM_User_Interface) :
         array(
             'name' => 'Отзывы',
             'url' => $this->url(array(), 'admin-feedback-list'),
-            'menu' => 'feedbacks'
+            'menu' => 'feedbacks',
+            'count' => (new Application_Model_Feedback_Search())->getNotProcessedCount()
         ),
         array(
             'name' => 'Опции',

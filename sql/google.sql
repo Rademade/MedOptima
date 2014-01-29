@@ -1,0 +1,2 @@
+INSERT INTO routing (idRoute, type, name, module, controller, action, url, defaultParams, routeStatus) VALUES
+(150, 1, 'admin-link-google-account', 'admin', 'google-account', 'link', '/admin/google/link', '{}', 1);

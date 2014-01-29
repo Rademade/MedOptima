@@ -27,6 +27,12 @@ class Application_Model_Medical_Doctor
         'idPost' => array(
             'type' => 'int'
         ),
+        'googleAccessToken' => array(
+            'type' => 'string'
+        ),
+        'googleAccessTokenExpireTime' => array(
+            'type' => 'int'
+        ),
         'doctorStatus' => array(
             'type' => 'int',
             'default' => self::STATUS_UNDELETED
@@ -211,6 +217,22 @@ class Application_Model_Medical_Doctor
             $this->_schedule = new Application_Model_Medical_Doctor_Schedule($this);
         }
         return $this->_schedule;
+    }
+
+    public function setGoogleAccessToken($token) {
+        $this->_dataWorker->setValue('googleAccessToken', $token);
+    }
+
+    public function getGoogleAccessToken() {
+        return $this->_dataWorker->getValue('googleAccessToken');
+    }
+
+    public function setGoogleAccessTokenExpireTime($timeLeft) {
+        $this->_dataWorker->setValue('googleAccessTokenExpireTime', $timeLeft);
+    }
+
+    public function getGoogleAccessTokenExpireTime() {
+        return $this->_dataWorker->getValue('googleAccessTokenExpireTime');
     }
 
     protected function __setIdContent($idContent) {

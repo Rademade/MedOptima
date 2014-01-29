@@ -17,3 +17,10 @@ CREATE TABLE IF NOT EXISTS `medicalDoctors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 ALTER TABLE  `medicalDoctors` DROP  `isHead` ;
+
+
+-- 29.01.14
+
+ALTER TABLE  `medicalDoctors` CHANGE  `googleAccessTokenTimeLeft`  `googleAccessTokenExpireTime` INT( 11 ) NOT NULL ;
+
+ALTER TABLE  `medicalDoctors` CHANGE  `googleAccessToken`  `googleAccessToken` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ;

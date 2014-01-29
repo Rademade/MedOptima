@@ -21,6 +21,10 @@ ALTER TABLE  `medicalDoctors` DROP  `isHead` ;
 
 -- 29.01.14
 
+ALTER TABLE  `medicalDoctors` ADD  `googleAccessToken` VARCHAR( 255 ) NOT NULL AFTER  `idPost` ;
+
+ALTER TABLE  `medicalDoctors` ADD  `googleAccessTokenTimeLeft` INT NOT NULL AFTER  `googleAccessToken` ;
+
 ALTER TABLE  `medicalDoctors` CHANGE  `googleAccessTokenTimeLeft`  `googleAccessTokenExpireTime` INT( 11 ) NOT NULL ;
 
 ALTER TABLE  `medicalDoctors` CHANGE  `googleAccessToken`  `googleAccessToken` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ;

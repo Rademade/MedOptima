@@ -14,24 +14,32 @@ class MedOptima_Service_Google_Config {
      */
     private static $_calendarClient;
 
-    public static function getBaseClient() {
+    public static function getBaseClient($state = null) {
         if ( !self::$_baseClient ) {
-            self::$_baseClient = new Google_Client();
-            self::$_baseClient->setApplicationName("Google Calendar PHP Starter Application");
-            self::$_baseClient->setClientId('690299764059-853hndabc13tt5l8jqg4ib9u3iaq9his.apps.googleusercontent.com');
-            self::$_baseClient->setClientSecret('cDDaFBWA2xPFD3_K1dcpAcoE');
+            $client = new Google_Client();
+            $client->setApplicationName("Google Calendar PHP Starter Application");
+            $client->setClientId('690299764059-853hndabc13tt5l8jqg4ib9u3iaq9his.apps.googleusercontent.com');
+            $client->setClientSecret('cDDaFBWA2xPFD3_K1dcpAcoE');
             $cfg = Zend_Registry::get('cfg');
             $view = Zend_Layout::getMvcInstance()->getView();
-            self::$_baseClient->setRedirectUri($cfg['fullDomain'] . $view->url([], 'admin-link-google-account'));
-            self::$_baseClient->setAccessType('offline');
+            $client->setRedirectUri($cfg['fullDomain'] . $view->url([], 'admin-link-google-account'));
+            $client->setAccessType('offline');
+            $client->setUseObjects(true);
+            if ( !is_null($state) ) {
+                $client->setState( $state );
+            }
+            self::$_baseClient = $client;
         }
         return self::$_baseClient;
     }
 
-    public static function getCalendarClient() {
+    public static function getCalendarClient($state = null) {
         if ( !self::$_calendarClient ) {
-            self::$_calendarClient = clone self::getBaseClient();
-            new Google_CalendarService(self::$_calendarClient);
+            $client  = clone self::getBaseClient($state);
+            $client->setScopes(array(
+                'https://www.googleapis.com/auth/calendar'
+            ));
+            self::$_calendarClient = $client;
         }
         return self::$_calendarClient;
     }

@@ -61,6 +61,9 @@ class Admin_Medical_DoctorController
             }
         } else {
             $this->__postFields();
+            $this->view->assign(array(
+                'doctor' => $this->_entity
+            ));
         }
     }
 
@@ -86,6 +89,7 @@ class Admin_Medical_DoctorController
             return $service->getId();
         }, $this->_entity->getServices());
         $_POST['schedule'] = $this->_entity->getSchedule()->toArray();
+        $_POST['id_user'] = $this->_entity->getIdUser();
     }
 
     protected function __setData(stdClass $data) {
@@ -116,6 +120,12 @@ class Admin_Medical_DoctorController
         }
         $schedule = $this->_entity->getSchedule();
         $schedule->reset()->addWorkTimeListFromData($data->schedule)->save();
+        $user = Application_Model_User_Profile::getById($data->id_user);
+        if ( $user instanceof Application_Model_User_Profile ) {
+            $this->_entity->setUser($user);
+        } else {
+            $this->_entity->resetUser();
+        }
     }
 
 }

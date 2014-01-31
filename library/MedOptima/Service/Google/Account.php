@@ -3,28 +3,32 @@ require_once LIBRARY_PATH . '/GoogleAPI/src/Google_Client.php';
 require_once LIBRARY_PATH . '/GoogleAPI/src/contrib/Google_CalendarService.php';
 
 use Application_Model_Medical_Doctor as Doctor;
+use Application_Model_Api_Google_AccessToken as AccessToken;
 
 class MedOptima_Service_Google_Account {
 
+    /**
+     * @var Zend_Controller_Request_Http
+     */
+    private $_request;
+
+    public function __construct(Zend_Controller_Request_Http $request) {
+        $this->_request = $request;
+        return $this;
+    }
+    
     public function linkDoctorAccount(Doctor $doctor) {
-        if ( isset($_GET['logout']) ) {
-            $doctor->setGoogleAccessToken(null);
-            $doctor->setGoogleAccessTokenExpireTime(0);
-            $doctor->save();
+        $token = AccessToken::getByDoctor($doctor);
+        if ( !$token instanceof AccessToken ) {
+            $token = AccessToken::create();
+            $token->setDoctor($doctor);
         }
         $client = MedOptima_Service_Google_Config::getCalendarClient();
-        if ( isset($_GET['code']) ) {
-            $client->authenticate( $_GET['code'] );
-            $token = new MedOptima_Service_Google_AccessToken($client->getAccessToken());
-            if ( $token->isValid() ) {
-                $doctor->setGoogleAccessToken( $token->getJsonEncodedData() );
-                $doctor->setGoogleAccessTokenExpireTime( $token->getExpireTime() );
-                $doctor->save();
-                header('Location: http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']);
-            } else {
-                return false;
-            }
+        if ( $this->_request->getParam('code') ) {
+            $client->authenticate( $this->_request->getParam('code') );
+            (new MedOptima_Service_Google_AccessToken_Initializer)->updateFromEncodedData($token, $client->getAccessToken());
         }
+        $token->save();
         return true;
     }
 

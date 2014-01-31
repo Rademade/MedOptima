@@ -1,4 +1,6 @@
 <?php
+use Application_Model_User_Profile as User;
+
 class Application_Model_Medical_Doctor
     extends
         RM_Entity
@@ -18,6 +20,9 @@ class Application_Model_Medical_Doctor
             'id' => true,
             'type' => 'int'
         ),
+        'idUser' => array(
+            'type' => 'int'
+        ),
         'idContent' => array(
             'type' => 'int'
         ),
@@ -25,12 +30,6 @@ class Application_Model_Medical_Doctor
             'type' => 'int'
         ),
         'idPost' => array(
-            'type' => 'int'
-        ),
-        'googleAccessToken' => array(
-            'type' => 'string'
-        ),
-        'googleAccessTokenExpireTime' => array(
             'type' => 'int'
         ),
         'doctorStatus' => array(
@@ -68,6 +67,11 @@ class Application_Model_Medical_Doctor
      * @var Application_Model_Medical_Doctor_Schedule
      */
     private $_schedule;
+
+    /**
+     * @var User
+     */
+    private $_user;
 
     public function __construct(stdClass $data) {
         $this->_dataWorker = new RM_Entity_Worker_Data(get_class(), $data);
@@ -219,20 +223,29 @@ class Application_Model_Medical_Doctor
         return $this->_schedule;
     }
 
-    public function setGoogleAccessToken($token) {
-        $this->_dataWorker->setValue('googleAccessToken', $token);
+    public function getIdUser() {
+        return $this->_dataWorker->getValue('idUser');
     }
 
-    public function getGoogleAccessToken() {
-        return $this->_dataWorker->getValue('googleAccessToken');
+    public function getUser() {
+        if (!$this->_user && $this->getIdUser()) {
+            $this->_user = User::getById($this->getIdUser());
+        }
+        return $this->_user;
     }
 
-    public function setGoogleAccessTokenExpireTime($timeLeft) {
-        $this->_dataWorker->setValue('googleAccessTokenExpireTime', $timeLeft);
+    public function setUser(User $user) {
+        $this->_user = $user;
+        $this->__setIdUser($user->getId());
     }
 
-    public function getGoogleAccessTokenExpireTime() {
-        return $this->_dataWorker->getValue('googleAccessTokenExpireTime');
+    public function resetUser() {
+        $this->_user = null;
+        $this->__setIdUser(0);
+    }
+
+    protected function __setIdUser($id) {
+        $this->_dataWorker->setValue('idUser', $id);
     }
 
     protected function __setIdContent($idContent) {

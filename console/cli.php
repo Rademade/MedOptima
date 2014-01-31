@@ -1,14 +1,15 @@
 <?php
 require_once 'define.php';
+use Application_Model_Api_Google_AccessToken as AccessToken;
+use Application_Model_Medical_Reservation as Reservation;
+
 try {
     $opts = new Zend_Console_Getopt(
       	array(
             'help' => 'Displays usage information',
-            'menus' => 'Create restaurant menus',
-            'stats' => 'Update all restaurant statistics',
-            'rename_menu' => 'Rename all restaurant menu files',
-            'resave_vacancies' => 'Resave vacancies',
-            'sitemap' => 'Generate sitemap'
+            'refresh_tokens' => 'Refresh google access tokens',
+            'add_event' => 'Add test event',
+            'user_info' => 'View doctor info'
         )
     );
     $opts->parse();
@@ -16,49 +17,29 @@ try {
     exit($e->getMessage() ."\n\n". $e->getUsageMessage());
 }
 
-if (isset($opts->help)) :
-    echo $opts->getUsageMessage();
-    exit;
-endif;
-
-if (isset($opts->menus)) :
-    echo 'creating...';
-    foreach (Application_Model_Restaurant::getList() as $restaurant) :
-        $restaurantMenu = Application_Model_Restaurant_Menu::create($restaurant);
-        $restaurantMenu->save();
-    endforeach;
+if (isset($opts->refresh_tokens)) :
+    $tokens = AccessToken::getList();
+    foreach ($tokens as $token) {
+        /** @var AccessToken $token */
+//        if ( $token->isAlmostExpired() ) {
+        if ( true ) {
+            echo 'BEFORE' . PHP_EOL;
+            print_r($token->toArray());
+            $token->refresh();
+            echo 'AFTER' . PHP_EOL;
+            print_r($token->toArray());
+        }
+    }
     die('done');
 endif;
 
-if (isset($opts->stats)) :
-    $restaurantStatisticsUpdate = new Restoran_Service_Restaurant_StatisticsUpdater();
-    $restaurantStatisticsUpdate->updateStatistics();
-    die('done');
-endif;
+if (isset($opts->add_event)) :
+    $res = Reservation::create();
+    $res->setTimeVisit( MedOptima_Date_Time::currentTimestamp() );
+    $res->setDoctor(Application_Model_Medical_Doctor::getFirst());
+//    $res->save();
+    (new MedOptima_Service_Reservation($res))->commitEvent();
 
-if (isset($opts->rename_menu)) :
-    foreach (Application_Model_Restaurant_Menu::getList() as $restaurantMenu) :
-        /* @var Application_Model_Restaurant_Menu $restaurantMenu */
-        $restaurantMenu->generateFileName();
-        $restaurantMenu->save();
-        $restaurantMenuFile = new Application_Model_Restaurant_Menu_File($restaurantMenu);
-        $restaurantMenuFile->renameFile();
-    endforeach;
-    die('done');
-endif;
-
-if (isset($opts->resave_vacancies)) :
-    foreach (Application_Model_Page_Vacancy::getList() as $vacancy) :
-        /* @var Application_Model_Page_Vacancy $vacancy */
-        $vacancy->save();
-    endforeach;
-    die('done');
-endif;
-
-if (isset($opts->sitemap)) :
-    $sitemap = new Restoran_Sitemap();
-    $sitemap->initXml();
-    $sitemap->saveXml();
     die('done');
 endif;
 

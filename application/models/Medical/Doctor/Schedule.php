@@ -23,6 +23,7 @@ class Application_Model_Medical_Doctor_Schedule {
         $this->_workTimeList[] = $workTime;
     }
 
+    //RM_TODO move to service
     public function addWorkTimeListFromData($data) {
         foreach ($data['key'] as $index => $day) {
             $timeBegin = $data["value1"][$index];

@@ -14,3 +14,5 @@ CREATE TABLE IF NOT EXISTS `googleAccessTokens` (
   `accessTokenStatus` int(11) NOT NULL,
   PRIMARY KEY (`idAccessToken`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+ALTER TABLE  `googleAccessTokens` CHANGE  `idUser`  `idDoctor` INT( 11 ) NOT NULL ;

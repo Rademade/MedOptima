@@ -9,18 +9,21 @@ class Application_Model_Medical_Doctor_Schedule {
     private $_doctor;
 
     /**
-     * @var array Application_Model_Medical_Doctor_WorkTime[]
+     * @var Application_Model_Medical_Doctor_WorkTime[]
      */
     private $_workTimeList = array();
 
-    public function __construct(Application_Model_Medical_Doctor $doctor) {
+    public function __construct(Application_Model_Medical_Doctor $doctor, array $workTimeList = array()) {
         $this->_doctor = $doctor;
-        $this->_workTimeList = (new Application_Model_Medical_Doctor_WorkTime_Search_Repository())
-            ->getDoctorWorkTimeList($doctor);
+        $this->_workTimeList = $workTimeList;
     }
 
     public function addWorkTime(Application_Model_Medical_Doctor_WorkTime $workTime) {
         $this->_workTimeList[] = $workTime;
+    }
+
+    public function getDoctor() {
+        return $this->_doctor;
     }
 
     //RM_TODO move to service
@@ -72,6 +75,10 @@ class Application_Model_Medical_Doctor_Schedule {
             $result['value2'][] = DateTime::toGostTime($workTime->getTimeEnd());
         }
         return $result;
+    }
+
+    public function isAvailableAt(MedOptima_Date_Time $dateTime) {
+        return (new MedOptima_Service_Doctor_WorkSchedule($this))->isAvailableAt($dateTime);
     }
 
 }

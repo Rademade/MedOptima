@@ -29,11 +29,9 @@ ALTER TABLE  `medicalDoctors` CHANGE  `googleAccessTokenTimeLeft`  `googleAccess
 
 ALTER TABLE  `medicalDoctors` CHANGE  `googleAccessToken`  `googleAccessToken` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ;
 
---31.01.14
+-- 31.01.14
 
 ALTER TABLE  `medicalDoctors` DROP  `googleAccessToken` ,
 DROP  `googleAccessTokenExpireTime` ;
 
 ALTER TABLE  `medicalDoctors` ADD  `idUser` INT NOT NULL AFTER  `idDoctor` ;
-
-ALTER TABLE  `googleAccessTokens` CHANGE  `idUser`  `idDoctor` INT( 11 ) NOT NULL ;

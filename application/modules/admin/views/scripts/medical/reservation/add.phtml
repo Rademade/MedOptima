@@ -1,0 +1,17 @@
+<?php
+$form = new RM_View_Form();
+$form->getLangPanel()->allLangs();
+
+$form
+    ->add( New RM_View_Form_Field_Select('Статус', 'status', $this->medicalReservation()->getList()) )
+    ->add( (new RM_View_Form_Field_Text('Врач', 'doctor', ''))->disable() )
+    ->add( (new RM_View_Form_Field_Text('Клиент', 'visitor_name', ''))->disable() )
+    ->add( (new RM_View_Form_Field_Text('Телефон', 'visitor_phone', ''))->disable() )
+    ->add( (new RM_View_Form_Field_Textarea('Комментарии', 'visitor_notes', ''))->disable() )
+    ->add( (new RM_View_Form_Field_Text('Время создания', 'create_time', ''))->disable() )
+    ->add( (new RM_View_Form_Field_Text('Желаемое время приема', 'desired_visit_time', ''))->disable() )
+    ->add( new RM_View_Form_Field_Text('Установленное время приема', 'final_visit_time', '') )
+    ->add( new RM_View_Form_Field_Text('Время окончания приема', 'visit_end_time', '') )
+    ->add( new RM_View_Form_Field_Multiselect('Услуги', 'id_services', $this->toSelect($this->services), []));
+
+echo $form->render();

@@ -64,11 +64,6 @@ class Application_Model_Medical_Doctor
     private $_postCollection;
 
     /**
-     * @var Application_Model_Medical_Doctor_Schedule
-     */
-    private $_schedule;
-
-    /**
      * @var User
      */
     private $_user;
@@ -216,11 +211,18 @@ class Application_Model_Medical_Doctor
         return $this->getServiceCollection()->getToItems();
     }
 
-    public function getSchedule() {
-        if (is_null($this->_schedule)) {
-            $this->_schedule = new Application_Model_Medical_Doctor_Schedule($this);
-        }
-        return $this->_schedule;
+    public function getSchedule(MedOptima_Date_Time $date = null) {
+        $workTimeList = (new Application_Model_Medical_Doctor_WorkTime_Search_Repository())
+            ->getDoctorWorkTimeList($this, $date);
+        return new Application_Model_Medical_Doctor_Schedule($this, $workTimeList);
+    }
+
+    /**
+     * @param MedOptima_Date_Time $date
+     * @return Application_Model_Medical_Reservation[]
+     */
+    public function getReservationsByDate(MedOptima_Date_Time $date) {
+        return (new Application_Model_Medical_Reservation_Search_Repository)->getDoctorAcceptedReservations($this, $date);
     }
 
     public function getIdUser() {
@@ -242,6 +244,10 @@ class Application_Model_Medical_Doctor
     public function resetUser() {
         $this->_user = null;
         $this->__setIdUser(0);
+    }
+
+    public function getReceptionDuration() {
+        return '01:00';
     }
 
     protected function __setIdUser($id) {

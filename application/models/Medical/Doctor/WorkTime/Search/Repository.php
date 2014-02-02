@@ -6,10 +6,13 @@ class Application_Model_Medical_Doctor_WorkTime_Search_Repository
     extends
         RM_Entity_Search_Repository {
 
-    public function getDoctorWorkTimeList(Doctor $doctor, Limit $limit = null) {
+    public function getDoctorWorkTimeList(Doctor $doctor, MedOptima_Date_Time $date = null) {
         $condition = $this->__getConditionClass();
         $condition->setDoctor($doctor);
-        return $this->__getEntitySearch($condition)->getResults($limit);
+        if ($date) {
+            $condition->setWeekDay($date->getWeekday());
+        }
+        return $this->__getEntitySearch($condition)->getResults();
     }
 
     protected function __getEntityClassName() {

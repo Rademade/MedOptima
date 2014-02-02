@@ -12,8 +12,9 @@ class Application_Model_Medical_Reservation
 
     const FIELD_STATUS = 'reservationStatus';
 
-    const STATUS_PROCESSED = 9;
-    const STATUS_NOT_PROCESSED = 10;
+    const STATUS_ACCEPTED = 3;
+    const STATUS_DECLINED = 4;
+    const STATUS_NEW = 5;
 
     protected static $_properties = array(
         'idReservation' => array(
@@ -24,7 +25,8 @@ class Application_Model_Medical_Reservation
             'type' => 'int'
         ),
         'idGoogleEvent' => array(
-            'type' => 'int'
+            'type' => 'string',
+            'default' => ''
         ),
         'visitorName' => array(
             'type' => 'string'
@@ -35,24 +37,28 @@ class Application_Model_Medical_Reservation
         'visitorNotes' => array(
             'type' => 'string'
         ),
-        'timeCreated' => array(
+        'createTime' => array(
             'type' => 'int'
         ),
-        'timeVisit' => array(
+        'desiredVisitTime' => array(
             'type' => 'int'
         ),
-        'timeFinalVisit' => array(
+        'finalVisitTime' => array(
             'type' => 'int'
         ),
-        'timeLastSaved' => array(
+        'visitEndTime' => array(
             'type' => 'int'
         ),
-        'timeLastSynced' => array(
+        'lastSyncTime' => array(
+            'type' => 'int',
+            'default' => 0
+        ),
+        'lastSaveTime' => array(
             'type' => 'int'
         ),
         self::FIELD_STATUS => array(
             'type' => 'int',
-            'default' => self::STATUS_NOT_PROCESSED
+            'default' => self::STATUS_NEW
         )
     );
 
@@ -70,7 +76,12 @@ class Application_Model_Medical_Reservation
      * @var Application_Model_Medical_Doctor
      */
     private $_doctor;
-    
+
+    /**
+     * @var RM_Entity_ToMany_Proxy
+     */
+    private $_serviceCollection;
+
     public function __construct(stdClass $data) {
         $this->_dataWorker = new RM_Entity_Worker_Data(get_class(), $data);
         $this->_cacheWorker = new RM_Entity_Worker_Cache(get_class());
@@ -78,18 +89,19 @@ class Application_Model_Medical_Reservation
 
     public static function create() {
         $reservation = new self(new RM_Compositor(array(
-            'timeCreated' => MedOptima_Date_Time::currentTimestamp()
+            'createTime' => MedOptima_Date_Time::currentTimestamp()
         )));
         return $reservation;
     }
 
     public static function _setSelectRules(Zend_Db_Select $select) {
-        $select->where('adviceStatus != ?', self::STATUS_DELETED);
+        $select->where(self::FIELD_STATUS . ' != ?', self::STATUS_DELETED);
     }
 
     public function save() {
-        $this->_dataWorker->setValue('timeLastSaved', MedOptima_Date_Time::currentTimestamp());
+        $this->_dataWorker->setValue('lastSaveTime', MedOptima_Date_Time::currentTimestamp());
         $this->_dataWorker->save();
+        $this->getServiceCollection()->save();
         $this->__refreshCache();
     }
 
@@ -100,20 +112,29 @@ class Application_Model_Medical_Reservation
     public function remove() {
         $this->_dataWorker->setValue(self::FIELD_STATUS, self::STATUS_DELETED);
         $this->save();
+        $this->getServiceCollection()->resetItems();
         $this->__cleanCache();
+        (new MedOptima_Service_Google_Calendar_Sync($this))->deleteRemote();
+    }
+
+    public function getServiceCollection() {
+        if (is_null($this->_serviceCollection)) {
+            $this->_serviceCollection =
+                RM_Entity_ToMany_Proxy::get($this, 'Application_Model_Medical_Reservation_Service');
+        }
+        return $this->_serviceCollection;
     }
 
     public function getStatus() {
-        $status = $this->_dataWorker->getValue(self::FIELD_STATUS);
-        return $status == self::STATUS_NOT_PROCESSED ? self::STATUS_HIDE : $status;
+        return $this->_dataWorker->getValue(self::FIELD_STATUS);
     }
 
     public function setStatus($status) {
-        $status = (int)$status;
         if (in_array($status, array(
             self::STATUS_DELETED,
-            self::STATUS_PROCESSED,
-            self::STATUS_NOT_PROCESSED
+            self::STATUS_ACCEPTED,
+            self::STATUS_DECLINED,
+            self::STATUS_NEW
         ))) {
             $this->_dataWorker->setValue(self::FIELD_STATUS, $status);
         } else {
@@ -125,6 +146,9 @@ class Application_Model_Medical_Reservation
         return $this->_dataWorker->getValue('idDoctor');
     }
 
+    /**
+     * @return Application_Model_Medical_Doctor|null
+     */
     public function getDoctor() {
         if (!$this->_doctor && $this->getIdDoctor()) {
             $this->_doctor = Doctor::getById($this->getIdDoctor());
@@ -169,42 +193,73 @@ class Application_Model_Medical_Reservation
         return $this->_dataWorker->getValue('visitorPhone');
     }
 
-    public function getTimeCreated() {
-        return $this->_dataWorker->getValue('timeCreated');
+    public function getCreateTime() {
+        return $this->_dataWorker->getValue('createTime');
     }
 
-    public function getTimeVisit() {
-        return $this->_dataWorker->getValue('timeVisit');
+    public function getDesiredVisitTime() {
+        return $this->_dataWorker->getValue('desiredVisitTime');
     }
 
-    public function setTimeVisit($time) {
-        if ( $time > MedOptima_Date_Time::currentTimestamp() ) {
+    public function setDesiredVisitTime($time) {
+        $time = (int)$time;
+        if ( $time < MedOptima_Date_Time::currentTimestamp() ) {
             throw new Exception('Invalid visit time');
         }
-        $this->_dataWorker->setValue('timeVisit', $time);
+        $this->_dataWorker->setValue('desiredVisitTime', $time);
     }
 
-    public function getTimeFinalVisit() {
-        return $this->_dataWorker->getValue('timeFinalVisit');
+    public function getVisitEndTime() {
+        return $this->_dataWorker->getValue('visitEndTime');
     }
 
-    public function setTimeFinalVisit($time) {
-        if ($time > MedOptima_Date_Time::currentTimestamp()) {
-            throw new Exception('Invalid visit time');
-        }
-        $this->_dataWorker->setValue('timeFinalVisit', $time);
+    public function setVisitEndTime($time) {
+        $this->_dataWorker->setValue('visitEndTime', $time);
     }
 
-    public function getTimeLastSaved() {
-        return $this->_dataWorker->getValue('timeLastSaved');
+    public function getFinalVisitTime() {
+        return $this->_dataWorker->getValue('finalVisitTime');
     }
 
-    public function getTimeLastSynced() {
-        return $this->_dataWorker->getValue('timeLastSynced');
+    public function setFinalVisitTime($time) {
+        $this->_dataWorker->setValue('finalVisitTime', $time);
     }
 
-    public function setTimeLastSynced($time) {
-        $this->_dataWorker->setValue('timeLastSynced', $time);
+    public function getLastSyncTime() {
+        return $this->_dataWorker->getValue('lastSyncTime');
+    }
+
+    public function setLastSyncTime($time) {
+        $this->_dataWorker->setValue('lastSyncTime', $time);
+    }
+
+    public function getLastSaveTime() {
+        return $this->_dataWorker->getValue('lastSaveTime');
+    }
+
+    public function setIdGoogleEvent($id) {
+        $this->_dataWorker->setValue('idGoogleEvent', $id);
+    }
+
+    public function getIdGoogleEvent() {
+        return $this->_dataWorker->getValue('idGoogleEvent');
+    }
+
+    public function getServices() {
+        return $this->getServiceCollection()->getToItems();
+    }
+
+    public function wasSynced() {
+        $id = $this->getIdGoogleEvent();
+        return (int)$this->getLastSyncTime() != 0 && !empty($id);
+    }
+
+    public function isAccepted() {
+        return (int)$this->getStatus() == self::STATUS_ACCEPTED;
+    }
+
+    public function isDeclined() {
+        return (int)$this->getStatus() == self::STATUS_DECLINED;
     }
 
     protected function __setIdDoctor($id) {

@@ -94,10 +94,8 @@ class Admin_Medical_ReservationController
             throw new Exception('Время приема не может быть позже времени окончания приема');
         }
         if ( $this->_entity->getFinalVisitTime() != $finalVisitTime->getTimestamp() ) {
-            $schedule = $this->_entity->getDoctor()->getSchedule($finalVisitTime);
-            $service = new MedOptima_Service_Doctor_WorkSchedule($schedule);
-            $excludeReservations = array((int)$this->_entity->getId());
-            if ( !$service->isAvailableAt($finalVisitTime, $excludeReservations) ) {
+            $service = new MedOptima_Service_Doctor_WorkSchedule($this->_entity->getDoctor());
+            if ( !$service->isAvailableAt($finalVisitTime, [(int)$this->_entity->getId()]) ) {
                 throw new Exception('В это время доктор не принимает или занят');
             }
         }

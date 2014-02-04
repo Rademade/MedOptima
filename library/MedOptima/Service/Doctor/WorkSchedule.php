@@ -1,7 +1,7 @@
 <?php
+
 use Application_Model_Medical_Doctor as Doctor;
 use MedOptima_Date_Time as DateTime;
-use Application_Model_Medical_Doctor_Schedule as Schedule;
 
 class MedOptima_Service_Doctor_WorkSchedule {
 
@@ -10,127 +10,74 @@ class MedOptima_Service_Doctor_WorkSchedule {
      */
     private $_doctor;
 
-    /**
-     * @var Schedule
-     */
-    private $_schedule;
+    private $_workingTimeList = array();
 
-    private $debug = false;
-
-    public function __construct(Schedule $schedule) {
-        $this->_schedule = $schedule;
-        $this->_doctor = $schedule->getDoctor();
-    }
-
-    /**
-     * Свободное время доктора на текущий момент переданной даты
-     * @param DateTime $date
-     * @param array $excludeReservations
-     * @return array ( from => array(from => 1800, to => 3600) )
-     */
-    public function getAvailableReservationTimeList(DateTime $date = null, $excludeReservations = array()) {
-        if ( is_null($date) ) {
-            $date = DateTime::create();
-        }
-        $reservationSchedule = $this->_getReservationTimeList($date, $excludeReservations);
-        $workSchedule = $this->_getWorkTimeList($date);
-        if ($this->debug) {
-            echo 'Reservation schedule:';
-            var_dump($reservationSchedule);
-            echo 'Work schedule:';
-            var_dump($workSchedule);
-            echo 'Prepared work schedule';
-        }
-        $this->_prepare($workSchedule, $reservationSchedule);
-        if ($this->debug) {
-            $list = $this->_process($workSchedule, $reservationSchedule);
-            echo 'Free time:';
-            var_dump($list);
-            return $list;
-        }
-        return $this->_process($workSchedule, $reservationSchedule);
+    public function __construct(Doctor $doctor) {
+        $this->_doctor = $doctor;
     }
 
     public function isAvailableAt(DateTime $dateTime, $excludeReservations = array()) {
+        if (!$this->_isWorkingAt($dateTime)) {
+            return false;
+        }
+        return $this->_hasNoReservationsAt($dateTime, $excludeReservations);
+    }
+
+    public function getAvailableTimeList(DateTime $date) {
+        $view = Zend_Layout::getMvcInstance()->getView();
+        $splitTimeList = $view->TimeSplitter()->splitTimeIntoSeconds($this->_doctor->getReceptionDuration());
+        $list = array();
+        foreach ($splitTimeList as $from) {
+            $date->setTime(0, 0);
+            $date->addSeconds($from);
+            if ($this->isAvailableAt($date)) {
+                $list[$from] = $from;
+            }
+        }
+        return $list;
+    }
+
+    private function _isWorkingAt(DateTime $dateTime) {
         $time = $dateTime->getTimeAsSeconds();
-//        $avg = MedOptima_Date_Time::timeToSeconds($this->_doctor->getReceptionDuration());
-        foreach ($this->getAvailableReservationTimeList($dateTime, $excludeReservations) as $data) {
-            $from = $data['from'];
-            $to = $data['to'];
-            if ($time >= $from && $time <= $to /*&& $time + $avg <= $to*/) {
+        foreach ($this->_getWorkingTimeList($dateTime) as $data) {
+            if ($data['from'] <= $time && $time < $data['to']) {
                 return true;
             }
         }
         return false;
     }
 
-    private function _getWorkTimeList() {
-        $workSchedule = array();
-        foreach ($this->_schedule->getWorkTimeList() as $workTime) {
-            $from = DateTime::timeToSeconds($workTime->getTimeBegin());
-            $workSchedule[$from] = array(
-                'from' => $from,
-                'to' => DateTime::timeToSeconds($workTime->getTimeEnd())
-            );
-        }
-        return $workSchedule;
-    }
-
-    private function _getReservationTimeList(DateTime $date, $excludeReservations) {
-        $reservationSchedule = array();
-        foreach ($this->_doctor->getReservationsByDate($date) as $reservation) {
-            if ( !in_array($reservation->getId(), $excludeReservations) ) {
-                $from = DateTime::createFromTimestamp($reservation->getFinalVisitTime())->getTimeAsSeconds();
-                $reservationSchedule[$from] = array(
+    private function _getWorkingTimeList(DateTime $date) {
+        if (empty($this->_workingTimeList)) {
+            foreach ($this->_doctor->getSchedule($date)->getWorkTimeList() as $workTime) {
+                $from = DateTime::timeToSeconds($workTime->getTimeBegin());
+                $to = DateTime::timeToSeconds($workTime->getTimeEnd());
+                $this->_workingTimeList[$from] = array(
                     'from' => $from,
-                    'to' => DateTime::createFromTimestamp($reservation->getVisitEndTime())->getTimeAsSeconds()
+                    'to' => $to
                 );
             }
         }
-        return $reservationSchedule;
+        return $this->_workingTimeList;
     }
 
-    private function _prepare(array &$workSchedule, array &$reservationSchedule) {
-        ksort($workSchedule);
-        ksort($reservationSchedule);
-        foreach ($workSchedule as &$work) {
-            $work['reservations'] = array();
-            foreach ($reservationSchedule as $key => $res) {
-                if ($work['from'] <= $res['from'] && $res['from'] <= $work['to']) {
-                    $work['reservations'][$res['from']] = $res;
-                }
-            }
-            if ($this->debug) {
-                var_dump($work);
-            }
-        }
-    }
-
-    private function _process(array &$workSchedule) {
-        $list = array();
-        $avg = MedOptima_Date_Time::timeToSeconds($this->_doctor->getReceptionDuration());
-        foreach ($workSchedule as &$work) {
-            $ranges = array();
-            $ranges[] = $work['from'];
-            foreach ($work['reservations'] as $res) {
-                $ranges[] = $res['from'];
-                $ranges[] = $res['to'];
-            }
-            $ranges[] = $work['to'];
-            $i = 0;
-            while ($i < sizeof($ranges) - 1) {
-                $from = $ranges[$i];
-                $to = $ranges[$i + 1];
-                if ($to - $from >= $avg) {
-                    $list[$from] = array(
-                        'from' => $from,
-                        'to' => $to
-                    );
-                }
-                $i += 2;
+    private function _hasNoReservationsAt(DateTime $dateTime, $excludeReservations = array()) {
+        $from = $dateTime;
+        $to = clone $dateTime;
+        $to->addSeconds($this->_doctor->getReceptionDuration());
+        $conditions = new Application_Model_Medical_Reservation_Search_Conditions();
+        $conditions->setDoctor($this->_doctor);
+        $conditions->setTimeOverlapsWith($from, $to);
+        $conditions->setAccepted();
+        $search = new RM_Entity_Search_Entity('Application_Model_Medical_Reservation');
+        $search->addCondition($conditions);
+        $results = $search->getResults();
+        foreach ($results as $key => $reservation) {
+            if (in_array($reservation->getId(), $excludeReservations)) {
+                unset($results[$key]);
             }
         }
-        return $list;
+        return empty($results);
     }
 
 }

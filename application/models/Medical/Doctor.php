@@ -247,7 +247,7 @@ class Application_Model_Medical_Doctor
     }
 
     public function getReceptionDuration() {
-        return '01:00';
+        return MedOptima_Date_Time::create('01:00')->getTimeAsSeconds();
     }
 
     protected function __setIdUser($id) {

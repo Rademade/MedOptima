@@ -11,16 +11,31 @@ class Application_Model_Medical_Reservation_Search_Conditions
         $this->_getWhere()->add('idDoctor', '=', $doctor->getId());
     }
 
-    public function setDateVisit(MedOptima_Date_Time $date) {
-        $date = clone $date;
-        $date->setTime(0, 0);
-        $from = $date->getTimestamp();
-        $date->setTime(24, 0);
-        $to = $date->getTimestamp();
+    public function setTimeOverlapsWith(MedOptima_Date_Time $fromDateTime, MedOptima_Date_Time $toDateTime) {
+        $from = $fromDateTime->getTimestamp();
+        $to = $toDateTime->getTimestamp();
+        $firstOr = new RM_Query_Where();
+        $firstOr
+            ->add('finalVisitTime', '<=', $from)
+            ->add('visitEndTime', '>', $from);
+        $secondOr = new RM_Query_Where();
+        $secondOr
+            ->add('finalVisitTime', '<', $to)
+            ->add('visitEndTime', '>', $to);
+        $thirdOr = new RM_Query_Where();
+        $thirdOr
+            ->add('finalVisitTime', '>=', $from)
+            ->add('finalVisitTime', '<', $to);
+        $fourthOr = new RM_Query_Where();
+        $fourthOr
+            ->add('visitEndTime', '>=', $from)
+            ->add('visitEndTime', '<', $to);
         $where = new RM_Query_Where();
         $where
-                ->add('finalVisitTime', '>=', $from)
-                ->add('finalVisitTime', '<=', $to);
+                ->addSubOr($firstOr)
+                ->addSubOr($secondOr)
+                ->addSubOr($thirdOr)
+                ->addSubOr($fourthOr);
         $this->_getWhere()->addSub($where);
     }
 

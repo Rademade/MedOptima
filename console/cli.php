@@ -12,8 +12,8 @@ try {
     $opts = new Zend_Console_Getopt(
       	array(
             'help' => 'Displays usage information',
-            'refresh' => 'Refresh doctor\'s access tokens',
-            'sync' => 'Sync reservations'
+            'refresh_tokens' => 'Refresh doctor\'s access tokens',
+            'sync_events' => 'Sync reservations'
         )
     );
     $opts->parse();
@@ -26,7 +26,7 @@ if (isset($opts->help)) :
     exit;
 endif;
 
-if (isset($opts->refresh)) :
+if (isset($opts->refresh_tokens)) :
     $tokens = AccessToken::getList();
     foreach ($tokens as $token) {
         /** @var AccessToken $token */
@@ -45,9 +45,9 @@ if (isset($opts->refresh)) :
     exit;
 endif;
 
-if (isset($opts->sync)) :
-    //RM_TODO select only valid reservations
-    foreach (Reservation::getList() as $reservation) {
+if (isset($opts->sync_events)) :
+    $reservations = (new Application_Model_Medical_Reservation_Search_Repository)->getAllReservations();
+    foreach ($reservations as $reservation) {
         try {
             (new MedOptima_Service_Google_Calendar_Sync($reservation))->setDebugEnabled($debug)->sync();
         } catch (Exception $e) {

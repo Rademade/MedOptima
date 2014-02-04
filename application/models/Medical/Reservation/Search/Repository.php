@@ -13,14 +13,11 @@ class Application_Model_Medical_Reservation_Search_Repository
     }
 
     /**
-     * @param Application_Model_Medical_Doctor $doctor
-     * @param MedOptima_Date_Time $date
      * @return Application_Model_Medical_Reservation[]
      */
-    public function getDoctorAcceptedReservations(Application_Model_Medical_Doctor $doctor, MedOptima_Date_Time $date) {
+    public function getActiveReservations() {
         $conditions = $this->__getConditionClass();
-        $conditions->setDoctor($doctor);
-        $conditions->setDateVisit($date);
+        $conditions->onlyActive();
         $conditions->setAccepted();
         return $this->__getEntitySearch($conditions)->getResults();
     }

@@ -33,6 +33,9 @@ $form
     ->add(new MedOptima_Admin_View_Form_Field_MultiListSelect('График работы', 'schedule', 3, array(
         MedOptima_Date_Time::getWeekDayNames(),
         $time, $time
-    )));
+    )))
+    ->add(new RM_View_Form_Field_Select('Средняя продолжительность приема', 'reception_duration',
+        $this->TimeSplitter()->splitTimeIntoHoursMinutes(45)
+    ));
 
 echo $form->render();

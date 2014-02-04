@@ -26,9 +26,14 @@ class MedOptima_Service_Google_Calendar_Event {
         return $this->_process($event);
     }
 
+    public function updateReservationFromEvent(Google_Event $event) {
+        $this->_reservation->setFinalVisitTime(DateTime::create($event->getStart()->getDateTime())->getTimestamp());
+        $this->_reservation->setVisitEndTime(DateTime::create($event->getEnd()->getDateTime())->getTimestamp());
+    }
+
     private function _process(Google_Event $event) {
-        $event->setSummary('Удалить, вылечить, отбелить для Маши Алексеевны'); //RM_TODO
-        $event->setDescription('89 888 888 88'); //RM_TODO
+        $event->setSummary($this->_getReservationSummary());
+        $event->setDescription($this->_getReservationDescription());
 
         $timeBegin = DateTime::createFromTimestamp($this->_reservation->getFinalVisitTime());
         $timeEnd = DateTime::createFromTimestamp($this->_reservation->getVisitEndTime());
@@ -43,6 +48,23 @@ class MedOptima_Service_Google_Calendar_Event {
         $event->setEnd($timeEventEnd);
 
         return $event;
+    }
+
+    private function _getReservationSummary() {
+        $services = join(', ', array_map(function(Application_Model_Medical_Service $service) {
+            return $service->getName();
+        }, $this->_reservation->getServices()));
+        return empty($services) ? $this->_reservation->getVisitorName() : join(' ', array(
+            ucfirst($services),
+            'для', $this->_reservation->getVisitorName()
+        ));
+    }
+
+    private function _getReservationDescription() {
+        return join('; ', array(
+            'Клиент: ' . $this->_reservation->getVisitorName(),
+            'Телефон: ' . $this->_reservation->getVisitorPhone()
+        ));
     }
 
 }

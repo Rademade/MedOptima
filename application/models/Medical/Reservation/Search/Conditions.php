@@ -39,6 +39,10 @@ class Application_Model_Medical_Reservation_Search_Conditions
         $this->_getWhere()->addSub($where);
     }
 
+    public function onlyActive() {
+        $this->_getWhere()->add('finalVisitTime', '>', MedOptima_Date_Time::create()->getTimestamp());
+    }
+
     public function setAccepted() {
         $this->_getWhere()->add('reservationStatus', '=', Application_Model_Medical_Reservation::STATUS_ACCEPTED);
     }

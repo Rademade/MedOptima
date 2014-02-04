@@ -29,7 +29,10 @@ class Application_Model_Medical_Doctor
         'idPhoto' => array(
             'type' => 'int'
         ),
-        'idPost' => array(
+        'receptionDuration' => array(
+            'type' => 'string'
+        ),
+        'lastSyncTime' => array(
             'type' => 'int'
         ),
         'doctorStatus' => array(
@@ -217,14 +220,6 @@ class Application_Model_Medical_Doctor
         return new Application_Model_Medical_Doctor_Schedule($this, $workTimeList);
     }
 
-    /**
-     * @param MedOptima_Date_Time $date
-     * @return Application_Model_Medical_Reservation[]
-     */
-    public function getReservationsByDate(MedOptima_Date_Time $date) {
-        return (new Application_Model_Medical_Reservation_Search_Repository)->getDoctorAcceptedReservations($this, $date);
-    }
-
     public function getIdUser() {
         return $this->_dataWorker->getValue('idUser');
     }
@@ -247,7 +242,19 @@ class Application_Model_Medical_Doctor
     }
 
     public function getReceptionDuration() {
-        return MedOptima_Date_Time::create('01:00')->getTimeAsSeconds();
+        return $this->_dataWorker->getValue('receptionDuration');
+    }
+
+    public function setReceptionDuration($duration) {
+        $this->_dataWorker->setValue('receptionDuration', $duration);
+    }
+
+    public function getLastSyncTime() {
+        return $this->_dataWorker->getValue('lastSyncTime');
+    }
+
+    public function setLastSyncTime($time) {
+        $this->_dataWorker->setValue('lastSyncTime', $time);
     }
 
     protected function __setIdUser($id) {

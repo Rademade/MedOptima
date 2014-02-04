@@ -44,3 +44,7 @@ CHANGE  `timeVisitFinal`  `finalVisitTime` INT( 11 ) NOT NULL ,
 CHANGE  `timeLastSaved`  `visitEndTime` INT( 11 ) NOT NULL ,
 CHANGE  `timeLastSynced`  `lastSyncTime` INT( 11 ) NOT NULL ;
 ALTER TABLE  `medicalReservations` ADD  `lastSaveTime` INT NOT NULL AFTER  `lastSyncTime` ;
+
+-- 04.02.2014
+
+ALTER TABLE  `medicalReservations` DROP  `visitorNotes` ;

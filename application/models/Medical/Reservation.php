@@ -34,9 +34,6 @@ class Application_Model_Medical_Reservation
         'visitorPhone' => array(
             'type' => 'string'
         ),
-        'visitorNotes' => array(
-            'type' => 'string'
-        ),
         'createTime' => array(
             'type' => 'int'
         ),
@@ -161,14 +158,6 @@ class Application_Model_Medical_Reservation
         $this->__setIdDoctor($doctor->getId());
     }
 
-    public function getVisitorNotes() {
-        return $this->_dataWorker->getValue('visitorNotes');
-    }
-    
-    public function setVisitorNotes($notes) {
-        $this->_dataWorker->setValue('visitorNotes', $notes);
-    }
-
     public function getVisitorName() {
         return $this->_dataWorker->getValue('visitorName');
     }
@@ -245,6 +234,9 @@ class Application_Model_Medical_Reservation
         return $this->_dataWorker->getValue('idGoogleEvent');
     }
 
+    /**
+     * @return Application_Model_Medical_Service[]
+     */
     public function getServices() {
         return $this->getServiceCollection()->getToItems();
     }

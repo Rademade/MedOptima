@@ -90,6 +90,9 @@ class Admin_Medical_DoctorController
         }, $this->_entity->getServices());
         $_POST['schedule'] = $this->_entity->getSchedule()->toArray();
         $_POST['id_user'] = $this->_entity->getIdUser();
+        $_POST['reception_duration'] =
+            MedOptima_Date_Time::timeToSeconds($this->_entity->getReceptionDuration())
+            ? $this->_entity->getReceptionDuration() : '00:00';
     }
 
     protected function __setData(stdClass $data) {
@@ -126,6 +129,7 @@ class Admin_Medical_DoctorController
         } else {
             $this->_entity->resetUser();
         }
+        $this->_entity->setReceptionDuration($data->reception_duration);
     }
 
 }

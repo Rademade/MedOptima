@@ -40,19 +40,13 @@ class Admin_Medical_ReservationController
             try {
                 $this->__setData($data);
                 $this->_entity->save();
-                (new MedOptima_Service_Google_Calendar_Sync($this->_entity))->sync();
                 $this->__goBack();
             } catch (Exception $e) {
                 $this->__postFields();
                 $this->view->showMessage($e->getMessage());
             }
         } else {
-            try {
-                (new MedOptima_Service_Google_Calendar_Sync($this->_entity))->sync();
-                $this->__postFields();
-            } catch (Exception $e) {
-                $this->__goBack();
-            }
+            $this->__postFields();
         }
     }
 
@@ -69,7 +63,6 @@ class Admin_Medical_ReservationController
         $_POST['doctor'] = $this->_entity->getDoctor() ? $this->_entity->getDoctor()->getName() : 'DELETED';
         $_POST['visitor_name'] = $this->_entity->getVisitorName();
         $_POST['visitor_phone'] = $this->_entity->getVisitorPhone();
-        $_POST['visitor_notes'] = $this->_entity->getVisitorNotes();
         $_POST['create_time'] = DateTime::createFromTimestamp($this->_entity->getCreateTime())->getGostDatetime();
         $_POST['desired_visit_time'] = DateTime::createFromTimestamp($this->_entity->getDesiredVisitTime())->getGostDatetime();
         $_POST['final_visit_time'] = DateTime::createFromTimestamp($this->_entity->getFinalVisitTime())->getGostDatetime();

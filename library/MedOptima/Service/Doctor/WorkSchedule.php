@@ -16,6 +16,7 @@ class MedOptima_Service_Doctor_WorkSchedule {
         $this->_doctor = $doctor;
     }
 
+    //RM_TODO add end time verification
     public function isAvailableAt(DateTime $dateTime, $excludeReservations = array()) {
         if (!$this->_isWorkingAt($dateTime)) {
             return false;

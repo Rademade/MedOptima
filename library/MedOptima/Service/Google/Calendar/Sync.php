@@ -107,8 +107,7 @@ class MedOptima_Service_Google_Calendar_Sync {
         if ($this->_debug) {
             echo 'Update local' . PHP_EOL;
         }
-        $this->_reservation->setFinalVisitTime(DateTime::create($event->getStart()->getDateTime())->getTimestamp());
-        $this->_reservation->setVisitEndTime(DateTime::create($event->getEnd()->getDateTime())->getTimestamp());
+        $this->_eventService->updateReservationFromEvent($event);
         $this->_save();
     }
 

@@ -18,7 +18,7 @@ class MedOptima_Service_Google_Calendar_Sync {
      */
     private $_calendar;
 
-    private $_debug = true;
+    private $_debug = false;
 
     public function __construct(Reservation $reservation) {
         $this->_reservation = $reservation;

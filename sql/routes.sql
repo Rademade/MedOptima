@@ -18,3 +18,8 @@ INSERT INTO `routing` (`idRoute`, `type`, `name`, `module`, `controller`, `actio
 
 INSERT INTO `routing` (`idRoute`, `type`, `name`, `module`, `controller`, `action`, `url`, `defaultParams`, `routeStatus`) VALUES
 (1007, 1, 'doctor-list-ajax', 'public', 'reservation-ajax', 'doctor-list', '/doctor/list/ajax', '{}', 1);
+
+-- 06.02.2014
+
+INSERT INTO `routing` (`idRoute`, `type`, `name`, `module`, `controller`, `action`, `url`, `defaultParams`, `routeStatus`) VALUES
+(1008, 1, 'create-reservation-ajax', 'public', 'reservation-ajax', 'create', '/reservation/create/ajax', '{}', 1);

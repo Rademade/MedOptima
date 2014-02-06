@@ -1,35 +1,27 @@
-<div class="calendar-popup">
+<div id="reservation" class="calendar-popup" style="display: none">
     <i class="ico popup-tile"></i>
     <div class="calendar-popup-box">
-        <div class="calendar-popup-box-menu">
-            <button class="popup-btn">Удалить</button>
-            <button class="popup-btn clicked">Вылечить</button>
-            <button class="popup-btn">Отбелить</button>
-            <button class="popup-btn">Узнать</button>
-            <button class="popup-btn clicked">Вставить</button>
-            <button class="popup-btn">Другое</button>
-            <div class="clear"></div>
+        <div id="service-list" class="calendar-popup-box-menu"><?
+            foreach ($this->services as $service) : ?>
+                <button class="popup-btn" data-id="<?=$service->getId()?>"><?=$service->getName()?></button><?
+            endforeach
+            ?><div class="clear"></div>
         </div>
         <div class="popup-doctors-box">
-            <?=$this->partial('blocks/index/parts/calendar/popup-item.phtml',array(
-                'itemStatus'=>'activated'
-            ));?>
-            <?=$this->partial('blocks/index/parts/calendar/popup-item.phtml');?>
-            <?=$this->partial('blocks/index/parts/calendar/popup-item.phtml');?>
-            <?=$this->partial('blocks/index/parts/calendar/popup-item.phtml');?>
-            <?=$this->partial('blocks/index/parts/calendar/popup-item.phtml');?>
             <div class="clear"></div>
         </div>
-        <div class="popup-client-box">
-            <div class="popup-client-box-item">
-                <input type="text" placeholder="Имя"/>
+        <form action="" id="reservation-form" style="display: none">
+            <div class="popup-client-box">
+                <div class="popup-client-box-item">
+                    <input name="visitor-name" id="visitor-name" type="text" placeholder="Имя"/>
+                </div>
+                <div class="popup-client-box-item">
+                    <input name="visitor-phone" id="visitor-phone" type="text" placeholder="Телефон"/>
+                </div>
+                <div class="popup-client-box-item">
+                    <input id="submit-button" class="button popup-send-btn" type="button" value="Записатся"/>
+                </div>
             </div>
-            <div class="popup-client-box-item">
-                <input type="text" placeholder="Телефон"/>
-            </div>
-            <div class="popup-client-box-item">
-                <input class="button popup-send-btn" type="button" value="Записатся"/>
-            </div>
-        </div>
+        </form>
     </div>
 </div>

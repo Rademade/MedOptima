@@ -9,7 +9,7 @@ class Application_Model_Medical_Doctor_Search_Conditions
 
     public function isWorkingAt(MedOptima_DateTime $date) {
         $this->_getJoin()->add('join', 'medicalDoctorWorkTime', 'medicalDoctors', 'idDoctor');
-        $this->_getWhere()->add('weekDay', '=', $date->getWeekday());
+        $this->_getWhere()->add('weekday', '=', $date->getWeekday());
     }
 
     public function providesServices($services) {
@@ -21,6 +21,11 @@ class Application_Model_Medical_Doctor_Search_Conditions
 
     public function groupByDoctor() {
         $this->_getGroup()->add('idDoctor');
+    }
+
+    public function setId($id) {
+        $id = (int)$id;
+        $this->_getWhere()->add('idDoctor', '=', $id);
     }
 
 }

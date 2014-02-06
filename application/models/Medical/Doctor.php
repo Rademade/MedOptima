@@ -210,6 +210,9 @@ class Application_Model_Medical_Doctor
         return $this->getPostCollection()->getToItems();
     }
 
+    /**
+     * @return Application_Model_Medical_Service[]
+     */
     public function getServices() {
         return $this->getServiceCollection()->getToItems();
     }

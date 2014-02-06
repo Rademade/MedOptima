@@ -1,17 +1,13 @@
 <div class="fix">
     <?=$this->render('blocks/index/parts/banner.phtml')?>
     <?=$this->render('blocks/index/parts/text-box.phtml')?>
-    <div id="visit-date"></div>
     <?=$this->render('blocks/index/parts/calendar/main.phtml')?>
+<!--    --><?//=$this->render('blocks/index/parts/calendar/jquery-calendar.phtml')?>
 </div>
 <?=$this->render('blocks/index/parts/map.phtml')?>
 <?echo $this->headScript()->captureStart();
-    ?>$(function() {
-        $("#visit-date").datepicker({
-            dateFormat : "dd.mm.yy",
-            numberOfMonths : 1,
-            firstDay : 1,
-            minDate : '+0d'
-        });
+    ?>$(function(){
+        var $widget = $('#reservation-widget');
+        MedOptima.prototype.ReservationWidget.init($widget.find('#calendar'), $widget.find('#reservation'));
     });<?
 echo $this->headScript()->captureEnd();

@@ -172,11 +172,11 @@ class Application_Model_Api_Google_AccessToken
     }
 
     public function isAlmostExpired() {
-        return MedOptima_Date_Time::create()->getTimestamp() > $this->getTimeExpires() + self::TOKEN_ALMOST_EXPIRE_TIME;
+        return MedOptima_DateTime::create()->getTimestamp() > $this->getTimeExpires() + self::TOKEN_ALMOST_EXPIRE_TIME;
     }
 
     public function isExpired() {
-        return MedOptima_Date_Time::create()->getTimestamp() > $this->getTimeExpires();
+        return MedOptima_DateTime::create()->getTimestamp() > $this->getTimeExpires();
     }
 
     public function getIdDoctor() {

@@ -86,7 +86,7 @@ class Application_Model_Medical_Reservation
 
     public static function create() {
         $reservation = new self(new RM_Compositor(array(
-            'createTime' => MedOptima_Date_Time::currentTimestamp()
+            'createTime' => MedOptima_DateTime::currentTimestamp()
         )));
         return $reservation;
     }
@@ -96,7 +96,7 @@ class Application_Model_Medical_Reservation
     }
 
     public function save() {
-        $this->_dataWorker->setValue('lastSaveTime', MedOptima_Date_Time::currentTimestamp());
+        $this->_dataWorker->setValue('lastSaveTime', MedOptima_DateTime::currentTimestamp());
         $this->_dataWorker->save();
         $this->getServiceCollection()->save();
         $this->__refreshCache();
@@ -192,7 +192,7 @@ class Application_Model_Medical_Reservation
 
     public function setDesiredVisitTime($time) {
         $time = (int)$time;
-        if ( $time < MedOptima_Date_Time::currentTimestamp() ) {
+        if ( $time < MedOptima_DateTime::currentTimestamp() ) {
             throw new Exception('Invalid visit time');
         }
         $this->_dataWorker->setValue('desiredVisitTime', $time);

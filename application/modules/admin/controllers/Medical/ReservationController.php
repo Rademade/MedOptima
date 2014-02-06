@@ -1,5 +1,5 @@
 <?php
-use MedOptima_Date_Time as DateTime;
+use MedOptima_DateTime as DateTime;
 use Application_Model_Medical_Reservation as Reservation;
 
 class Admin_Medical_ReservationController
@@ -86,9 +86,11 @@ class Admin_Medical_ReservationController
         if ( $finalVisitTime->getTimestamp() > $visitEndTime->getTimestamp() ) {
             throw new Exception('Время приема не может быть позже времени окончания приема');
         }
-        if ( $this->_entity->getFinalVisitTime() != $finalVisitTime->getTimestamp() ) {
-            $service = new MedOptima_Service_Doctor_WorkSchedule($this->_entity->getDoctor());
-            if ( !$service->isAvailableAt($finalVisitTime, [(int)$this->_entity->getId()]) ) {
+        $timeChanged = false || $this->_entity->getFinalVisitTime() != $finalVisitTime->getTimestamp();
+        $timeChanged = $timeChanged || $this->_entity->getVisitEndTime() != $visitEndTime->getTimestamp();
+        if ( $timeChanged ) {
+            $schedule = $this->_entity->getDoctor()->getSchedule($finalVisitTime);
+            if (!$schedule->isAvailable($finalVisitTime, $visitEndTime, [(int)$this->_entity->getId()])) {
                 throw new Exception('В это время доктор не принимает или занят');
             }
         }

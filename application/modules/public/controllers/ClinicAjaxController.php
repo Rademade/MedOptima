@@ -13,7 +13,7 @@ class ClinicAjaxController
                 $feedback->setVisitorName($data->visitor_name);
                 $feedback->setVisitorPhone($data->visitor_phone);
                 $feedback->setContent($data->visitor_feedback);
-                $feedback->setDatePosted(MedOptima_Date_Time::create()->getMysqlDate());
+                $feedback->setDatePosted(MedOptima_DateTime::create()->getMysqlDate());
                 $feedback->setStatus(Application_Model_Feedback::STATUS_NOT_PROCESSED);
                 $feedback->save();
                 $this->_result->status = 1;

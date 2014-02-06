@@ -214,10 +214,8 @@ class Application_Model_Medical_Doctor
         return $this->getServiceCollection()->getToItems();
     }
 
-    public function getSchedule(MedOptima_Date_Time $date = null) {
-        $workTimeList = (new Application_Model_Medical_Doctor_WorkTime_Search_Repository())
-            ->getDoctorWorkTimeList($this, $date);
-        return new Application_Model_Medical_Doctor_Schedule($this, $workTimeList);
+    public function getSchedule(MedOptima_DateTime $date) {
+        return new Application_Model_Medical_Doctor_Schedule($this, $date);
     }
 
     public function getIdUser() {
@@ -242,10 +240,12 @@ class Application_Model_Medical_Doctor
     }
 
     public function getReceptionDuration() {
-        return $this->_dataWorker->getValue('receptionDuration');
+        return new MedOptima_DateTime_Duration_InsideDay(
+            $this->_dataWorker->getValue('receptionDuration')
+        );
     }
 
-    public function setReceptionDuration($duration) {
+    public function setReceptionDuration(MedOptima_DateTime_Duration_InsideDay $duration) {
         $this->_dataWorker->setValue('receptionDuration', $duration);
     }
 
@@ -255,6 +255,14 @@ class Application_Model_Medical_Doctor
 
     public function setLastSyncTime($time) {
         $this->_dataWorker->setValue('lastSyncTime', $time);
+    }
+
+    /**
+     * @param MedOptima_DateTime $date
+     * @return Application_Model_Medical_Doctor_WorkTime[]
+     */
+    public function getWorkTimeList(MedOptima_DateTime $date = null) {
+        return (new Application_Model_Medical_Doctor_WorkTime_Search_Repository)->getDoctorWorkTimeList($this, $date);
     }
 
     protected function __setIdUser($id) {

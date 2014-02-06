@@ -2,7 +2,7 @@
 
 use Application_Model_Medical_Reservation as Reservation;
 use MedOptima_Service_Google_Calendar as CalendarService;
-use MedOptima_Date_Time as DateTime;
+use MedOptima_DateTime as DateTime;
 
 class MedOptima_Service_Google_Calendar_Sync {
 

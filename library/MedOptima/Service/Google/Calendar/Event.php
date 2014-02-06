@@ -4,7 +4,7 @@ require_once LIBRARY_PATH . '/GoogleAPI/src/Google_Client.php';
 require_once LIBRARY_PATH . '/GoogleAPI/src/contrib/Google_CalendarService.php';
 
 use Application_Model_Medical_Reservation as Reservation;
-use MedOptima_Date_Time as DateTime;
+use MedOptima_DateTime as DateTime;
 
 class MedOptima_Service_Google_Calendar_Event {
 

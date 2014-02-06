@@ -9,8 +9,8 @@ class Application_Model_Medical_Doctor_WorkTime_Search_Conditions
         $this->_getWhere()->add('idDoctor', '=', $doctor->getId());
     }
 
-    public function setWeekDay($weekDay) {
-        $this->_getWhere()->add('weekDay', '=', $weekDay);
+    public function setWeekday($weekDay) {
+        $this->_getWhere()->add('weekday', '=', $weekDay);
     }
 
 }

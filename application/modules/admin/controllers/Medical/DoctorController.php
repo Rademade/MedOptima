@@ -88,11 +88,9 @@ class Admin_Medical_DoctorController
         $_POST['id_services'] = array_map(function(Application_Model_Medical_Service $service) {
             return $service->getId();
         }, $this->_entity->getServices());
-        $_POST['schedule'] = $this->_entity->getSchedule()->toArray();
+        $_POST['work_time_list'] = (new MedOptima_Service_Doctor_WorkTime)->listToArray($this->_entity->getWorkTimeList());
         $_POST['id_user'] = $this->_entity->getIdUser();
-        $_POST['reception_duration'] =
-            MedOptima_Date_Time::timeToSeconds($this->_entity->getReceptionDuration())
-            ? $this->_entity->getReceptionDuration() : '00:00';
+        $_POST['reception_duration'] = $this->_entity->getReceptionDuration()->getTimestamp();
     }
 
     protected function __setData(stdClass $data) {
@@ -121,15 +119,24 @@ class Admin_Medical_DoctorController
                 $serviceCollection->add($service);
             }
         }
-        $schedule = $this->_entity->getSchedule();
-        $schedule->reset()->addWorkTimeListFromData($data->schedule)->save();
+        $this->_setDoctorWorkTime($data);
         $user = Application_Model_User_Profile::getById($data->id_user);
         if ( $user instanceof Application_Model_User_Profile ) {
             $this->_entity->setUser($user);
         } else {
             $this->_entity->resetUser();
         }
-        $this->_entity->setReceptionDuration($data->reception_duration);
+        $this->_entity->setReceptionDuration(
+            new MedOptima_DateTime_Duration_InsideDay((int)$data->reception_duration)
+        );
+    }
+
+    private function _setDoctorWorkTime(stdClass $data) {
+        $workTimeService = new MedOptima_Service_Doctor_WorkTime;
+        $workTimeService->removeList($this->_entity->getWorkTimeList());
+        $workTimeService->saveList(
+            $workTimeService->createListFromArray($this->_entity, $data->work_time_list)
+        );
     }
 
 }

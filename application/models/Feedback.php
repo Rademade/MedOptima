@@ -145,7 +145,7 @@ class Application_Model_Feedback
     }
 
     public function setDatePosted($date) {
-        $this->_dataWorker->setValue('datePosted', MedOptima_Date_Time::toMysqlDate($date));
+        $this->_dataWorker->setValue('datePosted', MedOptima_DateTime::toMysqlDate($date));
     }
 
     public function isShownOnMain() {

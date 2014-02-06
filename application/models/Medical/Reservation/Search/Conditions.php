@@ -11,7 +11,7 @@ class Application_Model_Medical_Reservation_Search_Conditions
         $this->_getWhere()->add('idDoctor', '=', $doctor->getId());
     }
 
-    public function setTimeOverlapsWith(MedOptima_Date_Time $fromDateTime, MedOptima_Date_Time $toDateTime) {
+    public function setTimeOverlapsWith(MedOptima_DateTime $fromDateTime, MedOptima_DateTime $toDateTime) {
         $from = $fromDateTime->getTimestamp();
         $to = $toDateTime->getTimestamp();
         $firstOr = new RM_Query_Where();
@@ -40,7 +40,7 @@ class Application_Model_Medical_Reservation_Search_Conditions
     }
 
     public function onlyActive() {
-        $this->_getWhere()->add('finalVisitTime', '>', MedOptima_Date_Time::create()->getTimestamp());
+        $this->_getWhere()->add('finalVisitTime', '>', MedOptima_DateTime::create()->getTimestamp());
     }
 
     public function setAccepted() {

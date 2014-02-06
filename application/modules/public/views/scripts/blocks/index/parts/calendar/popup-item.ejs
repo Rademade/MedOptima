@@ -1,0 +1,18 @@
+<script type="ejs/template" id="doctor-ejs">
+    <div class="popup-doctors-box-item" data-id="<%=doctor.id%>">
+        <div class="popup-doctors-box-item-img">
+            <img src="<%=doctor.photo%>" alt=""/>
+        </div>
+        <div class="popup-doctors-box-item-name"><%=doctor.name%></div>
+        <div class="popup-doctors-box-item-post"><%=doctor.posts%></div>
+        <div class="popup-doctors-box-schedule"><%
+            for (var i = 0; i < doctor.schedule.length; ++i) { %>
+                <button class="popup-schedule-time<%=
+                    doctor.schedule[i].available ? '' : ' off'%>" data-time="<%=doctor.schedule[i].time%>">
+                    <%=doctor.schedule[i].time
+                %></button><%
+            }
+        %></div>
+        <span class="popup-box-close-link"><i class="ico popup-box-close-link-ico"></i></span>
+    </div>
+</script>

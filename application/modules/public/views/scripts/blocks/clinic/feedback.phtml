@@ -4,7 +4,7 @@ if ($feedback instanceof Application_Model_Feedback) : ?>
     <div class="comments-item">
         <div class="comments-item-author">
             <div class="comments-item-author-name"><?=$feedback->getVisitorName()?></div>
-            <div class="comments-item-author-post"><?=MedOptima_Date_Time::toGostPrettyDate($feedback->getDatePosted())?></div>
+            <div class="comments-item-author-post"><?=MedOptima_DateTime::toGostPrettyDate($feedback->getDatePosted())?></div>
         </div>
         <div class="comments-item-text">
             <div class="simple-text">

@@ -26,6 +26,7 @@
                 "phoneMask": '<?=Zend_Registry::get('cfg')['validation']['mask']['phone']?>'
             };
         </script><?
+        echo $this->render('blocks/index/parts/calendar/popup-item.ejs');
         echo $this->headScript();
         echo $this->render('blocks/loader/ajax.phtml');
         ?><script type="text/javascript">

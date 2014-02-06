@@ -37,43 +37,29 @@ class Application_Model_Medical_Doctor_Schedule
             $to = clone $from;
             $to->addSeconds( $this->_doctor->getReceptionDuration()->getTimestamp() );
         }
-        if ( !$this->_isWorkingAt($from) || !$this->_isWorkingAt($to) ) {
+        if ( !$this->isWorkingAt($from) || !$this->isWorkingAt($to) ) {
             return false;
         }
-        return !$this->_reservationService->hasReservationsBetween($from, $to, $excludeReservations);;
+        return !$this->_reservationService->hasReservationsBetween($from, $to, $excludeReservations);
     }
 
     public function jsonSerialize() {
-        $result = array();
-        $duration = $this->_doctor->getReceptionDuration()->getTimestamp();
-
-        $from = clone $this->_scheduleDate;
-        $to = clone $from;
-
-        foreach ($this->_workTimeList as $workTime) {
-            $from->setTime(0, 0);
-            $to->setTime(0, 0);
-            $to->addSeconds($duration);
-
-            $period = $workTime->getPeriod();
-            $time = $period->getTimestampBegin();
-            $from->addSeconds($time);
-            $to->addSeconds($time);
-
-            for (; $time < $period->getTimestampEnd(); $time += $duration) {
-                $result[$from->getTimestamp()] = array(
-                    'time' => $from->getGostTime(),
-                    'available' => !$this->_reservationService->hasReservationsBetween($from, $to)
-                );
-                $from->addSeconds($duration);
-                $to->addSeconds($duration);
-            }
-        }
-        ksort($result);
-        return array_values($result);
+        return (new MedOptima_DTO_Schedule($this))->jsonSerialize();
     }
 
-    private function _isWorkingAt(DateTime $dateTime) {
+    public function getDoctor() {
+        return $this->_doctor;
+    }
+
+    public function getDate() {
+        return $this->_scheduleDate;
+    }
+
+    public function getWorkTimeList() {
+        return $this->_workTimeList;
+    }
+
+    public function isWorkingAt(DateTime $dateTime) {
         foreach ($this->_workTimeList as $workTime) {
             if ($workTime->getPeriod()->includes($dateTime)) {
                 return true;

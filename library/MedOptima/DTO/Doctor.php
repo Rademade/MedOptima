@@ -13,7 +13,10 @@ class MedOptima_DTO_Doctor {
     public static function jsonSerializeList(array $doctors, MedOptima_DateTime $date = null) {
         $result = array();
         foreach ($doctors as $doctor) {
-            $result[] = (new self($doctor, $date))->jsonSerialize();
+            $serializedDoctor = (new self($doctor, $date))->jsonSerialize();
+            if ( $serializedDoctor ) {
+                $result[] = $serializedDoctor;
+            }
         }
         return $result;
     }
@@ -24,31 +27,40 @@ class MedOptima_DTO_Doctor {
         return $this;
     }
 
-    /**
-     *         id : undefined,
-     * name : undefined,
-     * photo : undefined,
-     * posts : [],
-     * schedule : []
-     */
     public function jsonSerialize() {
         $photo = $this->_doctor->getPhoto();
         $doctor = $this->_doctor;
-        $data = array(
+        $data = array();
+        if ($this->_addSchedule()) {
+            $schedule = $doctor->getSchedule($this->_date)->jsonSerialize();
+            if ($this->_isAvailable($schedule)) {
+                $data['schedule'] = $schedule;
+            } else {
+                return false;
+            }
+        }
+        $data = array_merge($data, array(
             'id' => $doctor->getId(),
             'name' => $doctor->getName(),
-            'photo' => $photo ? $photo->getPath(56, 56) : MedOptima_Photo::getDefaultDoctorPhoto()->getPath(56, 56),
+            'photo' => $photo ? $photo->getPath(56, 56) : MedOptima_Photo::getDefaultDoctorPhoto()->getPhotoPath(),
             'posts' => array_map(
                 function (Application_Model_Medical_Post $post) {
                     return $post->getName();
                 }, $doctor->getPosts())
-        );
-        if ($this->_addSchedule()) {
-            $data['schedule'] = (new MedOptima_Service_Doctor_WorkSchedule($doctor))->getAvailableTimeList($this->_date);
-        }
+        ));
         return $data;
     }
 
+    private function _isAvailable(array $schedule) {
+        $availCount = 0;
+        foreach ($schedule as $data) {
+            if ( $data['available'] ) {
+                ++$availCount;
+            }
+        }
+        return (bool)$availCount;
+    }
+    
     private function _addSchedule() {
         return $this->_date instanceof MedOptima_DateTime;
     }

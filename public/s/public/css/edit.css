@@ -12,3 +12,6 @@
     background: url('/s/public/images/loader.gif') 50% 50% no-repeat;
     min-height: inherit;
 }
+.ui-datepicker-prev, .ui-datepicker-next {
+    display: none;
+}

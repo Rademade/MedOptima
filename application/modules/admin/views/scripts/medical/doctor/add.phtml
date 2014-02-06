@@ -4,6 +4,7 @@ use Application_Model_Medical_Doctor as Doctor;
 $form = new RM_View_Form();
 $form->getLangPanel()->allLangs();
 
+//RM_TODO
 $time = $this->TimeSplitter()->splitTimeIntoHoursMinutes(15);
 if ( $this->doctor instanceof Doctor && !Application_Model_Api_Google_AccessToken::getByDoctor($this->doctor) ) : ?>
     <a href="<?=MedOptima_Service_Google_Config::getCalendarClient($this->doctor->getId())->createAuthUrl()?>"
@@ -30,12 +31,12 @@ $form
         'type' => 'option',
         'url' => $this->url([], 'admin-medical-service-ajax')
     )))
-    ->add(new MedOptima_Admin_View_Form_Field_MultiListSelect('График работы', 'schedule', 3, array(
-        MedOptima_Date_Time::getWeekDayNames(),
+    ->add(new MedOptima_Admin_View_Form_Field_MultiListSelect('График работы', 'work_time_list', 3, array(
+        MedOptima_DateTime::getWeekdayNames(),
         $time, $time
     )))
     ->add(new RM_View_Form_Field_Select('Средняя продолжительность приема', 'reception_duration',
-        $this->TimeSplitter()->splitTimeIntoHoursMinutes(45)
+        $this->DateTime_InsideDayDuration()->splitRange('00:00', '03:00', '00:15')
     ));
 
 echo $form->render();

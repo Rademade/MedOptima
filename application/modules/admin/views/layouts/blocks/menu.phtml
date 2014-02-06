@@ -23,41 +23,11 @@ if ($this->user instanceof RM_User_Interface) :
             'url' => $this->url(array(), 'admin-medical-doctor-list'),
             'menu' => 'medical-doctors'
         ),
-//        array(
-//            'name' => 'Города',
-//            'url' => $this->url(array(), 'admin-city-list'),
-//            'menu' => 'cities'
-//        ),
-//        array(
-//            'name' => 'Статические страницы',
-//            'subItems' => array(
-//                array(
-//                    'name' => 'Новости',
-//                    'url' => $this->url(array(), 'admin-news-list'),
-//                    'menu' => 'news'
-//                ),
-//                array(
-//                    'name' => 'Текстовые страницы',
-//                    'url' => $this->url(array(), 'admin-page-list'),
-//                    'menu' => 'pages'
-//                ),
-//                array(
-//                    'name' => 'Авторы',
-//                    'url' => $this->url(array(), 'admin-author-list'),
-//                    'menu' => 'authors'
-//                )
-//            )
-//        ),
-//        array(
-//            'name' => 'Опции страниц',
-//            'subItems' => array(
-//                array(
-//                    'name' => 'Теги',
-//                    'url' => $this->url(array(), 'admin-tag-list'),
-//                    'menu' => 'tags'
-//                )
-//            )
-//        ),
+        array(
+            'name' => 'Заявки',
+            'url' => $this->url(array(), 'admin-medical-reservation-list'),
+            'menu' => 'reservations'
+        ),
         array(
             'name' => 'Текстовые блоки',
             'url' => $this->url(array(), 'admin-text-block-list'),

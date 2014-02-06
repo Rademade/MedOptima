@@ -17,3 +17,31 @@ CREATE TABLE IF NOT EXISTS `medicalDoctors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 ALTER TABLE  `medicalDoctors` DROP  `isHead` ;
+
+
+-- 29.01.14
+
+ALTER TABLE  `medicalDoctors` ADD  `googleAccessToken` VARCHAR( 255 ) NOT NULL AFTER  `idPost` ;
+
+ALTER TABLE  `medicalDoctors` ADD  `googleAccessTokenTimeLeft` INT NOT NULL AFTER  `googleAccessToken` ;
+
+ALTER TABLE  `medicalDoctors` CHANGE  `googleAccessTokenTimeLeft`  `googleAccessTokenExpireTime` INT( 11 ) NOT NULL ;
+
+ALTER TABLE  `medicalDoctors` CHANGE  `googleAccessToken`  `googleAccessToken` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ;
+
+-- 31.01.14
+
+ALTER TABLE  `medicalDoctors` DROP  `googleAccessToken` ,
+DROP  `googleAccessTokenExpireTime` ;
+
+ALTER TABLE  `medicalDoctors` ADD  `idUser` INT NOT NULL AFTER  `idDoctor` ;
+
+-- 04.02.14
+
+ALTER TABLE  `medicalDoctors` ADD  `receptionDuration` INT NOT NULL AFTER  `idPost` ;
+
+ALTER TABLE  `medicalDoctors` ADD  `lastSyncTime` INT NOT NULL AFTER  `receptionDuration` ;
+
+ALTER TABLE  `medicalDoctors` CHANGE  `receptionDuration`  `receptionDuration` VARCHAR( 255 ) NOT NULL ;
+
+ALTER TABLE  `medicalDoctors` DROP  `idPost` ;

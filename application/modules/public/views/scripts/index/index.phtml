@@ -1,6 +1,17 @@
 <div class="fix">
     <?=$this->render('blocks/index/parts/banner.phtml')?>
     <?=$this->render('blocks/index/parts/text-box.phtml')?>
-<!--    --><?//=$this->render('blocks/index/parts/calendar/main.phtml')?>
+    <div id="visit-date"></div>
+    <?=$this->render('blocks/index/parts/calendar/main.phtml')?>
 </div>
 <?=$this->render('blocks/index/parts/map.phtml')?>
+<?echo $this->headScript()->captureStart();
+    ?>$(function() {
+        $("#visit-date").datepicker({
+            dateFormat : "dd.mm.yy",
+            numberOfMonths : 1,
+            firstDay : 1,
+            minDate : '+0d'
+        });
+    });<?
+echo $this->headScript()->captureEnd();

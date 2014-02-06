@@ -1,4 +1,6 @@
 <?php
+use Application_Model_User_Profile as User;
+
 class Application_Model_Medical_Doctor
     extends
         RM_Entity
@@ -18,13 +20,19 @@ class Application_Model_Medical_Doctor
             'id' => true,
             'type' => 'int'
         ),
+        'idUser' => array(
+            'type' => 'int'
+        ),
         'idContent' => array(
             'type' => 'int'
         ),
         'idPhoto' => array(
             'type' => 'int'
         ),
-        'idPost' => array(
+        'receptionDuration' => array(
+            'type' => 'string'
+        ),
+        'lastSyncTime' => array(
             'type' => 'int'
         ),
         'doctorStatus' => array(
@@ -59,9 +67,9 @@ class Application_Model_Medical_Doctor
     private $_postCollection;
 
     /**
-     * @var Application_Model_Medical_Doctor_Schedule
+     * @var User
      */
-    private $_schedule;
+    private $_user;
 
     public function __construct(stdClass $data) {
         $this->_dataWorker = new RM_Entity_Worker_Data(get_class(), $data);
@@ -206,11 +214,59 @@ class Application_Model_Medical_Doctor
         return $this->getServiceCollection()->getToItems();
     }
 
-    public function getSchedule() {
-        if (is_null($this->_schedule)) {
-            $this->_schedule = new Application_Model_Medical_Doctor_Schedule($this);
+    public function getSchedule(MedOptima_DateTime $date) {
+        return new Application_Model_Medical_Doctor_Schedule($this, $date);
+    }
+
+    public function getIdUser() {
+        return $this->_dataWorker->getValue('idUser');
+    }
+
+    public function getUser() {
+        if (!$this->_user && $this->getIdUser()) {
+            $this->_user = User::getById($this->getIdUser());
         }
-        return $this->_schedule;
+        return $this->_user;
+    }
+
+    public function setUser(User $user) {
+        $this->_user = $user;
+        $this->__setIdUser($user->getId());
+    }
+
+    public function resetUser() {
+        $this->_user = null;
+        $this->__setIdUser(0);
+    }
+
+    public function getReceptionDuration() {
+        return new MedOptima_DateTime_Duration_InsideDay(
+            $this->_dataWorker->getValue('receptionDuration')
+        );
+    }
+
+    public function setReceptionDuration(MedOptima_DateTime_Duration_InsideDay $duration) {
+        $this->_dataWorker->setValue('receptionDuration', $duration);
+    }
+
+    public function getLastSyncTime() {
+        return $this->_dataWorker->getValue('lastSyncTime');
+    }
+
+    public function setLastSyncTime($time) {
+        $this->_dataWorker->setValue('lastSyncTime', $time);
+    }
+
+    /**
+     * @param MedOptima_DateTime $date
+     * @return Application_Model_Medical_Doctor_WorkTime[]
+     */
+    public function getWorkTimeList(MedOptima_DateTime $date = null) {
+        return (new Application_Model_Medical_Doctor_WorkTime_Search_Repository)->getDoctorWorkTimeList($this, $date);
+    }
+
+    protected function __setIdUser($id) {
+        $this->_dataWorker->setValue('idUser', $id);
     }
 
     protected function __setIdContent($idContent) {

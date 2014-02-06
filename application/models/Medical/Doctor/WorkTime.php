@@ -1,5 +1,5 @@
 <?php
-use MedOptima_Date_Time as DateTime;
+use MedOptima_DateTime as DateTime;
 use Application_Model_Medical_Doctor as Doctor;
 
 class Application_Model_Medical_Doctor_WorkTime
@@ -19,7 +19,7 @@ class Application_Model_Medical_Doctor_WorkTime
         'idDoctor' => array(
             'type' => 'int'
         ),
-        'weekDay' => array(
+        'weekday' => array(
             'type' => 'int'
         ),
         'timeBegin' => array(
@@ -79,32 +79,19 @@ class Application_Model_Medical_Doctor_WorkTime
         $this->__cleanCache();
     }
 
-    public function setTimeBegin($time) {
-        $this->_dataWorker->setValue('timeBegin', DateTime::toMySqlTime($time));
+    public function getPeriod() {
+        //RM_TODO lazy load
+        return new MedOptima_DateTime_WeekdayPeriod(
+            $this->_getWeekday(),
+            $this->_getTimeBegin(),
+            $this->_getTimeEnd()
+        );
     }
 
-    public function setTimeEnd($time) {
-        $this->_dataWorker->setValue('timeEnd', DateTime::toMySqlTime($time));
-    }
-
-    public function getTimeBegin() {
-        return $this->_dataWorker->getValue('timeBegin');
-    }
-
-    public function getTimeEnd() {
-        return $this->_dataWorker->getValue('timeEnd');
-    }
-
-    public function setWeekDay($day) {
-        if ( isset(DateTime::getWeekDayNames()[$day]) ) {
-            $this->_dataWorker->setValue('weekDay', $day);
-        } else {
-            throw new Exception('Invalid week day');
-        }
-    }
-
-    public function getWeekDay() {
-        return $this->_dataWorker->getValue('weekDay');
+    public function setPeriod(MedOptima_DateTime_WeekdayPeriod $period) {
+        $this->_setWeekday($period->getWeekday());
+        $this->_setTimeBegin($period->getTimeBegin());
+        $this->_setTimeEnd($period->getTimeEnd());
     }
 
     public function getIdDoctor() {
@@ -125,6 +112,30 @@ class Application_Model_Medical_Doctor_WorkTime
 
     protected function __setIdDoctor($id) {
         $this->_dataWorker->setValue('idDoctor', $id);
+    }
+
+    private function _setTimeBegin($time) {
+        $this->_dataWorker->setValue('timeBegin', DateTime::toMySqlTime($time));
+    }
+
+    private function _setTimeEnd($time) {
+        $this->_dataWorker->setValue('timeEnd', DateTime::toMySqlTime($time));
+    }
+
+    private function _getTimeBegin() {
+        return $this->_dataWorker->getValue('timeBegin');
+    }
+
+    private function _getTimeEnd() {
+        return $this->_dataWorker->getValue('timeEnd');
+    }
+
+    private function _setWeekday($day) {
+        $this->_dataWorker->setValue('weekday', $day);
+    }
+
+    private function _getWeekday() {
+        return $this->_dataWorker->getValue('weekday');
     }
 
 }

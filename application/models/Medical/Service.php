@@ -41,6 +41,11 @@ class Application_Model_Medical_Service
      */
     private $_doctorCollection;
 
+    /**
+     * @var RM_Entity_ToMany_Reverse_Proxy
+     */
+    private $_reservationCollection;
+
     public function __construct(stdClass $data) {
         $this->_dataWorker = new RM_Entity_Worker_Data(get_class(), $data);
         $this->_cacheWorker = new RM_Entity_Worker_Cache(get_class());
@@ -60,6 +65,7 @@ class Application_Model_Medical_Service
         $this->__setIdContent($this->getContentManager()->save()->getId());
         $this->_dataWorker->save();
         $this->getDoctorCollection()->save();
+        $this->getReservationCollection()->save();
         $this->__refreshCache();
     }
 
@@ -83,6 +89,7 @@ class Application_Model_Medical_Service
         $this->save();
         $this->getContentManager()->remove();
         $this->getDoctorCollection()->resetItems();
+        $this->getReservationCollection()->resetItems();
         $this->__cleanCache();
     }
 
@@ -92,9 +99,16 @@ class Application_Model_Medical_Service
 
     public function getDoctorCollection() {
         if (is_null($this->_doctorCollection)) {
-            $this->_doctorCollection = RM_Entity_ToMany_Reverse_Proxy::get($this, 'Application_Model_Medical_Doctor_Post');
+            $this->_doctorCollection = RM_Entity_ToMany_Reverse_Proxy::get($this, 'Application_Model_Medical_Doctor_Service');
         }
         return $this->_doctorCollection;
+    }
+
+    public function getReservationCollection() {
+        if (is_null($this->_reservationCollection)) {
+            $this->_reservationCollection = RM_Entity_ToMany_Reverse_Proxy::get($this, 'Application_Model_Medical_Reservation_Service');
+        }
+        return $this->_reservationCollection;
     }
 
     public function getDoctors() {

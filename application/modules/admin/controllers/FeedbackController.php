@@ -47,7 +47,7 @@ class Admin_FeedbackController
             $_POST['visitor_name'] = $this->_entity->getVisitorName();
             $_POST['visitor_phone'] = $this->_entity->getVisitorPhone();
             $_POST['feedback_content'] = $this->_entity->getContent();
-            $_POST['date_posted'] = MedOptima_Date_Time::toGostDate($this->_entity->getDatePosted());
+            $_POST['date_posted'] = MedOptima_DateTime::toGostDate($this->_entity->getDatePosted());
             $_POST['show_on_main'] = $this->_entity->isShownOnMain();
         }
     }

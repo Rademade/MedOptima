@@ -12,6 +12,15 @@ class Application_Model_Medical_Doctor_Search_Repository
         return $this->__getEntitySearch($conditions)->getResults();
     }
 
+    public function getWorkingDoctorsWithServices(MedOptima_DateTime $date, array $services) {
+        $conditions = $this->__getConditionClass();
+        $conditions->onlyShown();
+        $conditions->isWorkingAt($date);
+        $conditions->providesServices($services);
+        $conditions->groupByDoctor();
+        return $this->__getEntitySearch($conditions)->getResults();
+    }
+
     protected function __getEntityClassName() {
         return 'Application_Model_Medical_Doctor';
     }

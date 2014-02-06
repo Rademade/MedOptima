@@ -14,6 +14,8 @@ class MedOptima_Date_Time extends DateTime {
     const TIME_FORMAT_MYSQL_SECONDS = 'H:i:s';
     const TIME_FORMAT_MYSQL_NO_SECONDS = 'H:i';
 
+    const DATETIME_FORMAT_GOOGLE_API = self::RFC3339;
+
     const WEEK_DAY_MONDAY = 1;
     const WEEK_DAY_TUESDAY = 2;
     const WEEK_DAY_WEDNESDAY = 3;
@@ -21,6 +23,8 @@ class MedOptima_Date_Time extends DateTime {
     const WEEK_DAY_FRIDAY = 5;
     const WEEK_DAY_SATURDAY = 6;
     const WEEK_DAY_SUNDAY = 7;
+
+    const DEFAULT_TIME_ZONE = 'Europe/Kiev';
 
     private static $_monthNames = array(
         1 => 'Январь',
@@ -64,6 +68,13 @@ class MedOptima_Date_Time extends DateTime {
     
     public static function create($datetime = 'now') {
         return self::constructDateTime($datetime);
+    }
+
+    public static function createFromTimestamp($time) {
+        $self = new self();
+        $self->setTimestamp($time);
+        $self->setTimezone(self::_getDefaultTimeZone());
+        return $self;
     }
 
     public static function toGostDate($date) {
@@ -142,6 +153,10 @@ class MedOptima_Date_Time extends DateTime {
         return self::$_weekDayNames;
     }
 
+    public static function currentTimestamp() {
+        return self::create()->getTimestamp();
+    }
+
     public function getMonth() {
         return $this->format('m');
     }
@@ -163,11 +178,50 @@ class MedOptima_Date_Time extends DateTime {
         return $this->format(self::DATE_FORMAT_GOST);
     }
 
+    public function getGostTime() {
+        return $this->format(self::TIME_FORMAT_GOST_NO_SECONDS);
+    }
+
+    public function getGostDatetime() {
+        return $this->format(self::DATETIME_FORMAT_GOST_NO_SECONDS);
+    }
+
+    public function getGoogleApiDatetime() {
+        return $this->format(self::DATETIME_FORMAT_GOOGLE_API);
+    }
+
+    public function getWeekday() {
+        return date('N', $this->getTimestamp());
+    }
+
     /**
      * @return MedOptima_Date_Time
      */
     public function addMonth() {
         return $this->add(new DateInterval('P1M'));
+    }
+
+    /**
+     * @param $minutes
+     * @return self
+     */
+    public function addMinutes($minutes) {
+        return $this->add(new DateInterval('PT' . $minutes . 'M'));
+    }
+
+    public function addSeconds($seconds) {
+        return $this->add(new DateInterval('PT' . $seconds . 'S'));
+    }
+
+    public function getTimeAsSeconds() {
+        $clone = clone $this;
+        $timestamp = $clone->getTimestamp();
+        $clone->setTime(0, 0);
+        return $timestamp - $clone->getTimestamp();
+    }
+
+    private static function _getDefaultTimeZone() {
+        return new DateTimeZone(self::DEFAULT_TIME_ZONE); //RM_TODO static
     }
 
     private static function _checkTime($hours, $minutes, $seconds) {
@@ -186,7 +240,7 @@ class MedOptima_Date_Time extends DateTime {
     }
 
     private static function constructDateTime($date) {
-        return new self($date);
+        return new self($date, self::_getDefaultTimeZone());
     }
     
 }

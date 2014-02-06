@@ -10,3 +10,7 @@ CREATE TABLE IF NOT EXISTS `medicalDoctorWorkTime` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 ALTER TABLE  `medicalDoctorWorkTime` ADD  `idDoctor` INT NOT NULL AFTER  `idWorkTime` ;
+
+-- 05.02.2014
+
+ALTER TABLE  `medicalDoctorWorkTime` CHANGE  `weekDay`  `weekday` INT( 11 ) NOT NULL ;

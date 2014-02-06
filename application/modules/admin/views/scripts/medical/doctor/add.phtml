@@ -1,10 +1,21 @@
 <?php
+use Application_Model_User_Profile as User;
+use Application_Model_Medical_Doctor as Doctor;
 $form = new RM_View_Form();
 $form->getLangPanel()->allLangs();
 
 $time = $this->TimeSplitter()->splitTimeIntoHoursMinutes(15);
+if ( $this->doctor instanceof Doctor && !Application_Model_Api_Google_AccessToken::getByDoctor($this->doctor) ) : ?>
+    <a href="<?=MedOptima_Service_Google_Config::getCalendarClient($this->doctor->getId())->createAuthUrl()?>"
+       class="main-links download-button">Link Google Account</a><?
+endif;
 
 $form
+    ->add( new RM_View_Form_Field_Select('Пользователь', 'id_user', array_merge(array(
+        0 => 'Отсутствует'
+    ), $this->toSelect(User::getList(), function (User $user) {
+        return $user->getFullName();
+    }) )))
     ->add(new RM_View_Form_Field_Image('Фото', 'id_photo', 0, 255, 175))
     ->add(new RM_View_Form_Field_Text('Имя', 'firstName', []))
     ->add(new RM_View_Form_Field_Text('Фамилия', 'secondName', []))
@@ -22,6 +33,9 @@ $form
     ->add(new MedOptima_Admin_View_Form_Field_MultiListSelect('График работы', 'schedule', 3, array(
         MedOptima_Date_Time::getWeekDayNames(),
         $time, $time
-    )));
+    )))
+    ->add(new RM_View_Form_Field_Select('Средняя продолжительность приема', 'reception_duration',
+        $this->TimeSplitter()->splitTimeIntoHoursMinutes(45)
+    ));
 
 echo $form->render();

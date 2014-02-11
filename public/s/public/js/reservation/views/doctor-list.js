@@ -15,6 +15,8 @@ MedOptima.prototype.ReservationViewDoctorList = Backbone.View.extend({
         var self = this;
         this.model.set('selectedDoctor', undefined);
         this.model.set('visitTime', undefined);
+
+        //RM_TODO make success fetch via trigger
         this.collection.fetch({
             data : self.model.getUpdateData(),
             reset : true,
@@ -64,7 +66,7 @@ MedOptima.prototype.ReservationViewDoctorList = Backbone.View.extend({
 
     _loadStart : function() {
         this.hide();
-        this._$loader.height(this.$el.height()).show();
+        this._$loader.height( this.$el.height() ).show();
     },
 
     _loadFinish : function() {
@@ -73,8 +75,7 @@ MedOptima.prototype.ReservationViewDoctorList = Backbone.View.extend({
     },
 
     _bindEvents : function() {
-        this.model.on('change:visitDate', this.update, this);
-        this.model.on('change:selectedServices', this.update, this);
+
     },
 
     _renderDoctor : function(doctorModel) {

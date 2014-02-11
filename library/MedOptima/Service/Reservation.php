@@ -4,8 +4,11 @@ use Application_Model_Medical_Reservation as Reservation;
 class MedOptima_Service_Reservation {
 
     private static $_requiredFields = array(
-        'visitDate', 'visitTime',
-        'selectedDoctor', 'visitorName', 'visitorPhone'
+        'visitDate',
+        'visitTime',
+        'selectedDoctor',
+        'visitorName',
+        'visitorPhone'
     );
 
     private $_data = [];
@@ -79,8 +82,8 @@ class MedOptima_Service_Reservation {
     }
 
     private function _prepareDoctor() {
-        $this->_doctor = (new Application_Model_Medical_Doctor_Search_Repository)
-            ->getShownById($this->_data['selectedDoctor']);
+        $this->_doctor = (new Application_Model_Medical_Doctor_Search_Repository)->getShownById($this->_data['selectedDoctor']);
+
         if (!$this->_doctor) {
             throw new Exception('Invalid doctor');
         }

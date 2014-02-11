@@ -18,6 +18,4 @@ MedOptima.prototype.ReservationModelDoctor = Backbone.Model.extend({
         });
     }
 
-}, {
-
 });

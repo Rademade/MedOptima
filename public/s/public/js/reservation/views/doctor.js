@@ -2,7 +2,7 @@ MedOptima.prototype.ReservationViewDoctor = Backbone.View.extend({
 
     events : {
         'click :not(.popup-doctors-box-schedule, .popup-doctors-box-schedule *, .popup-box-close-link, .popup-box-close-link *)' : '_selected',
-        //RM_TODO selector ^^^
+        //RM_TODO fix selector ^^^
         'click .popup-box-close-link' : '_closed',
         'click .popup-doctors-box-schedule button' : '_timeSelected'
     },

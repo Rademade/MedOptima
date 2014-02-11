@@ -5,12 +5,12 @@ MedOptima.prototype.ReservationWidget = Backbone.View.extend({
     dialog : undefined,
 
     initialize: function(data) {
-        _.extend(this, data);
-        this._bindEvents();
+        this._bindCalendarEvents();
+        this._bindModelEvents();
+        this._bindDialogEvents();
     },
 
     _dateSelected : function($dateContainer, dateView, dateModel) {
-        console.log('date selected');
         this.reservationView.$el.detach().appendTo($dateContainer);
         this.model.set('visitDate', dateModel.getFormattedDate());
         this.reservationView.show();
@@ -18,12 +18,10 @@ MedOptima.prototype.ReservationWidget = Backbone.View.extend({
     },
 
     _beforeMonthChanged : function() {
-        console.log('before month changed');
         this.reservationView.hide().$el.detach();
     },
 
     _dateReselected : function() {
-        console.log('date reselected');
         if (this.reservationView.visible()) {
             this.reservationView.hide();
         } else {
@@ -31,15 +29,14 @@ MedOptima.prototype.ReservationWidget = Backbone.View.extend({
         }
     },
 
-    _bindEvents : function() {
+    _bindCalendarEvents : function() {
         this.calendarWidget.on('dateSelect', this._dateSelected, this);
         this.calendarWidget.on('dateReselect', this._dateReselected, this);
         this.calendarWidget.on('beforeMonthChange', this._beforeMonthChanged, this);
-        this._bindModelEvents();
-        this._bindDialogEvents();
     },
 
     _bindModelEvents : function() {
+        //RM_TODO extract methods for event's!
         this.model
             .on('save remove', function() {
                 this.dialog.$errorMsg.hide();

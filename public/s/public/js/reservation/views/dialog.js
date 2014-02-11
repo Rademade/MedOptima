@@ -17,6 +17,7 @@ MedOptima.prototype.DialogView = Backbone.View.extend({
 
     _bindEvents : function() {
         var self = this;
+        //RM_TODO need move or extract other component
         this.$saveSuccessMsg.find('a').click(function(event) {
             event.preventDefault();
             self.trigger('removeButtonClick');

@@ -18,6 +18,7 @@ set   :shared_children,     ["application/configs/base",
                              "public/imagecache",
                              "public/s/public/upload",
                              "library/RM",
+                             "library/GoogleAPI",
                              "library/Zend"]
 
 set   :copy_exclude,        [".git", ".DS_Store", ".gitignore", ".gitmodules", "Capfile"]

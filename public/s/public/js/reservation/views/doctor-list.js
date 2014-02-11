@@ -4,7 +4,7 @@ MedOptima.prototype.ReservationViewDoctorList = Backbone.View.extend({
 
     initialize : function() {
         this._$loader = Med.cloneAjaxLoader().hide();
-        this.$el.after(this._$loader);
+        this.$el.after( this._$loader );
         this.collection.on('change:isSelected change:selectedTime', this._doctorChanged, this);
         this._bindEvents();
     },
@@ -35,9 +35,9 @@ MedOptima.prototype.ReservationViewDoctorList = Backbone.View.extend({
     },
 
     render : function() {
-        console.log('render');
         this.clear();
         if (!this.collection.size()) {
+            //RM_TODO move to other EJS template
             this.$el.append('<span class="popup-error-message">На это время нету свободных докторов</span>');
         } else {
             this.collection.each(this._renderDoctor, this);

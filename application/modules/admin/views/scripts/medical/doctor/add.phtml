@@ -24,13 +24,15 @@ $form
     ->add(new RM_View_Form_Field_Multiselect(
         'Должность',
         'id_posts',
-        $this->toSelect(Application_Model_Medical_Post::getList()), array()
+        $this->toSelect(Application_Model_Medical_Post::getList()),
+        []
     ))
-    ->add(new RM_View_Form_Field_ToMany('Услуги', 'id_services', array(), array(
-        'class' => 'Application_Model_Medical_Service',
-        'type' => 'option',
-        'url' => $this->url([], 'admin-medical-service-ajax')
-    )))
+    ->add(new RM_View_Form_Field_Multiselect(
+        'Услуги',
+        'id_services',
+        $this->toSelect(Application_Model_Medical_Service::getList()),
+        []
+    ))
     ->add(new MedOptima_Admin_View_Form_Field_MultiListSelect('График работы', 'work_time_list', 3, array(
         MedOptima_DateTime::getWeekdayNames(),
         $time, $time

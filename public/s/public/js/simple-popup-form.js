@@ -38,9 +38,6 @@ MedOptima.prototype.SimplePopupForm = function() {
         _.each(_fields, function($field, fieldName) {
             if ($field instanceof $) {
                 var method = ['set', Med.capitilizeFirst(fieldName), 'Validation'].join('');
-                if (fieldName == 'phone') {
-                    $field.mask(Med.getCfg().phoneMask);
-                }
                 validator[method]($field.attr('id'));
             }
         });
@@ -50,13 +47,13 @@ MedOptima.prototype.SimplePopupForm = function() {
     this.bindActivateButton = function() {
         var $activateButton = _$buttons.activateButton;
         var $formContainer = _$blocks.formContainer;
+
         $(document).mouseup(function(e) {
-            if (!$formContainer.is(e.target)
-                && $formContainer.has(e.target).length === 0
-            ) {
+            if (!$formContainer.is(e.target) && $formContainer.has(e.target).length === 0) {
                 $formContainer.fadeOut(200);
             }
         });
+
         $activateButton.click(function() {
             if (!$formContainer.is(":visible")) {
                 $formContainer.fadeIn(200);
@@ -97,24 +94,21 @@ MedOptima.prototype.SimplePopupForm = function() {
 
     this.showError = function() {
         Med.hideAjaxLoader(_$blocks.formContainer);
-        _$blocks.errorBox.find('.error-message').text(_tr.unknownError);
+        _$blocks.errorBox.find('.error-message').text( _tr.unknownError );
         _$blocks.errorBox.show();
     };
 
     this.showThank = function() {
         this.clearFields();
-        _$blocks.errorBox.fadeOut(200);
-        _$buttons.activateButton.slideUp();
-        setTimeout(function() {
-            _$blocks.thankYouBox.slideDown()
-        }, 500);
+        _$blocks.errorBox.hide();
+        _$buttons.activateButton.hide();
+        _$blocks.formContainer.hide();
+        _$blocks.thankYouBox.fadeIn( 400 );
     };
 
     this.clearFields = function() {
         _.each(_fields, function($field) {
-            if ($field instanceof $) {
-                $field.val('');
-            }
+            if ($field instanceof $) $field.val('');
         })
     };
 
@@ -122,7 +116,7 @@ MedOptima.prototype.SimplePopupForm = function() {
         var data = {};
         _.each(_fields, function($field) {
             if ($field instanceof $) {
-                data[$field.attr('data-alias')] = $field.val();
+                data[ $field.attr('data-alias') ] = $field.val();
             }
         });
         return data;
@@ -141,9 +135,9 @@ MedOptima.prototype.SimplePopupForm = function() {
 MedOptima.prototype.SimplePopupForm.init = function(ajaxUrl, fieldSelectors) {
     var form = new Med.SimplePopupForm();
 
-    var $formContainer = $('#form-container');
+    var $formContainer = $('.form-container');
     var $form = $formContainer.find('form');
-    var $errorBox = $formContainer.find('#error-box');
+    var $errorBox = $formContainer.find('.error-box');
 
     var fields = {};
     _.each(fieldSelectors, function(fieldSelector, fieldName) {
@@ -155,13 +149,13 @@ MedOptima.prototype.SimplePopupForm.init = function(ajaxUrl, fieldSelectors) {
         "formContainer": $formContainer,
         "form": $form,
         "errorBox": $errorBox,
-        "thankYouBox": $('#thank-you-box')
+        "thankYouBox": $('.thank-you-box')
     });
     form.setFields(fields);
     form.setButtons({
-        "submitButton": $form.find('#form-submit-button'),
-        "activateButton": $('#form-activate-button'),
-        "tryAgainButton": $errorBox.find('#form-try-again-button')
+        "submitButton": $form.find('.form-submit-button'),
+        "activateButton": $('.form-activate-button'),
+        "tryAgainButton": $errorBox.find('.form-try-again-button')
     });
     form.bindValidate();
     return form;

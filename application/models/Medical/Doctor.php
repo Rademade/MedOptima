@@ -123,13 +123,17 @@ class Application_Model_Medical_Doctor
         return $this->getFirstName() . ' ' . $this->getSecondName();
     }
 
+    public function hasPhoto() {
+        return $this->getIdPhoto() !== 0;
+    }
+
     public function getIdPhoto() {
         return $this->_dataWorker->getValue('idPhoto');
     }
 
     public function getPhoto() {
-        if (!$this->_photo && $this->getIdPhoto()) {
-            $this->_photo = RM_Photo::getById($this->getIdPhoto());
+        if (!$this->_photo) {
+            $this->_photo = $this->hasPhoto() ? RM_Photo::getById($this->getIdPhoto()) : $this->_getDefaultPhoto();
         }
         return $this->_photo;
     }
@@ -278,6 +282,10 @@ class Application_Model_Medical_Doctor
 
     protected function __setIdPhoto($id) {
         $this->_dataWorker->setValue('idPhoto', $id);
+    }
+
+    protected function _getDefaultPhoto() {
+        return MedOptima_Photo::getDefaultDoctorPhoto();
     }
 
 }

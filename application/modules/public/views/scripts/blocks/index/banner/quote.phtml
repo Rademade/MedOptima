@@ -1,16 +1,16 @@
 <?php
-/**
- * @var Application_Model_Banner $banner
- */
+use Application_Model_Banner as Banner;
+
+/* @var Banner $banner */
 $banner = $this->banner;
-$quote = $banner->getQuote();
-if ($banner instanceof Application_Model_Banner && $quote ) : ?>
-    <div class="photo-text-box">
-        <span class="photo-text-box-title"><?=$quote->getText()?></span>
+
+if ($banner instanceof Banner && $banner->hasQuote()) :
+    ?><div class="photo-text-box">
+        <span class="photo-text-box-title"><?=$banner->getQuote()->getText()?></span>
         <div class="photo-text-box-sign">
-            <span class="photo-text-box-doctor-name">— <?=$quote->getAuthor()?></span>
+            <span class="photo-text-box-doctor-name">— <?=$banner->getQuote()->getAuthor()?></span>
             <div class="clear"></div>
-            <span class="photo-text-box-doctor-status"><?=$quote->getAuthorPost()?></span>
+            <span class="photo-text-box-doctor-status"><?=$banner->getQuote()->getAuthorPost()?></span>
         </div>
     </div><?
 endif;

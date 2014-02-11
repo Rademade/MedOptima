@@ -1,49 +1,46 @@
 <?php
-$previewWidth = null;  //RM_TODO size of previews
-$previewHeight = null;
-$width = 1020;
-$height = 480;
+$fullWidth = 1020;
+$fullHeight = 480;
+
+$previewWidth = 160;
+$previewHeight = 80;
+
+/* @var Application_Model_Banner[] $banners */
 $banners = $this->banners;
-foreach ($banners as $key => &$banner) {
-    /** @var Application_Model_Banner $banner */
-    if ( $banner->getPhoto() ) {
-        $banner = array(
-            'photoUrl' => $banner->getPhoto()->getPath($width, $height),
-            'previewPhotoUrl' => $banner->getPhoto()->getPath($previewWidth, $previewHeight),
-            'banner' => $banner
-        );
-    } else {
-        unset($banners[$key]);
-    }
-}
+
 ?><div class="banner">
     <div class="banner-box">
         <div class="connected-carousels">
+
             <div class="stage">
                 <div class="carousel carousel-stage">
                     <ul><?
-                    foreach ($banners as $data) : ?>
-                        <li><?
-                            echo $this->partial('blocks/index/banner/quote.phtml', array(
-                                    'banner' => $data['banner']
-                                ));
-                            ?><img src="<?=$data['photoUrl']?>" width="<?=$width?>" height="<?=$height?>" alt="">
-                        </li><?
-                    endforeach
+                        foreach ($banners as $banner) :
+                            ?><li><?
+                                $imagePath = $banner->getPhoto()->getPath($fullWidth, $fullHeight);
+                                echo $this->partial('blocks/index/banner/quote.phtml', ['banner' => $banner]);
+                                ?><img src="<?=$imagePath?>" width="<?=$fullWidth?>" height="<?=$fullHeight?>" alt=""/>
+                            </li><?
+                        endforeach
                     ?></ul>
                 </div>
                 <a href="#" class="prev prev-stage"><span><i class="ico banner-prev-ico"></i></span></a>
                 <a href="#" class="next next-stage"><span><i class="ico banner-next-ico"></i></span></a>
             </div>
+
             <div class="navigation">
                 <div class="carousel carousel-navigation">
                     <ul><?
-                    foreach ($banners as $data) : ?>
-                        <li><img src="<?=$data['photoUrl']?>" width="<?=$previewWidth?>" height="<?=$previewHeight?>" alt=""></li><?
-                    endforeach
+                        foreach ($banners as $banner) :
+                            $previewImagePath = $banner->getPhoto()->getPath($previewWidth, $previewHeight);
+                            ?><li>
+                                <img src="<?=$previewImagePath?>" width="<?=$previewWidth?>" height="<?=$previewHeight?>" alt=""/>
+                            </li><?
+                        endforeach
                     ?></ul>
                 </div>
             </div>
+
         </div>
     </div>
     <div class="clear"></div>

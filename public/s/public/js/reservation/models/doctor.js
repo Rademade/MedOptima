@@ -1,11 +1,13 @@
 MedOptima.prototype.ReservationModelDoctor = Backbone.Model.extend({
 
-    attributes : {
+    defaults : {
         id : undefined,
         name : undefined,
         photo : undefined,
         posts : [],
-        schedule : []
+        schedule : [],
+        isSelected : false,
+        selectedTime : undefined
     },
 
     toJSON : function() {

@@ -9,6 +9,7 @@ class Application_Model_Medical_Reservation_Search_Repository
     public function getAllReservations() {
         $conditions = $this->__getConditionClass();
         $conditions->sortLastAdded();
+        $conditions->exceptDeclinedByVisitor();
         return $this->__getEntitySearch($conditions)->getResults();
     }
 

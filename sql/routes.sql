@@ -23,3 +23,22 @@ INSERT INTO `routing` (`idRoute`, `type`, `name`, `module`, `controller`, `actio
 
 INSERT INTO `routing` (`idRoute`, `type`, `name`, `module`, `controller`, `action`, `url`, `defaultParams`, `routeStatus`) VALUES
 (1008, 1, 'create-reservation-ajax', 'public', 'reservation-ajax', 'create', '/reservation/create/ajax', '{}', 1);
+
+INSERT INTO  `medoptima`.`routing` (
+`idRoute` ,
+`type` ,
+`name` ,
+`module` ,
+`controller` ,
+`action` ,
+`url` ,
+`defaultParams` ,
+`routeStatus`
+)
+VALUES (
+NULL ,  '1',  'remove-reservation-ajax',  'public',  'reservation-ajax',  'remove',  '/reservation/remove/ajax',  '{}',  '1'
+);
+
+UPDATE  `medoptima`.`routing` SET  `name` =  'save-reservation-ajax',
+`action` =  'save',
+`url` =  '/reservation/save/ajax' WHERE  `routing`.`idRoute` =1008;

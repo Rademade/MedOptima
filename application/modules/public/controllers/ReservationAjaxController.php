@@ -22,16 +22,38 @@ class ReservationAjaxController
         }
     }
 
-    public function createAction() {
+    public function saveAction() {
         $this->_setResponseJSON();
         $this->_result->status = 0;
         if ($this->getRequest()->isPost()) {
-//            try {
-                if ((new MedOptima_Service_Reservation((array)$this->_data))->createReservation()) {
-                    $this->_result->status = 1;
+            try {
+                $data = (array)$this->_data;
+                $service = new MedOptima_Service_Reservation($data);
+                if (isset($data['id']) && $data['id'] > 0) {
+                    $this->_result->id = $service->restore($data['id']);
+                } else {
+                    $this->_result->id = $service->create();
                 }
-//            } catch (Exception $e) {
-//            }
+                $this->_result->status = 1;
+            } catch (Exception $e) {
+                $this->_result->errorMessage = $e->getMessage();
+            }
+        }
+    }
+
+    public function removeAction() {
+        $this->_setResponseJSON();
+        if ($this->getRequest()->isPost()) {
+            try {
+                $data = (array)$this->_data;
+                $service = new MedOptima_Service_Reservation($data);
+                if (isset($data['id'])) {
+                    $this->_result->id = $service->remove($data['id']);
+                }
+                $this->_result->status = 1;
+            } catch (Exception $e) {
+                $this->_result->errorMessage = $e->getMessage();
+            }
         }
     }
 

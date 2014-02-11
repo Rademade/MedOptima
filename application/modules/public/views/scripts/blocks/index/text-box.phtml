@@ -1,6 +1,6 @@
 <div class="index-text-box"><?
     foreach ($this->feedbacks as $feedback) :
-        echo $this->partial('blocks/index/parts/feedback.phtml', array(
+        echo $this->partial('blocks/index/feedback.phtml', array(
             'feedback' => $feedback
         ));
     endforeach

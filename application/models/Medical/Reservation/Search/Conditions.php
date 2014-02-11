@@ -28,7 +28,7 @@ class Application_Model_Medical_Reservation_Search_Conditions
             ->add('finalVisitTime', '<', $to);
         $fourthOr = new RM_Query_Where();
         $fourthOr
-            ->add('visitEndTime', '>=', $from)
+            ->add('visitEndTime', '>', $from)
             ->add('visitEndTime', '<', $to);
         $where = new RM_Query_Where();
         $where
@@ -45,6 +45,14 @@ class Application_Model_Medical_Reservation_Search_Conditions
 
     public function setAccepted() {
         $this->_getWhere()->add('reservationStatus', '=', Application_Model_Medical_Reservation::STATUS_ACCEPTED);
+    }
+
+    public function exceptDeclinedByVisitor() {
+        $this->_getWhere()->add('reservationStatus', '!=', Application_Model_Medical_Reservation::STATUS_DECLINED_BY_VISITOR);
+    }
+
+    public function setId($id) {
+        $this->_getWhere()->add('idReservation', '=', $id);
     }
 
 }

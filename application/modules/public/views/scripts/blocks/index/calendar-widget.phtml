@@ -1,0 +1,39 @@
+<div id="calendar-widget" class="calendar">
+    <div class="calendar-title">Запись на приём</div>
+    <div class="calendar-data-container">
+        <div class="calendar-widget-left">
+            <div class="calendar-widget-nav-button-prev calendar-prev-month-link">
+                <i class="ico prev-month-link-ico"></i>
+                <span class="calendar-widget-nav-button-label">Январь</span>
+            </div>
+        </div>
+        <div class="calendar-widget-middle calendar-box">
+            <div class="calendar-widget-month-container">
+                <div class="calendar-widget-month-label calendar-box-month-title">Февраль 2014</div>
+                <div class="calendar-widget-weekdays calendar-box-week-title">
+                    <div class="calendar-widget-weekday calendar-box-week-date">Пн</div>
+                    <div class="calendar-widget-weekday calendar-box-week-date">Вт</div>
+                    <div class="calendar-widget-weekday calendar-box-week-date">Ср</div>
+                    <div class="calendar-widget-weekday calendar-box-week-date">Чт</div>
+                    <div class="calendar-widget-weekday calendar-box-week-date">Пт</div>
+                    <div class="calendar-widget-weekday calendar-box-week-date">Сб</div>
+                    <div class="calendar-widget-weekday calendar-box-week-date off-week-date">Вс</div>
+                    <div class="clear"></div>
+                </div>
+                <div class="calendar-widget-month calendar-box-date">
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="calendar-widget-today-button calendar-current-day-link">
+                <span>Сегодня</span>
+            </div>
+        </div>
+        <?= $this->render('blocks/index/calendar/messages.phtml') ?>
+        <div class="calendar-widget-right">
+            <div class="calendar-widget-nav-button-next calendar-next-month-link">
+                <i class="ico next-month-link-ico"></i>
+                <span class="calendar-widget-nav-button-label">Март</span>
+            </div>
+        </div>
+    </div>
+</div>

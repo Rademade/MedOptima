@@ -14,11 +14,15 @@ MedOptima.prototype.ReservationViewForm = Backbone.View.extend({
     },
 
     show : function() {
-        this.$el.show();
+        this.$el.animate({
+            height : 'show'
+        });
     },
 
     hide : function() {
-        this.$el.hide();
+        this.$el.animate({
+            height : 'hide'
+        });
     },
 
     _bindEvents : function() {
@@ -26,7 +30,7 @@ MedOptima.prototype.ReservationViewForm = Backbone.View.extend({
     },
 
     _timeChanged : function() {
-        if (this.model.isValid()) {
+        if (this.model.get('visitTime') !== undefined) {
             this.show();
         } else {
             this.hide();
@@ -68,7 +72,7 @@ MedOptima.prototype.ReservationViewForm = Backbone.View.extend({
     init : function(model, $reservation) {
         return new MedOptima.prototype.ReservationViewForm({
             model : model,
-            el : $reservation.find('#reservation-form')
+            el : $reservation.find('form')
         });
     }
 

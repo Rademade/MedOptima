@@ -1,0 +1,30 @@
+<div id="reservation-widget">
+    <div id="reservation-popup" class="calendar-popup" style="display: none">
+        <i class="ico popup-tile"></i>
+        <div class="calendar-popup-box">
+                <div id="service-list" class="calendar-popup-box-menu"><?
+                    foreach ($this->services as $service) : ?>
+                        <button class="popup-btn" data-id="<?= $service->getId() ?>"><?= $service->getName() ?></button><?
+                    endforeach
+                    ?>
+                    <div class="clear"></div>
+                </div>
+            <div class="popup-doctors-box">
+                <div class="clear"></div>
+            </div>
+            <form action="" style="display: none">
+                <div class="popup-client-box">
+                    <div class="popup-client-box-item">
+                        <input name="visitor-name" id="visitor-name" type="text" placeholder="Имя"/>
+                    </div>
+                    <div class="popup-client-box-item">
+                        <input name="visitor-phone" id="visitor-phone" type="text" placeholder="Телефон"/>
+                    </div>
+                    <div class="popup-client-box-item">
+                        <input id="submit-button" class="button popup-send-btn" type="button" value="Записатся"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

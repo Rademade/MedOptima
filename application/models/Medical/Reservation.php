@@ -15,6 +15,7 @@ class Application_Model_Medical_Reservation
     const STATUS_ACCEPTED = 3;
     const STATUS_DECLINED = 4;
     const STATUS_NEW = 5;
+    const STATUS_DECLINED_BY_VISITOR = 6;
 
     protected static $_properties = array(
         'idReservation' => array(
@@ -131,7 +132,8 @@ class Application_Model_Medical_Reservation
             self::STATUS_DELETED,
             self::STATUS_ACCEPTED,
             self::STATUS_DECLINED,
-            self::STATUS_NEW
+            self::STATUS_NEW,
+            self::STATUS_DECLINED_BY_VISITOR
         ))) {
             $this->_dataWorker->setValue(self::FIELD_STATUS, $status);
         } else {

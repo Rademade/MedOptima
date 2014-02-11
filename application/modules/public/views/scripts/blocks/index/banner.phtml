@@ -24,7 +24,7 @@ foreach ($banners as $key => &$banner) {
                     <ul><?
                     foreach ($banners as $data) : ?>
                         <li><?
-                            echo $this->partial('blocks/index/parts/banner-parts/quote.phtml', array(
+                            echo $this->partial('blocks/index/banner/quote.phtml', array(
                                     'banner' => $data['banner']
                                 ));
                             ?><img src="<?=$data['photoUrl']?>" width="<?=$width?>" height="<?=$height?>" alt="">

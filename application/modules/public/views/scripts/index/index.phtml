@@ -1,13 +1,13 @@
 <div class="fix">
-    <?=$this->render('blocks/index/parts/banner.phtml')?>
-    <?=$this->render('blocks/index/parts/text-box.phtml')?>
-    <?=$this->render('blocks/index/parts/calendar/main.phtml')?>
-<!--    --><?//=$this->render('blocks/index/parts/calendar/jquery-calendar.phtml')?>
+    <?=$this->render('blocks/index/banner.phtml')?>
+    <?=$this->render('blocks/index/text-box.phtml')?>
+    <?= $this->render('blocks/index/calendar-widget.phtml') ?>
+    <?= $this->render('blocks/index/reservation-widget.phtml') ?>
+
 </div>
-<?=$this->render('blocks/index/parts/map.phtml')?>
+<?=$this->render('blocks/index/map.phtml')?>
 <?echo $this->headScript()->captureStart();
     ?>$(function(){
-        var $widget = $('#reservation-widget');
-        MedOptima.prototype.ReservationWidget.init($widget.find('#calendar'), $widget.find('#reservation'));
+        MedOptima.prototype.ReservationWidget.init($('#calendar-widget'), $('#reservation-widget'));
     });<?
 echo $this->headScript()->captureEnd();

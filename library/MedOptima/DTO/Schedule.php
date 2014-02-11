@@ -22,6 +22,7 @@ class MedOptima_DTO_Schedule
 
         $from = clone $this->_schedule->getDate();
         $to = clone $from;
+        $currentTimestamp = MedOptima_DateTime::create()->getTimestamp();
 
         foreach ($this->_schedule->getWorkTimeList() as $workTime) {
             $from->setTime(0, 0);
@@ -36,7 +37,9 @@ class MedOptima_DTO_Schedule
             for (; $time < $period->getTimestampEnd(); $time += $duration) {
                 $result[$from->getTimestamp()] = array(
                     'time' => $from->getGostTime(),
-                    'available' => !$this->_getReservationService()->hasReservationsBetween($from, $to)
+                    'available' =>
+                        $from->getTimestamp() > $currentTimestamp
+                        && !$this->_getReservationService()->hasReservationsBetween($from, $to)
                 );
                 $from->addSeconds($duration);
                 $to->addSeconds($duration);

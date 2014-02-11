@@ -1,33 +1,72 @@
 MedOptima.prototype.ReservationWidget = Backbone.View.extend({
 
-    calendarView : undefined,
+    calendarWidget : undefined,
     reservationView : undefined,
+    dialog : undefined,
 
     initialize: function(data) {
         _.extend(this, data);
         this._bindEvents();
     },
 
-    _dateClicked : function($el) {
-        var oldDate = this.reservationView.model.get('visitDate');
-        var newDate = this.calendarView.getDate();
-        var dateChanged = oldDate !== newDate;
+    _dateSelected : function($dateContainer, dateView, dateModel) {
+        console.log('date selected');
+        this.reservationView.$el.detach().appendTo($dateContainer);
+        this.model.set('visitDate', dateModel.getFormattedDate());
+        this.reservationView.show();
+
+    },
+
+    _beforeMonthChanged : function() {
+        console.log('before month changed');
+        this.reservationView.hide().$el.detach();
+    },
+
+    _dateReselected : function() {
+        console.log('date reselected');
         if (this.reservationView.visible()) {
             this.reservationView.hide();
-            if (dateChanged) {
-                this.reservationView.relocate($el).show();
-            }
         } else {
-            if (dateChanged) {
-                this.reservationView.relocate($el);
-            }
             this.reservationView.show();
         }
-        this.reservationView.model.set('visitDate', newDate);
     },
 
     _bindEvents : function() {
-        this.calendarView.on('dateClicked', this._dateClicked, this);
+        this.calendarWidget.on('dateSelect', this._dateSelected, this);
+        this.calendarWidget.on('dateReselect', this._dateReselected, this);
+        this.calendarWidget.on('beforeMonthChange', this._beforeMonthChanged, this);
+        this._bindModelEvents();
+        this._bindDialogEvents();
+    },
+
+    _bindModelEvents : function() {
+        this.model
+            .on('save remove', function() {
+                this.dialog.$errorMsg.hide();
+                this.dialog.$saveSuccessMsg.hide();
+                this.dialog.$removeSuccessMsg.hide();
+                this.dialog.$loader.show();
+            }, this)
+            .on('saveSuccess saveError removeSuccess removeError', function() {
+                this.dialog.$loader.hide();
+            }, this)
+            .on('saveSuccess', function() {
+                this.dialog.setLabel(this.dialog.$saveSuccessMsg, this.model.getPrettyVisitDateTime());
+                this.dialog.$saveSuccessMsg.show();
+            }, this)
+            .on('removeSuccess', function() {
+                this.dialog.setLabel(this.dialog.$removeSuccessMsg, 'Отмена ' + this.model.getPrettyVisitDateTime());
+                this.dialog.$removeSuccessMsg.show();
+            }, this)
+            .on('saveError removeError', function() {
+                this.dialog.$errorMsg.show();
+            }, this);
+    },
+
+    _bindDialogEvents : function() {
+        this.dialog
+            .on('removeButtonClick', this.model.remove, this.model)
+            .on('saveButtonClick', this.model.save, this.model);
     }
 
 }, {
@@ -35,8 +74,10 @@ MedOptima.prototype.ReservationWidget = Backbone.View.extend({
     init : function($calendar, $reservation) {
         var model = new MedOptima.prototype.ReservationModel();
         return new MedOptima.prototype.ReservationWidget({
-            calendarView : MedOptima.prototype.ReservationViewCalendar.init($calendar),
-            reservationView : MedOptima.prototype.ReservationView.init(model, $reservation)
+            model : model,
+            calendarWidget : MedOptima.prototype.CalendarWidget.init($calendar),
+            reservationView : MedOptima.prototype.ReservationView.init(model, $reservation.children('#reservation-popup')),
+            dialog : MedOptima.prototype.DialogView.init($calendar)
         });
     }
 

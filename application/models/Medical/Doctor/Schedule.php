@@ -37,7 +37,7 @@ class Application_Model_Medical_Doctor_Schedule
             $to = clone $from;
             $to->addSeconds( $this->_doctor->getReceptionDuration()->getTimestamp() );
         }
-        if ( !$this->isWorkingAt($from) || !$this->isWorkingAt($to) ) {
+        if ( !$this->isWorkingAt($from) || !$this->isWorkingAt($to) ) { //RM_TODO
             return false;
         }
         return !$this->_reservationService->hasReservationsBetween($from, $to, $excludeReservations);

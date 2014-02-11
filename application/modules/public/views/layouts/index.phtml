@@ -26,12 +26,9 @@
                 "phoneMask": '<?=Zend_Registry::get('cfg')['validation']['mask']['phone']?>'
             };
         </script><?
-        echo $this->render('blocks/index/parts/calendar/popup-item.ejs');
+        echo $this->render('blocks/index/reservation/doctor.ejs');
+        echo $this->render('blocks/index/calendar/date.ejs');
         echo $this->headScript();
         echo $this->render('blocks/loader/ajax.phtml');
-        ?><script type="text/javascript">
-            $(function() {
-                Med.setAjaxLoader('#ajax-loader');
-        });</script>
-    </body>
+    ?></body>
 </html>

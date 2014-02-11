@@ -3,16 +3,10 @@ MedOptima.prototype.ReservationView = Backbone.View.extend({
     serviceListView : undefined,
     doctorListView : undefined,
     formView : undefined,
-    //RM_TODO add component : messageView
 
     initialize : function(data) {
         _.extend(this, data);
         this._bindEvents();
-    },
-
-    relocate : function($container) {
-        this.$el.appendTo($container).hide();
-        return this;
     },
 
     show : function() {
@@ -29,16 +23,19 @@ MedOptima.prototype.ReservationView = Backbone.View.extend({
         return this.$el.is(':visible');
     },
 
+
     _bindEvents : function() {
-        this.formView.on('submit', this._createReservation, this);
+        this.formView.on('submit', this._save, this);
+        this.model.on('change:visitTime', this._scrollToForm, this);
     },
 
-    _createReservation : function() {
-        console.log(this.model.toJSON());
-        if (this.model.isValid()) {
-            console.log('Valid');
-            this.model.save();
-        }
+    _save : function() {
+        this.hide();
+        this.model.save();
+    },
+
+    _scrollToForm : function() {
+        //RM_TODO scroll
     }
 
 }, {

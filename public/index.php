@@ -28,10 +28,3 @@ $application = new Zend_Application(
 
 $application->bootstrap()
     ->run();
-
-/**
- * @var Application_Model_Medical_Doctor $doctor
- */
-$doctor = Application_Model_Medical_Doctor::getFirst();
-
-//var_dump($doctor->getSchedule(MedOptima_DateTime::create('09.02.2014'))->isAvailable(MedOptima_DateTime::create('09.02.2014 14:30')));

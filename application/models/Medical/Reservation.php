@@ -123,6 +123,7 @@ class Application_Model_Medical_Reservation
         return $this->_serviceCollection;
     }
 
+    
     public function getStatus() {
         return $this->_dataWorker->getValue(self::FIELD_STATUS);
     }
@@ -245,15 +246,19 @@ class Application_Model_Medical_Reservation
 
     public function wasSynced() {
         $id = $this->getIdGoogleEvent();
-        return (int)$this->getLastSyncTime() != 0 && !empty($id);
+        return $this->getLastSyncTime() != 0 && !empty($id);
     }
 
     public function isAccepted() {
-        return (int)$this->getStatus() == self::STATUS_ACCEPTED;
+        return $this->getStatus() == self::STATUS_ACCEPTED;
     }
 
     public function isDeclined() {
-        return (int)$this->getStatus() == self::STATUS_DECLINED;
+        return $this->getStatus() == self::STATUS_DECLINED;
+    }
+
+    public function isDeclinedByUser() {
+        return $this->getStatus() == self::STATUS_DECLINED_BY_VISITOR;
     }
 
     protected function __setIdDoctor($id) {

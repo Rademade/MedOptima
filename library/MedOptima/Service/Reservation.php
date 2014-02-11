@@ -15,7 +15,13 @@ class MedOptima_Service_Reservation {
      * @var Application_Model_Medical_Doctor
      */
     private $_doctor;
+    /**
+     * @var MedOptima_DateTime
+     */
     private $_fromTime;
+    /**
+     * @var MedOptima_DateTime
+     */
     private $_toTime;
     private $_services = [];
 
@@ -33,16 +39,17 @@ class MedOptima_Service_Reservation {
         $this->_prepareVisitTime();
         $this->_prepareServices();
         $reservation = $this->_initReservation();
-        $this->_session->ids[] =(int)$reservation->getId();
-        return $reservation->getId();
+        $this->_session->ids[] = $reservation->getId(); //store to session
+        return $reservation;
     }
 
     public function restore($idReservation) {
         $idReservation = (int)$idReservation;
+        //RM_TODO throw exception with reason if not restored
         if (in_array($idReservation, $this->_session->ids)) {
-            $reservation = Reservation::getById($idReservation);
-            if ($reservation && $reservation->getStatus() == Reservation::STATUS_DECLINED_BY_VISITOR) {
-                $reservation->setStatus(Reservation::STATUS_NEW);
+            $reservation = Reservation::getById( $idReservation );
+            if ($reservation && $reservation->isDeclinedByUser()) {
+                $reservation->setStatus(Reservation::STATUS_NEW); //RM_TODO ->setNew()
                 $reservation->save();
                 return $reservation->getId();
             }
@@ -54,8 +61,8 @@ class MedOptima_Service_Reservation {
         $idReservation = (int)$idReservation;
         if (in_array($idReservation, $this->_session->ids)) {
             $reservation = Reservation::getById($idReservation);
-            if ($reservation && $reservation->getStatus() == Reservation::STATUS_NEW) {
-                $reservation->setStatus(Reservation::STATUS_DECLINED_BY_VISITOR);
+            if ($reservation && $reservation->getStatus() == Reservation::STATUS_NEW) { //RM_TODO $reservation->isNew()
+                $reservation->setStatus( Reservation::STATUS_DECLINED_BY_VISITOR ); //RM_TODO ->setDeclinedByUser()
                 $reservation->save();
                 return $reservation->getId();
             }

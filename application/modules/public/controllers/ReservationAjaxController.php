@@ -32,7 +32,7 @@ class ReservationAjaxController
                 if (isset($data['id']) && $data['id'] > 0) {
                     $this->_result->id = $service->restore($data['id']);
                 } else {
-                    $this->_result->id = $service->create();
+                    $this->_result->id = $service->create()->getId();
                 }
                 $this->_result->status = 1;
             } catch (Exception $e) {

@@ -11,6 +11,8 @@ class Application_Model_Medical_Advice
     const TABLE_NAME = 'medicalAdvices';
     const CACHE_NAME = 'medicalAdvices';
 
+    const STATUS_NOT_PROCESSED = 10;
+
     protected static $_properties = array(
         'idAdvice' => array(
             'type' => 'int',
@@ -33,7 +35,7 @@ class Application_Model_Medical_Advice
         ),
         'adviceStatus' => array(
             'type' => 'int',
-            'default' => self::STATUS_HIDE
+            'default' => self::STATUS_NOT_PROCESSED
         )
     );
 
@@ -82,7 +84,8 @@ class Application_Model_Medical_Advice
     }
 
     public function getStatus() {
-        return $this->_dataWorker->getValue('adviceStatus');
+        $status = $this->_dataWorker->getValue('adviceStatus');
+        return $status == self::STATUS_NOT_PROCESSED ? self::STATUS_HIDE : $status;
     }
 
     public function setStatus($status) {
@@ -90,7 +93,8 @@ class Application_Model_Medical_Advice
         if (in_array($status, array(
             self::STATUS_DELETED,
             self::STATUS_HIDE,
-            self::STATUS_SHOW
+            self::STATUS_SHOW,
+            self::STATUS_NOT_PROCESSED
         ))) {
             $this->_dataWorker->setValue('adviceStatus', $status);
         } else {
@@ -99,7 +103,8 @@ class Application_Model_Medical_Advice
     }
     
     public function isShow() {
-        return $this->getStatus() === self::STATUS_SHOW;
+        return $this->getStatus() === self::STATUS_SHOW
+            || $this->getStatus() == self::STATUS_NOT_PROCESSED;
     }
 
     public function show() {

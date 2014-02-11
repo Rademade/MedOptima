@@ -11,7 +11,7 @@ foreach ($this->feedbacks as $feedback) :
     $row = $table
         ->addRecord($feedback->getId(), $feedback->getVisitorName())
         ->addTd($feedback->getVisitorPhone())
-        ->addTd( MedOptima_Date_Time::toGostDate($feedback->getDatePosted()) )
+        ->addTd( MedOptima_DateTime::toGostDate($feedback->getDatePosted()) )
         ->addTd($feedback->isShownOnMain() ? 'Да' : 'Нет')
         ->setStatus($feedback->getStatus())
         ->setHideble()

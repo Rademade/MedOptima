@@ -5,24 +5,31 @@ $vacancy = Block::getByAlias('opened-vacancies');
 ?><div class="clinic">
     <div class="fix">
         <div class="clinic-left-box"><?
+
             if ($aboutClinic instanceof Block) : ?>
                 <div class="main-title"><?=$aboutClinic->getName()?></div>
                 <div class="clinic-text-box"><?=$aboutClinic->getText()?></div><?
             endif;
+
             foreach ($this->quotes as $quote) :
                 echo $this->partial('blocks/clinic/quote.phtml', array(
                     'quote' => $quote
                 ));
-            endforeach
+            endforeach;
+
         ?></div><?
+
         if ($vacancy instanceof Block) : ?>
             <div class="clinic-right-box">
                 <div class="main-title"><?=$vacancy->getName()?></div>
                 <div class="clinic-text-box"><?=$vacancy->getText()?></div>
             </div><?
-        endif
+        endif;
+
         ?><div class="clear"></div>
-        <?=$this->render('blocks/index/parts/banner.phtml')?>
+
+        <?=$this->render('blocks/index/banner.phtml')?>
+
         <div class="doctor-box"><?
             foreach ($this->doctors as $doctor) :
                 echo $this->partial('blocks/clinic/doctor.phtml', array(
@@ -30,6 +37,9 @@ $vacancy = Block::getByAlias('opened-vacancies');
                 ));
             endforeach
         ?></div>
+
+        <? //RM_TODO extract comments block ?>
+
         <div class="clinic-comments">
             <div class="fix">
                 <div class="main-title">Отзывы</div>
@@ -41,30 +51,32 @@ $vacancy = Block::getByAlias('opened-vacancies');
                     endforeach
                 ?></div>
                 <div class="comment-btn-box">
-                    <span id="form-activate-button" class="button comments-btn">Напиcать отзыв...</span>
-                    <div id="form-container" class="popup-box up-show" style="display: none">
+                    <span id="" class="button comments-btn form-activate-button">Напиcать отзыв...</span>
+                    <div class="popup-box up-show form-container" style="display: none">
                         <i class="ico popup-tile"></i>
                         <form action="">
                             <div class="popup-client-box">
                                 <div class="popup-client-box-item">
-                                    <input id="visitor-name" name="visitor-name" data-alias="visitor_name" type="text" placeholder="Имя"/>
+                                    <input name="visitor-name" data-alias="visitor_name" type="text" placeholder="Имя"/>
                                 </div>
                                 <div class="popup-client-box-item">
-                                    <input id="visitor-phone" name="visitor-phone" data-alias="visitor_phone" type="text" placeholder="Телефон"/>
+                                    <input name="visitor-phone" data-phone data-alias="visitor_phone" type="text" placeholder="Телефон для связи"/>
                                 </div>
-                                <div><textarea id="visitor-feedback" name="visitor-feedback" data-alias="visitor_feedback"></textarea></div>
+                                <div>
+                                    <textarea name="visitor-feedback" data-alias="visitor_feedback"></textarea>
+                                </div>
                                 <div class="popup-client-box-item">
-                                    <input id="form-submit-button" class="button popup-send-btn" type="button" value="Отправить"/>
+                                    <input class="form-submit-button button popup-send-btn" type="button" value="Отправить"/>
                                 </div>
                             </div>
                         </form>
-                        <div id="error-box" class="popup-client-box" style="display: none">
+                        <div class="error-box popup-client-box" style="display: none">
                             <span class="error-message"></span>
-                            <span id="form-try-again-button">Попробовать еще раз</span>
+                            <span class="form-try-again-button">Попробовать еще раз</span>
                         </div>
                     </div>
                 </div>
-                <div id="thank-you-box" class="popup-thx" style="display: none">Благодарим вас. <br/> Отзыв будет опубликован через 1—2 дня.</div>
+                <div class="thank-you-box popup-thx" style="display: none">Благодарим вас. <br/> Отзыв будет опубликован через 1—2 дня.</div>
                 <div class="clear"></div>
             </div>
         </div>
@@ -73,9 +85,9 @@ $vacancy = Block::getByAlias('opened-vacancies');
 echo $this->headScript()->captureStart();
 ?>$(function() {
     Med.SimplePopupForm.init('<?=$this->url([], 'post-feedback-ajax')?>', {
-        "name": '#visitor-name',
-        "phone": '#visitor-phone',
-        "text": '#visitor-feedback'
+        "name": 'input[name="visitor-name"]',
+        "phone": 'input[name="visitor-phone"]',
+        "text": 'textarea[name="visitor-feedback"]'
     });
 });<?
 echo $this->headScript()->captureEnd();

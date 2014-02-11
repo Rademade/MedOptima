@@ -173,7 +173,7 @@ class Application_Model_Banner
     }
 
     public function hasQuote() {
-        return $this->getQuote() != null;
+        return $this->getQuote() instanceof Quote;
     }
 
     public function isShownOnMain() {

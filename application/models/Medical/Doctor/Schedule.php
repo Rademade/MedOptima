@@ -1,7 +1,9 @@
 <?php
-use MedOptima_Date_Time as DateTime;
+use MedOptima_DateTime as DateTime;
 
-class Application_Model_Medical_Doctor_Schedule {
+class Application_Model_Medical_Doctor_Schedule
+    implements
+        JsonSerializable {
 
     /**
      * @var Application_Model_Medical_Doctor
@@ -9,68 +11,61 @@ class Application_Model_Medical_Doctor_Schedule {
     private $_doctor;
 
     /**
-     * @var array Application_Model_Medical_Doctor_WorkTime[]
+     * @var MedOptima_Service_Doctor_Reservation
      */
-    private $_workTimeList = array();
-
-    public function __construct(Application_Model_Medical_Doctor $doctor) {
-        $this->_doctor = $doctor;
-        $this->_workTimeList = (new Application_Model_Medical_Doctor_WorkTime_Search_Repository())
-            ->getDoctorWorkTimeList($doctor);
-    }
-
-    public function addWorkTime(Application_Model_Medical_Doctor_WorkTime $workTime) {
-        $this->_workTimeList[] = $workTime;
-    }
-
-    public function addWorkTimeListFromData($data) {
-        foreach ($data['key'] as $index => $day) {
-            $timeBegin = $data["value1"][$index];
-            $timeEnd = $data["value2"][$index];
-            if ( $day && $timeBegin && $timeEnd ) {
-                $workTime = Application_Model_Medical_Doctor_WorkTime::create($this->_doctor);
-                $workTime->setWeekDay($day);
-                $workTime->setTimeBegin($timeBegin);
-                $workTime->setTimeEnd($timeEnd);
-                $this->_workTimeList[] = $workTime;
-            }
-        }
-        return $this;
-    }
+    private $_reservationService;
 
     /**
-     * @return Application_Model_Medical_Doctor_WorkTime[]
+     * @var DateTime
      */
+    private $_scheduleDate;
+
+    /**
+     * @var Application_Model_Medical_Doctor_WorkTime[]
+     */
+    private $_workTimeList;
+
+    public function __construct(Application_Model_Medical_Doctor $doctor, DateTime $date) {
+        $this->_doctor = $doctor;
+        $this->_scheduleDate = $date;
+        $this->_reservationService = new MedOptima_Service_Doctor_Reservation($doctor);
+        $this->_workTimeList = $this->_doctor->getWorkTimeList($date);
+    }
+
+    public function isAvailable(DateTime $from, DateTime $to = null, array $excludeReservations = array()) {
+        if (!$to) {
+            $to = clone $from;
+            $to->addSeconds( $this->_doctor->getReceptionDuration()->getTimestamp() );
+        }
+        if ( !$this->isWorkingAt($from) || !$this->isWorkingAt($to) ) { //RM_TODO
+            return false;
+        }
+        return !$this->_reservationService->hasReservationsBetween($from, $to, $excludeReservations);
+    }
+
+    public function jsonSerialize() {
+        return (new MedOptima_DTO_Schedule($this))->jsonSerialize();
+    }
+
+    public function getDoctor() {
+        return $this->_doctor;
+    }
+
+    public function getDate() {
+        return $this->_scheduleDate;
+    }
+
     public function getWorkTimeList() {
         return $this->_workTimeList;
     }
 
-    public function reset() {
+    public function isWorkingAt(DateTime $dateTime) {
         foreach ($this->_workTimeList as $workTime) {
-            /** @var Application_Model_Medical_Doctor_WorkTime $workTime */
-            $workTime->remove();
+            if ($workTime->getPeriod()->includes($dateTime)) {
+                return true;
+            }
         }
-        $this->_workTimeList = [];
-        return $this;
-    }
-
-    public function save() {
-        foreach ($this->_workTimeList as $workTime) {
-            /** @var Application_Model_Medical_Doctor_WorkTime $workTime */
-            $workTime->save();
-        }
-        return $this;
-    }
-
-    public function toArray() {
-        $result = array();
-        foreach ($this->_workTimeList as $workTime) {
-            /** @var Application_Model_Medical_Doctor_WorkTime $workTime */
-            $result['key'][] = $workTime->getWeekDay();
-            $result['value1'][] = DateTime::toGostTime($workTime->getTimeBegin());
-            $result['value2'][] = DateTime::toGostTime($workTime->getTimeEnd());
-        }
-        return $result;
+        return false;
     }
 
 }

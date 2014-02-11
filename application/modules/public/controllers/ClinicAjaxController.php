@@ -13,13 +13,11 @@ class ClinicAjaxController
                 $feedback->setVisitorName($data->visitor_name);
                 $feedback->setVisitorPhone($data->visitor_phone);
                 $feedback->setContent($data->visitor_feedback);
-                $feedback->setDatePosted(MedOptima_Date_Time::create()->getMysqlDate());
-                $feedback->setStatus(Application_Model_Feedback::STATUS_HIDE);
+                $feedback->setDatePosted(MedOptima_DateTime::create()->getMysqlDate());
+                $feedback->setStatus(Application_Model_Feedback::STATUS_NOT_PROCESSED);
                 $feedback->save();
                 $this->_result->status = 1;
-            } catch (Exception $e) {
-                RM_Error::addLogRow('Clinic request', $e);
-            }
+            } catch (Exception $e) {}
         }
     }
 

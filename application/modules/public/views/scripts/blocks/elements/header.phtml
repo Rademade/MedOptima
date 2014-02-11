@@ -11,8 +11,10 @@
         <?=$this->render('blocks/elements/header-parts/menu.phtml')?>
         <div class="contact-info">
             <div class="contact-info-phone-num">
-                <span class="phone-num-value"><span><?=$this->phonePrefix
-                        ?></span><?=$this->phoneWithoutPrefix?></span>
+                <span class="phone-num-value">
+                    <span>(<?=$this->phonePrefix?>)</span>
+                    <?=$this->phoneWithoutPrefix?>
+                </span>
             </div>
         </div>
         <div class="clear"></div>

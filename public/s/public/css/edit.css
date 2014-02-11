@@ -12,3 +12,29 @@
     background: url('/s/public/images/loader.gif') 50% 50% no-repeat;
     min-height: inherit;
 }
+.ui-datepicker-prev, .ui-datepicker-next {
+    display: none;
+}
+.calendar-box-date {
+    height: 240px;
+}
+.calendar-box {
+    height: 335px;
+}
+.button-disabled {
+    color: #8d99a6;
+}
+.popup-client-box textarea {
+    font: inherit;
+    color: white;
+}
+.popup-error-message {
+    color: white;
+    display: block;
+    width: 300px;
+    margin: 0 auto;
+    height: 300px;
+}
+.calendar-appointment {
+    height : 400px;
+}

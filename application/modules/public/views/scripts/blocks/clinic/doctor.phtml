@@ -3,10 +3,7 @@ $doctor = $this->doctor;
 if ( $doctor instanceof Application_Model_Medical_Doctor ) : ?>
     <div class="doctor-box-item">
         <div class="doctor-box-item-img"><?
-            $photo = $doctor->getPhoto()
-                ? $doctor->getPhoto()->getPath()
-                : MedOptima_Photo::getDefaultDoctorPhoto()->getPhotoPath();
-            ?><img src="<?=$photo?>" alt=""/> <?//RM_TODO photo size?>
+            ?><img src="<?=$doctor->getPhoto()->getPath(140, 140)?>" alt=""/>
         </div>
         <div class="doctor-box-item-info">
             <div class="doctor-box-item-name"><?=$doctor->getName()?></div>

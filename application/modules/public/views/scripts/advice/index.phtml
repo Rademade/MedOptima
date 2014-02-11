@@ -2,32 +2,32 @@
     <div class="fix">
         <div class="main-title">Советы</div>
         <div class="tips-btn-box">
-            <span id="form-activate-button" class="button comments-btn">Спросить совета</span>
-            <div id="form-container" class="popup-box" style="display: none">
+            <span class="form-activate-button button comments-btn">Спросить совета...</span>
+            <div class="form-container popup-box" style="display: none">
                 <i class="ico popup-tile"></i>
                 <form action="">
                     <div class="popup-client-box">
                         <div class="popup-client-box-item">
-                            <input id="visitor-name" name="visitor-name" data-alias="visitor_name" type="text" placeholder="Имя"/>
+                            <input name="visitor-name" data-alias="visitor_name" type="text" placeholder="Имя"/>
                         </div>
                         <div class="popup-client-box-item">
-                            <input id="visitor-email" name="visitor-email" data-alias="visitor_email" type="text" placeholder="Электронная почта"/>
+                            <input name="visitor-email" data-alias="visitor_email" type="text" placeholder="Электронная почта"/>
                         </div>
                         <div>
-                            <textarea id="visitor-question" name="visitor-question" data-alias="visitor_question"></textarea>
+                            <textarea name="visitor-question" data-alias="visitor_question"></textarea>
                         </div>
                         <div class="popup-client-box-item">
-                            <input id="form-submit-button" class="button popup-send-btn" type="button" value="Записатся"/>
+                            <input class="form-submit-button button popup-send-btn" type="button" value="Спросить"/>
                         </div>
                     </div>
                 </form>
-                <div id="error-box" class="popup-client-box" style="display: none">
+                <div class="error-box popup-client-box" style="display: none">
                     <span class="error-message"></span>
-                    <span id="form-try-again-button">Попробовать еще раз</span>
+                    <span class="form-try-again-button">Попробовать еще раз</span>
                 </div>
             </div>
         </div>
-        <div id="thank-you-box" class="popup-thx" style="display: none">Спасибо за участие. Предлагаем ознакомиться с уже опубликованными ниже ответами.</div>
+        <div class="thank-you-box popup-thx" style="display: none">Спасибо за участие. Предлагаем ознакомиться с уже опубликованными ниже ответами.</div>
         <div class="clear"></div><?
         foreach ($this->advices as $advice) :
             echo $this->partial('blocks/advices/advice.phtml', array(
@@ -39,9 +39,9 @@
 echo $this->headScript()->captureStart();
 ?>$(function() {
     Med.SimplePopupForm.init('<?=$this->url([], 'ask-question-ajax')?>', {
-        "name": '#visitor-name',
-        "email": '#visitor-email',
-        "text": '#visitor-question'
+        "name": 'input[name="visitor-name"]',
+        "email": 'input[name="visitor-email"]',
+        "text": 'textarea[name="visitor-question"]'
     });
 });<?
 echo $this->headScript()->captureEnd();

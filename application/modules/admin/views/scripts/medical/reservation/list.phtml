@@ -1,0 +1,23 @@
+<?php
+$table = new RM_View_Table();
+
+$table
+    ->setEditRoute($this->editRoute)
+    ->setStatusUrl($this->ajaxUrl)
+    ->setHead('Номер', 'Статус', 'Врач', 'Время подачи заявки', 'Время приема', 'Клиент');
+
+foreach ($this->reservations as $reservation) :
+    /** @var Application_Model_Medical_Reservation $reservation */
+    $row = $table
+        ->addRecord($reservation->getId(), $reservation->getId())
+        ->addTd($this->MedicalReservation()->getStatus($reservation))
+        ->addTd($reservation->getDoctor() ? $reservation->getDoctor()->getName() : 'DELETED')
+        ->addTd(MedOptima_DateTime::createFromTimestamp($reservation->getCreateTime())->getGostDatetime())
+        ->addTd(MedOptima_DateTime::createFromTimestamp($reservation->getFinalVisitTime())->getGostDatetime())
+        ->addTd($reservation->getVisitorName())
+        ->setStatus($reservation->getStatus())
+        ->setHideble()
+        ->setDeletable();
+endforeach;
+
+echo $table;

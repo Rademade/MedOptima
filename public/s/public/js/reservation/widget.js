@@ -5,6 +5,7 @@ MedOptima.prototype.ReservationWidget = Backbone.View.extend({
     dialog : undefined,
 
     initialize: function(data) {
+        _.extend(this, data);
         this._bindCalendarEvents();
         this._bindModelEvents();
         this._bindDialogEvents();

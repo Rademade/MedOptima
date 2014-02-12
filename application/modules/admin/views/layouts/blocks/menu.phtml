@@ -26,7 +26,8 @@ if ($this->user instanceof RM_User_Interface) :
         array(
             'name' => 'Заявки',
             'url' => $this->url(array(), 'admin-medical-reservation-list'),
-            'menu' => 'reservations'
+            'menu' => 'reservations',
+            'count' => (new Application_Model_Medical_Reservation_Search())->getNotProcessedCount()
         ),
         array(
             'name' => 'Текстовые блоки',

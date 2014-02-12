@@ -14,10 +14,9 @@ class ReservationAjaxController
                 $services = empty($services) ? [] : explode(',', $services);
                 $doctors = (new Application_Model_Medical_Doctor_Search_Repository)
                     ->getWorkingDoctorsWithServices($date, $services);
-                $doctors = array_slice($doctors, 0, 5, true);
                 $this->_result = MedOptima_DTO_Doctor::jsonSerializeList($doctors, $date);
             } catch (Exception $e) {
-
+                $this->_result->errorMessage = $e->getMessage();
             }
         }
     }
@@ -30,10 +29,11 @@ class ReservationAjaxController
                 $data = (array)$this->_data;
                 $service = new MedOptima_Service_Reservation($data);
                 if (isset($data['id']) && $data['id'] > 0) {
-                    $this->_result->id = $service->restore($data['id']);
+                    $reservation = $service->restore($data['id']);
                 } else {
-                    $this->_result->id = $service->create()->getId();
+                    $reservation = $service->create();
                 }
+                $this->_result->id = $reservation->getId();
                 $this->_result->status = 1;
             } catch (Exception $e) {
                 $this->_result->errorMessage = $e->getMessage();
@@ -48,7 +48,8 @@ class ReservationAjaxController
                 $data = (array)$this->_data;
                 $service = new MedOptima_Service_Reservation($data);
                 if (isset($data['id'])) {
-                    $this->_result->id = $service->remove($data['id']);
+                    $reservation = $service->remove($data['id']);
+                    $this->_result->id = $reservation->getId();
                 }
                 $this->_result->status = 1;
             } catch (Exception $e) {

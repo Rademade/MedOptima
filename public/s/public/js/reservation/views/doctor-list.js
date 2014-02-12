@@ -20,12 +20,7 @@ MedOptima.prototype.ReservationViewDoctorList = Backbone.View.extend({
         this.collection.fetch({
             data : self.model.getUpdateData(),
             reset : true,
-            success : function(collection, response) {
-                _.each(response, function(value, key) {
-                    value.id = key;
-                });
-                collection.reset();
-                collection.add(response);
+            success : function() {
                 self.render();
                 self._loadFinish();
             },
@@ -75,7 +70,8 @@ MedOptima.prototype.ReservationViewDoctorList = Backbone.View.extend({
     },
 
     _bindEvents : function() {
-
+        this.model.on('change:visitDate', this.update, this);
+        this.model.on('change:selectedServices', this.update, this);
     },
 
     _renderDoctor : function(doctorModel) {

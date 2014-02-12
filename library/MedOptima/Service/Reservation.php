@@ -36,6 +36,10 @@ class MedOptima_Service_Reservation {
         }
     }
 
+    /**
+     * @return Reservation
+     * @throws Exception
+     */
     public function create() {
         $this->_validateData();
         $this->_prepareDoctor();
@@ -46,31 +50,40 @@ class MedOptima_Service_Reservation {
         return $reservation;
     }
 
+    /**
+     * @param $idReservation
+     * @return Reservation
+     * @throws Exception
+     */
     public function restore($idReservation) {
         $idReservation = (int)$idReservation;
-        //RM_TODO throw exception with reason if not restored
         if (in_array($idReservation, $this->_session->ids)) {
             $reservation = Reservation::getById( $idReservation );
-            if ($reservation && $reservation->isDeclinedByUser()) {
-                $reservation->setStatus(Reservation::STATUS_NEW); //RM_TODO ->setNew()
+            if ($reservation && $reservation->isDeclinedByVisitor()) {
+                $reservation->setNew();
                 $reservation->save();
-                return $reservation->getId();
+                return $reservation;
             }
         }
-        return 0;
+        throw new Exception('Cannot restore invalid reservation');
     }
 
+    /**
+     * @param $idReservation
+     * @return Reservation
+     * @throws Exception
+     */
     public function remove($idReservation) {
         $idReservation = (int)$idReservation;
         if (in_array($idReservation, $this->_session->ids)) {
             $reservation = Reservation::getById($idReservation);
-            if ($reservation && $reservation->getStatus() == Reservation::STATUS_NEW) { //RM_TODO $reservation->isNew()
-                $reservation->setStatus( Reservation::STATUS_DECLINED_BY_VISITOR ); //RM_TODO ->setDeclinedByUser()
+            if ($reservation && $reservation->isNew()) {
+                $reservation->setDeclinedByVisitor();
                 $reservation->save();
-                return $reservation->getId();
+                return $reservation;
             }
         }
-        return 0;
+        throw new Exception('Cannot remove invalid reservation');
     }
 
     private function _validateData() {
@@ -82,8 +95,8 @@ class MedOptima_Service_Reservation {
     }
 
     private function _prepareDoctor() {
-        $this->_doctor = (new Application_Model_Medical_Doctor_Search_Repository)->getShownById($this->_data['selectedDoctor']);
-
+        $this->_doctor = (new Application_Model_Medical_Doctor_Search_Repository)
+            ->getShownById($this->_data['selectedDoctor']);
         if (!$this->_doctor) {
             throw new Exception('Invalid doctor');
         }

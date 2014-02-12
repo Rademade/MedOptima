@@ -123,7 +123,6 @@ class Application_Model_Medical_Reservation
         return $this->_serviceCollection;
     }
 
-    
     public function getStatus() {
         return $this->_dataWorker->getValue(self::FIELD_STATUS);
     }
@@ -257,8 +256,20 @@ class Application_Model_Medical_Reservation
         return $this->getStatus() == self::STATUS_DECLINED;
     }
 
-    public function isDeclinedByUser() {
+    public function isDeclinedByVisitor() {
         return $this->getStatus() == self::STATUS_DECLINED_BY_VISITOR;
+    }
+
+    public function setDeclinedByVisitor() {
+        $this->setStatus(self::STATUS_DECLINED_BY_VISITOR);
+    }
+
+    public function isNew() {
+        return $this->getStatus() == self::STATUS_NEW;
+    }
+
+    public function setNew() {
+        $this->setStatus(self::STATUS_NEW);
     }
 
     protected function __setIdDoctor($id) {

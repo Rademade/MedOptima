@@ -1,13 +1,13 @@
 <?php
 $advice = $this->advice;
-if ($advice instanceof Application_Model_Medical_Advice
-    && ($doctor = $advice->getDoctor()) instanceof Application_Model_Medical_Doctor
-) : ?><div class="comments-item">
+$doctor = $advice->getDoctor();
+if ($advice instanceof Application_Model_Medical_Advice) : ?>
+    <div class="comments-item">
         <div class="comments-item-name"><?=$advice->getVisitorQuestion()?></div>
         <div class="comments-item-author">
-            <div class="comments-item-author-name"><?=$doctor->getName()?></div>
+            <div class="comments-item-author-name"><?=$doctor ? $doctor->getName() : ''?></div>
             <div class="comments-item-author-post"><?
-                echo $this->DoctorFormatter($doctor)->getFormattedPosts()?></div>
+                echo $doctor ? $this->DoctorFormatter($doctor)->getFormattedPosts() : ''?></div>
         </div>
         <div class="comments-item-text">
             <div class="simple-text">

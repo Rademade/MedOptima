@@ -108,7 +108,9 @@ MedOptima.prototype.SimplePopupForm = function() {
 
     this.clearFields = function() {
         _.each(_fields, function($field) {
-            if ($field instanceof $) $field.val('');
+            if ($field instanceof $) {
+                $field.val('');
+            }
         })
     };
 

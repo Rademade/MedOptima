@@ -23,7 +23,6 @@ MedOptima.prototype.ReservationModel = Backbone.Model.extend({
 
     //RM_TODO via native backbone save. Use REST routes
     save : function() {
-        console.log(this.toJSON());
         this.trigger('save');
         var self = this;
         if (this.isValid()) {
@@ -60,7 +59,6 @@ MedOptima.prototype.ReservationModel = Backbone.Model.extend({
                 data : {id : self.get('id')},
                 dataType : 'json',
                 success : function(data) {
-                    console.log(data);
                     if (data.status !== 0) {
                         self.set('id', data.id);
                         self.trigger('removeSuccess');
@@ -102,7 +100,5 @@ MedOptima.prototype.ReservationModel = Backbone.Model.extend({
         ];
         return [visitDate, monthNames[visitMonth - 1], 'в', visitTime].join(' ');
     }
-
-}, {
 
 });

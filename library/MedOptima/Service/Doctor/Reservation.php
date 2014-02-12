@@ -25,7 +25,8 @@ class MedOptima_Service_Doctor_Reservation {
         $conditions = new Application_Model_Medical_Reservation_Search_Conditions();
         $conditions->setDoctor($this->_doctor);
         $conditions->setTimeOverlapsWith($from, $to);
-        $conditions->setAccepted();
+        $conditions->exceptDeclined();
+        $conditions->exceptDeclinedByVisitor();
         $search = new RM_Entity_Search_Entity('Application_Model_Medical_Reservation');
         $search->addCondition($conditions);
         $results = $search->getResults();

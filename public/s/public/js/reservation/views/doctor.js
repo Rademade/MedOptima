@@ -26,9 +26,10 @@ MedOptima.prototype.ReservationViewDoctor = Backbone.View.extend({
     },
 
     render : function() {
+        console.log(this.getHtml());
         this.$el = $(this.getHtml());
         this._updateSchedule();
-        this.delegateEvents(this.events); //RM_TODO ???
+        this.delegateEvents(this.events);
         return this;
     },
 

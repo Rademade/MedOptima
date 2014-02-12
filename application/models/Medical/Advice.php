@@ -11,8 +11,6 @@ class Application_Model_Medical_Advice
     const TABLE_NAME = 'medicalAdvices';
     const CACHE_NAME = 'medicalAdvices';
 
-    const STATUS_NOT_PROCESSED = 10;
-
     protected static $_properties = array(
         'idAdvice' => array(
             'type' => 'int',
@@ -33,9 +31,13 @@ class Application_Model_Medical_Advice
         'doctorResponse' => array(
             'type' => 'string'
         ),
+        'isProcessed' => array(
+            'type' => 'int',
+            'default' => 0
+        ),
         'adviceStatus' => array(
             'type' => 'int',
-            'default' => self::STATUS_NOT_PROCESSED
+            'default' => self::STATUS_HIDE
         )
     );
 
@@ -78,14 +80,13 @@ class Application_Model_Medical_Advice
     }
 
     public function remove() {
-        $this->_dataWorker->setValue('adviceStatus', self::STATUS_DELETED);
+        $this->setStatus(self::STATUS_DELETED);
         $this->save();
         $this->__cleanCache();
     }
 
     public function getStatus() {
-        $status = $this->_dataWorker->getValue('adviceStatus');
-        return $status == self::STATUS_NOT_PROCESSED ? self::STATUS_HIDE : $status;
+        return $this->_dataWorker->getValue('adviceStatus');
     }
 
     public function setStatus($status) {
@@ -93,9 +94,9 @@ class Application_Model_Medical_Advice
         if (in_array($status, array(
             self::STATUS_DELETED,
             self::STATUS_HIDE,
-            self::STATUS_SHOW,
-            self::STATUS_NOT_PROCESSED
+            self::STATUS_SHOW
         ))) {
+            $this->setProcessed(true);
             $this->_dataWorker->setValue('adviceStatus', $status);
         } else {
             throw new Exception('Invalid advice status');
@@ -103,8 +104,7 @@ class Application_Model_Medical_Advice
     }
     
     public function isShow() {
-        return $this->getStatus() === self::STATUS_SHOW
-            || $this->getStatus() == self::STATUS_NOT_PROCESSED;
+        return $this->getStatus() === self::STATUS_SHOW;
     }
 
     public function show() {
@@ -150,9 +150,6 @@ class Application_Model_Medical_Advice
     }
 
     public function setVisitorQuestion($question) {
-        if (empty($question)) {
-            throw new Exception('Invalid question');
-        }
         $this->_dataWorker->setValue('visitorQuestion', $question);
     }
 
@@ -166,22 +163,23 @@ class Application_Model_Medical_Advice
     }
 
     public function setVisitorName($name) {
-        if (empty($name)) {
-            throw new Exception('Invalid name');
-        }
         $this->_dataWorker->setValue('visitorName', trim($name));
     }
 
     public function setVisitorEmail($email) {
-        $filteredEmail = filter_var($email, FILTER_VALIDATE_EMAIL);
-        if ( !$filteredEmail ) {
-            throw new Exception('Invalid email');
-        }
         $this->_dataWorker->setValue('visitorEmail', $email);
     }
 
     public function getVisitorEmail() {
         return $this->_dataWorker->getValue('visitorEmail');
+    }
+
+    public function setProcessed($val) {
+        $this->_dataWorker->setValue('isProcessed', $val);
+    }
+
+    public function isProcessed() {
+        return $this->_dataWorker->getValue('isProcessed');
     }
 
     protected function __setIdDoctor($id) {

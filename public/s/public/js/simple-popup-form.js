@@ -38,7 +38,7 @@ MedOptima.prototype.SimplePopupForm = function() {
         _.each(_fields, function($field, fieldName) {
             if ($field instanceof $) {
                 var method = ['set', Med.capitilizeFirst(fieldName), 'Validation'].join('');
-                validator[method]($field.attr('id'));
+                validator[method]($field.attr('name'));
             }
         });
         _$blocks.form.validate(validate);
@@ -108,7 +108,9 @@ MedOptima.prototype.SimplePopupForm = function() {
 
     this.clearFields = function() {
         _.each(_fields, function($field) {
-            if ($field instanceof $) $field.val('');
+            if ($field instanceof $) {
+                $field.val('');
+            }
         })
     };
 

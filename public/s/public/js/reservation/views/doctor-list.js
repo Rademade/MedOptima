@@ -6,6 +6,8 @@ MedOptima.prototype.ReservationViewDoctorList = Backbone.View.extend({
         this._$loader = Med.cloneAjaxLoader().hide();
         this.$el.after( this._$loader );
         this.collection.on('change:isSelected change:selectedTime', this._doctorChanged, this);
+//        this.collection.on('reset', this.todo, this);
+//        this.collection.on('error', this.todo, this);
         this._bindEvents();
     },
 
@@ -15,15 +17,12 @@ MedOptima.prototype.ReservationViewDoctorList = Backbone.View.extend({
         var self = this;
         this.model.set('selectedDoctor', undefined);
         this.model.set('visitTime', undefined);
+
+        //RM_TODO make success fetch via trigger
         this.collection.fetch({
             data : self.model.getUpdateData(),
             reset : true,
-            success : function(collection, response) {
-                _.each(response, function(value, key) {
-                    value.id = key;
-                });
-                collection.reset();
-                collection.add(response);
+            success : function() {
                 self.render();
                 self._loadFinish();
             },
@@ -64,7 +63,7 @@ MedOptima.prototype.ReservationViewDoctorList = Backbone.View.extend({
 
     _loadStart : function() {
         this.hide();
-        this._$loader.height(this.$el.height()).show();
+        this._$loader.height( this.$el.height() ).show();
     },
 
     _loadFinish : function() {

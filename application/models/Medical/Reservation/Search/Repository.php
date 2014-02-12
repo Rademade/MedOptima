@@ -19,7 +19,7 @@ class Application_Model_Medical_Reservation_Search_Repository
     public function getActiveReservations() {
         $conditions = $this->__getConditionClass();
         $conditions->onlyActive();
-        $conditions->setAccepted();
+        $conditions->exceptDeclinedByVisitor();
         return $this->__getEntitySearch($conditions)->getResults();
     }
 

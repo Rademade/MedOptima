@@ -5,7 +5,7 @@ $email = Option::getValueByKey('email');
 ?><div class="contacts">
     <div class="main-title">Контактная информация</div>
     <div class="contact-box">
-        <div class="contact-box-phone"><?=Option::getValueByKey('phone-with-prefix')?></div>
+        <div class="contact-box-phone"><?=$this->phoneWithPrefix?></div>
         <div class="contact-box-mail">
             <a href="mailto:<?=$email?>"><?=$email?></a>
         </div>

@@ -16,13 +16,13 @@ MedOptima.prototype.ReservationViewForm = Backbone.View.extend({
     show : function() {
         this.$el.animate({
             height : 'show'
-        });
+        }, 100);
     },
 
     hide : function() {
         this.$el.animate({
             height : 'hide'
-        });
+        }, 100);
     },
 
     _bindEvents : function() {

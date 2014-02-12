@@ -1,21 +1,29 @@
 MedOptima.prototype.ReservationWidget = Backbone.View.extend({
 
-    calendarWidget : undefined,
+    calendarWidget  : undefined,
     reservationView : undefined,
-    dialog : undefined,
+
+    createMsg   : undefined,
+    deleteMsg   : undefined,
+    errorMsg    : undefined,
+    loader      : undefined,
 
     initialize: function(data) {
         _.extend(this, data);
+        this._initLoader();
         this._bindCalendarEvents();
         this._bindModelEvents();
-        this._bindDialogEvents();
+        this._bindMessageButtons();
+    },
+
+    _initLoader : function() {
+        this.loader.$el.append(Med.cloneAjaxLoader().show());
     },
 
     _dateSelected : function($dateContainer, dateView, dateModel) {
         this.reservationView.$el.detach().appendTo($dateContainer);
-        this.model.set('visitDate', dateModel.getFormattedDate());
+        this.model.set('visitDate', dateModel.getDate());
         this.reservationView.show();
-
     },
 
     _beforeMonthChanged : function() {
@@ -37,34 +45,53 @@ MedOptima.prototype.ReservationWidget = Backbone.View.extend({
     },
 
     _bindModelEvents : function() {
-        //RM_TODO extract methods for event's!
         this.model
-            .on('save remove', function() {
-                this.dialog.$errorMsg.hide();
-                this.dialog.$saveSuccessMsg.hide();
-                this.dialog.$removeSuccessMsg.hide();
-                this.dialog.$loader.show();
-            }, this)
-            .on('saveSuccess saveError removeSuccess removeError', function() {
-                this.dialog.$loader.hide();
-            }, this)
-            .on('saveSuccess', function() {
-                this.dialog.setLabel(this.dialog.$saveSuccessMsg, this.model.getPrettyVisitDateTime());
-                this.dialog.$saveSuccessMsg.show();
-            }, this)
-            .on('removeSuccess', function() {
-                this.dialog.setLabel(this.dialog.$removeSuccessMsg, 'Отмена ' + this.model.getPrettyVisitDateTime());
-                this.dialog.$removeSuccessMsg.show();
-            }, this)
-            .on('saveError removeError', function() {
-                this.dialog.$errorMsg.show();
-            }, this);
+            .on('save destroy', this.showLoader, this)
+            .on('save', this.showCreateMessage, this)
+            .on('destroy', this.showDeleteMessage, this)
+            .on('error', this.showErrorMessage, this);
     },
 
-    _bindDialogEvents : function() {
-        this.dialog
-            .on('removeButtonClick', this.model.remove, this.model)
-            .on('saveButtonClick', this.model.save, this.model);
+    _bindMessageButtons : function() {
+        this.createMsg.on('buttonClick', this.model.destroy, this.model);
+        this.deleteMsg.on('buttonClick', this.model.save, this.model);
+    },
+
+    showLoader : function() {
+        this.calendarWidget.hideButtons();
+        this.createMsg.hide();
+        this.deleteMsg.hide();
+        this.errorMsg.hide();
+        this.loader.show();
+    },
+
+    hideLoader : function() {
+        this.loader.hide();
+    },
+
+    showCreateMessage : function() {
+        this.createMsg.setLabel(this.getMessageDateTime());
+        this.hideLoader();
+        this.createMsg.show();
+    },
+
+    showDeleteMessage : function() {
+        this.deleteMsg.setLabel('Отмена ' + this.getMessageDateTime());
+        this.hideLoader();
+        this.deleteMsg.show();
+    },
+
+    showErrorMessage : function() {
+        this.hideLoader();
+        this.errorMsg.show();
+    },
+
+    getMessageDateTime : function() {
+        return [
+            this.model.get('visitDate').formatFullDate(),
+            'в',
+            this.model.get('visitTime').formatTime()
+        ].join(' ');
     }
 
 }, {
@@ -73,9 +100,14 @@ MedOptima.prototype.ReservationWidget = Backbone.View.extend({
         var model = new MedOptima.prototype.ReservationModel();
         return new MedOptima.prototype.ReservationWidget({
             model : model,
-            calendarWidget : MedOptima.prototype.CalendarWidget.init($calendar),
+
+            calendarWidget  : MedOptima.prototype.CalendarWidget.init($calendar),
             reservationView : MedOptima.prototype.ReservationView.init(model, $reservation.children('#reservation-popup')),
-            dialog : MedOptima.prototype.DialogView.init($calendar)
+
+            createMsg   : new MedOptima.prototype.MessageView({el : $calendar.find('#message-create')}),
+            deleteMsg   : new MedOptima.prototype.MessageView({el : $calendar.find('#message-delete')}),
+            errorMsg    : new MedOptima.prototype.MessageView({el : $calendar.find('#message-error')}),
+            loader      : new MedOptima.prototype.MessageView({el : $calendar.find('#message-loader')})
         });
     }
 

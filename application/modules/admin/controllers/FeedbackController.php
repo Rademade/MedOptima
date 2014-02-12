@@ -33,6 +33,10 @@ class Admin_FeedbackController
     public function editAction() {
         parent::editAction();
         $this->_entity = Feedback::getById($this->_getParam('id'));
+        if (!$this->_entity->isProcessed()) {
+            $this->_entity->setProcessed(true);
+            $this->_entity->save();
+        }
         if ($this->getRequest()->isPost()) {
             $data = (object)$this->getRequest()->getPost();
             try {

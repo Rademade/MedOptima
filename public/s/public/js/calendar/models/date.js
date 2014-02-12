@@ -4,7 +4,7 @@ MedOptima.prototype.CalendarWidgetDateModel = Backbone.Model.extend({
         day : undefined,
         month : undefined,
         year : undefined
-    },
+    }, //RM_TODO store as object; add attributes as future and past
 
     initialize : function(params) {
         if (params.date instanceof Date) {
@@ -28,13 +28,6 @@ MedOptima.prototype.CalendarWidgetDateModel = Backbone.Model.extend({
 
     getDate : function() {
         return new Date(this.get('year'), this.get('month'), this.get('day'));
-    },
-
-    getFormattedDate : function() {
-        var date = this.getDate();
-        return [date.getDate(), date.getMonth() + 1, date.getFullYear()].join('.');
     }
-
-}, {
 
 });

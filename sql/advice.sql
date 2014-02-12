@@ -18,3 +18,7 @@ CREATE TABLE IF NOT EXISTS `medicalAdvices` (
 ALTER TABLE  `medicalAdvices` ADD  `visitorName` VARCHAR( 255 ) NOT NULL AFTER  `idDoctor` ;
 
 ALTER TABLE  `medicalAdvices` ADD  `visitorEmail` VARCHAR( 255 ) NOT NULL AFTER  `visitorName` ;
+
+-- 12.02.2014
+
+ALTER TABLE  `medicalAdvices` ADD  `isProcessed` INT NOT NULL AFTER  `doctorResponse` ;

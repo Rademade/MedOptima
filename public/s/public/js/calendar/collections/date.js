@@ -36,7 +36,7 @@ MedOptima.prototype.CalendarWidgetDateCollection = Backbone.Collection.extend({
         var date = new Date(current.getTime());
         date.setMonth(current.getMonth() + 1);
         while (this.size() < 6 * 7) {
-            this.add({date : date});
+            this.add({ date : date });
             date.setDate(date.getDate() + 1);
         }
     }

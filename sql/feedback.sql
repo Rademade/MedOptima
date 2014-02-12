@@ -22,3 +22,7 @@ INSERT INTO routing (idRoute, type, name, module, controller, action, url, defau
 (135+2, 1, 'admin-feedback-edit', 'admin', 'feedback', 'edit', '/admin/feedback/edit/:id', '{}', 1);
 
 ALTER TABLE  `feedbacks` ADD  `showOnMain` INT NOT NULL AFTER  `datePosted` ;
+
+-- 12.02.2014
+
+ALTER TABLE  `feedbacks` ADD  `isProcessed` INT NOT NULL AFTER  `showOnMain` ;

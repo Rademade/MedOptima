@@ -47,6 +47,10 @@ class Application_Model_Medical_Reservation_Search_Conditions
         $this->_getWhere()->add('reservationStatus', '=', Application_Model_Medical_Reservation::STATUS_ACCEPTED);
     }
 
+    public function exceptDeclined() {
+        $this->_getWhere()->add('reservationStatus', '!=', Application_Model_Medical_Reservation::STATUS_DECLINED);
+    }
+
     public function exceptDeclinedByVisitor() {
         $this->_getWhere()->add('reservationStatus', '!=', Application_Model_Medical_Reservation::STATUS_DECLINED_BY_VISITOR);
     }

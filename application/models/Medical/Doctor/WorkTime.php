@@ -49,6 +49,11 @@ class Application_Model_Medical_Doctor_WorkTime
      */
     private $_doctor;
 
+    /**
+     * @var MedOptima_DateTime_WeekdayPeriod
+     */
+    private $_period;
+
     public function __construct(stdClass $data) {
         $this->_dataWorker = new RM_Entity_Worker_Data(get_class(), $data);
         $this->_cacheWorker = new RM_Entity_Worker_Cache(get_class());
@@ -80,15 +85,18 @@ class Application_Model_Medical_Doctor_WorkTime
     }
 
     public function getPeriod() {
-        //RM_TODO lazy load
-        return new MedOptima_DateTime_WeekdayPeriod(
-            $this->_getWeekday(),
-            $this->_getTimeBegin(),
-            $this->_getTimeEnd()
-        );
+        if (!$this->_period) {
+            $this->_period = new MedOptima_DateTime_WeekdayPeriod(
+                $this->_getWeekday(),
+                $this->_getTimeBegin(),
+                $this->_getTimeEnd()
+            );
+        }
+        return $this->_period;
     }
 
     public function setPeriod(MedOptima_DateTime_WeekdayPeriod $period) {
+        $this->_period = $period;
         $this->_setWeekday($period->getWeekday());
         $this->_setTimeBegin($period->getTimeBegin());
         $this->_setTimeEnd($period->getTimeEnd());

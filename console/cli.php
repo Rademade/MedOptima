@@ -46,7 +46,7 @@ if (isset($opts->refresh_tokens)) :
 endif;
 
 if (isset($opts->sync_events)) :
-    $reservations = (new Application_Model_Medical_Reservation_Search_Repository)->getAllReservations();
+    $reservations = (new Application_Model_Medical_Reservation_Search_Repository)->getActiveReservations();
     foreach ($reservations as $reservation) {
         try {
             (new MedOptima_Service_Google_Calendar_Sync($reservation))->setDebugEnabled($debug)->sync();

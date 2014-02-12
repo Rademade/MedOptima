@@ -4,11 +4,17 @@ use Application_Model_Medical_Reservation as Reservation;
 class MedOptima_Service_Reservation {
 
     private static $_requiredFields = array(
-        'visitDate', 'visitTime',
-        'selectedDoctor', 'visitorName', 'visitorPhone'
+        'visitDate',
+        'visitTime',
+        'selectedDoctor',
+        'visitorName',
+        'visitorPhone'
     );
 
-    private $_data = [];
+    /**
+     * @var RM_Compositor
+     */
+    private $_data;
     private $_session;
 
     /**
@@ -25,7 +31,7 @@ class MedOptima_Service_Reservation {
     private $_toTime;
     private $_services = [];
 
-    public function __construct(array $data) {
+    public function __construct(RM_Compositor $data) {
         $this->_data = $data;
         $this->_session = new Zend_Session_Namespace('Reservation');
         if (!isset($this->_session->ids)) {
@@ -33,6 +39,10 @@ class MedOptima_Service_Reservation {
         }
     }
 
+    /**
+     * @return Reservation
+     * @throws Exception
+     */
     public function create() {
         $this->_validateData();
         $this->_prepareDoctor();
@@ -43,36 +53,45 @@ class MedOptima_Service_Reservation {
         return $reservation;
     }
 
+    /**
+     * @param $idReservation
+     * @return Reservation
+     * @throws Exception
+     */
     public function restore($idReservation) {
         $idReservation = (int)$idReservation;
-        //RM_TODO throw exception with reason if not restored
         if (in_array($idReservation, $this->_session->ids)) {
             $reservation = Reservation::getById( $idReservation );
-            if ($reservation && $reservation->isDeclinedByUser()) {
-                $reservation->setStatus(Reservation::STATUS_NEW); //RM_TODO ->setNew()
+            if ($reservation && $reservation->isDeclinedByVisitor()) {
+                $reservation->setNew();
                 $reservation->save();
-                return $reservation->getId();
+                return $reservation;
             }
         }
-        return 0;
+        throw new Exception('Cannot restore invalid reservation');
     }
 
+    /**
+     * @param $idReservation
+     * @return Reservation
+     * @throws Exception
+     */
     public function remove($idReservation) {
         $idReservation = (int)$idReservation;
         if (in_array($idReservation, $this->_session->ids)) {
             $reservation = Reservation::getById($idReservation);
-            if ($reservation && $reservation->getStatus() == Reservation::STATUS_NEW) { //RM_TODO $reservation->isNew()
-                $reservation->setStatus( Reservation::STATUS_DECLINED_BY_VISITOR ); //RM_TODO ->setDeclinedByUser()
+            if ($reservation && $reservation->isNew()) {
+                $reservation->setDeclinedByVisitor();
                 $reservation->save();
-                return $reservation->getId();
+                return $reservation;
             }
         }
-        return 0;
+        throw new Exception('Cannot remove invalid reservation');
     }
 
     private function _validateData() {
         foreach (self::$_requiredFields as $field) {
-            if (!isset($this->_data[$field])) {
+            if (!isset($this->_data->{$field})) {
                 throw new Exception("Field $field not set");
             }
         }
@@ -80,14 +99,14 @@ class MedOptima_Service_Reservation {
 
     private function _prepareDoctor() {
         $this->_doctor = (new Application_Model_Medical_Doctor_Search_Repository)
-            ->getShownById($this->_data['selectedDoctor']);
+            ->getShownById($this->_data->selectedDoctor);
         if (!$this->_doctor) {
             throw new Exception('Invalid doctor');
         }
     }
 
     private function _prepareVisitTime() {
-        $this->_fromTime = MedOptima_DateTime::create($this->_data['visitDate'] . ' ' . $this->_data['visitTime']);
+        $this->_fromTime = MedOptima_DateTime::create($this->_data->visitDate . ' ' . $this->_data->visitTime);
         $this->_toTime = clone $this->_fromTime;
         $this->_toTime->addSeconds($this->_doctor->getReceptionDuration()->getTimestamp()); //RM_TODO reception duration
         if (!$this->_doctor->getSchedule($this->_fromTime)->isAvailable($this->_fromTime, $this->_toTime)) {
@@ -96,7 +115,7 @@ class MedOptima_Service_Reservation {
     }
 
     private function _prepareServices() {
-        $selectedServices = isset($this->_data['selectedServiced']) ? $this->_data['selectedServiced'] : array();
+        $selectedServices = isset($this->_data->selectedServiced) ? $this->_data->selectedServiced : array();
         if (!is_array($selectedServices)) {
             $selectedServices = array();
         }
@@ -115,8 +134,8 @@ class MedOptima_Service_Reservation {
         $reservation->setDesiredVisitTime($this->_fromTime->getTimestamp());
         $reservation->setFinalVisitTime($this->_fromTime->getTimestamp());
         $reservation->setVisitEndTime($this->_toTime->getTimestamp());
-        $reservation->setVisitorName($this->_data['visitorName']);
-        $reservation->setVisitorPhone($this->_data['visitorPhone']);
+        $reservation->setVisitorName($this->_data->visitorName);
+        $reservation->setVisitorPhone($this->_data->visitorPhone);
         $serviceCollection = $reservation->getServiceCollection();
         foreach ($this->_services as $service) {
             $serviceCollection->add($service);

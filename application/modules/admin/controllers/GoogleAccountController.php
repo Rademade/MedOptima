@@ -14,13 +14,12 @@ class Admin_GoogleAccountController
     public function linkAction() {
         $doctor = Application_Model_Medical_Doctor::getById($this->_request->getParam('state'));
         if ($doctor instanceof Doctor) {
-            $user = $doctor->getUser();
-            if ( $user instanceof Profile && $user->getId() == $this->_user->getId() ) {
-                $service = new MedOptima_Service_Google_Account( $this->getRequest() );
-                $service->linkDoctorAccount($doctor);
-            }
-            #rm_todo redirect to doctor account edit
-            $this->redirect( $this->view->url([], 'admin-medical-doctor-list') );
+            $service = new MedOptima_Service_Google_Account( $this->getRequest() );
+            $service->linkDoctorAccount($doctor);
+            $this->redirect( $this->view->url([
+                'id' => $doctor->getId(),
+                'page' => 1
+            ], 'admin-medical-doctor-edit') );
         }
     }
 

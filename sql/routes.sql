@@ -24,7 +24,7 @@ INSERT INTO `routing` (`idRoute`, `type`, `name`, `module`, `controller`, `actio
 INSERT INTO `routing` (`idRoute`, `type`, `name`, `module`, `controller`, `action`, `url`, `defaultParams`, `routeStatus`) VALUES
 (1008, 1, 'create-reservation-ajax', 'public', 'reservation-ajax', 'create', '/reservation/create/ajax', '{}', 1);
 
-INSERT INTO  `medoptima`.`routing` (
+INSERT INTO  `routing` (
 `idRoute` ,
 `type` ,
 `name` ,
@@ -39,25 +39,25 @@ VALUES (
 NULL ,  '1',  'remove-reservation-ajax',  'public',  'reservation-ajax',  'remove',  '/reservation/remove/ajax',  '{}',  '1'
 );
 
-UPDATE  `medoptima`.`routing` SET  `name` =  'save-reservation-ajax',
+UPDATE  `routing` SET  `name` =  'save-reservation-ajax',
 `action` =  'save',
 `url` =  '/reservation/save/ajax' WHERE  `routing`.`idRoute` =1008;
 
 -- 12.02.2014
 
-UPDATE  `medoptima`.`routing` SET  `name` =  'create-reservation-ajax' WHERE  `routing`.`idRoute` =1008;
+UPDATE  `routing` SET  `name` =  'create-reservation-ajax' WHERE  `routing`.`idRoute` =1008;
 
-UPDATE  `medoptima`.`routing` SET  `name` =  'delete-reservation-ajax' WHERE  `routing`.`idRoute` =1009;
+UPDATE  `routing` SET  `name` =  'delete-reservation-ajax' WHERE  `routing`.`idRoute` =1009;
 
-UPDATE  `medoptima`.`routing` SET  `url` =  '/reservation/create/ajax' WHERE  `routing`.`idRoute` =1008;
+UPDATE  `routing` SET  `url` =  '/reservation/create/ajax' WHERE  `routing`.`idRoute` =1008;
 
-UPDATE  `medoptima`.`routing` SET  `action` =  'create' WHERE  `routing`.`idRoute` =1008;
+UPDATE  `routing` SET  `action` =  'create' WHERE  `routing`.`idRoute` =1008;
 
-UPDATE  `medoptima`.`routing` SET  `action` =  'delete' WHERE  `routing`.`idRoute` =1009;
+UPDATE  `routing` SET  `action` =  'delete' WHERE  `routing`.`idRoute` =1009;
 
-UPDATE  `medoptima`.`routing` SET  `url` =  '/reservation/delete/ajax' WHERE  `routing`.`idRoute` =1009;
+UPDATE  `routing` SET  `url` =  '/reservation/delete/ajax' WHERE  `routing`.`idRoute` =1009;
 
-INSERT INTO  `medoptima`.`routing` (
+INSERT INTO  `routing` (
 `idRoute` ,
 `type` ,
 `name` ,
@@ -71,3 +71,15 @@ INSERT INTO  `medoptima`.`routing` (
 VALUES (
 NULL ,  '1',  'update-reservation-ajax',  'public',  'reservation-ajax',  'update',  '/reservation/update/ajax',  '{}',  '1'
 );
+
+-- RestFull
+
+DELETE FROM routing WHERE idRoute IN (1007, 1008, 1009, 1010);
+
+INSERT INTO
+  `routing` (`idRoute`, `type`, `name`, `module`, `controller`, `action`, `url`, `defaultParams`, `routeStatus`)
+VALUES
+  (1007, 1, 'api-doctor-resources', 'public', 'api_doctor', 'index', '/api/doctor/', '{}', 1),
+  (1008, 1, 'api-doctor-resource',  'public', 'api_doctor', 'index', '/api/doctor/:id', '{}', 1),
+  (1009, 1, 'api-reservation-resources', 'public', 'api_reservation', 'index', '/api/reservation/', '{}', 1),
+  (1010, 1, 'api-reservation-resource',  'public', 'api_reservation', 'index', '/api/reservation/:id', '{}', 1);

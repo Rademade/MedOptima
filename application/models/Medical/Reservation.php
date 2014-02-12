@@ -5,6 +5,7 @@ class Application_Model_Medical_Reservation
     extends
         RM_Entity
     implements
+        JsonSerializable,
         RM_Interface_Deletable {
 
     const TABLE_NAME = 'medicalReservations';
@@ -274,6 +275,12 @@ class Application_Model_Medical_Reservation
 
     protected function __setIdDoctor($id) {
         $this->_dataWorker->setValue('idDoctor', $id);
+    }
+
+    public function jsonSerialize() {
+        $data = $this->_dataWorker->getAllData();
+        $data->id = $this->getId();
+        return $data;
     }
 
 }

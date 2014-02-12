@@ -24,7 +24,6 @@ MedOptima.prototype.ReservationWidget = Backbone.View.extend({
         this.reservationView.$el.detach().appendTo($dateContainer);
         this.model.set('visitDate', dateModel.getDate());
         this.reservationView.show();
-
     },
 
     _beforeMonthChanged : function() {
@@ -47,14 +46,14 @@ MedOptima.prototype.ReservationWidget = Backbone.View.extend({
 
     _bindModelEvents : function() {
         this.model
-            .on('save remove', this.showLoader, this) //RM_TODO rename triggers when REST will be ready
-            .on('saveSuccess', this.showCreateMessage, this)
-            .on('removeSuccess', this.showDeleteMessage, this)
-            .on('saveError removeError', this.showErrorMessage, this);
+            .on('save destroy', this.showLoader, this)
+            .on('save', this.showCreateMessage, this)
+            .on('destroy', this.showDeleteMessage, this)
+            .on('error', this.showErrorMessage, this);
     },
 
     _bindMessageButtons : function() {
-        this.createMsg.on('buttonClick', this.model.remove, this.model);
+        this.createMsg.on('buttonClick', this.model.destroy, this.model);
         this.deleteMsg.on('buttonClick', this.model.save, this.model);
     },
 

@@ -12,7 +12,7 @@ class Application_Model_Feedback_Search
         $db = RM_Entity::getDb();
         /* @var Zend_Db_Select $select */
         $select = Application_Model_Feedback::_getSelect();
-        $select->where('feedbackStatus = ?', Application_Model_Feedback::STATUS_NOT_PROCESSED);
+        $select->where('isProcessed = 0');
         $select->columns(array('COUNT(*) as notProcessedCount'));
         if ($result = $db->fetchRow($select)) {
             return (int)$result->notProcessedCount;

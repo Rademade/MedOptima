@@ -9,8 +9,6 @@ class Application_Model_Feedback
     const TABLE_NAME = 'feedbacks';
     const CACHE_NAME = 'feedbacks';
 
-    const STATUS_NOT_PROCESSED = 10;
-
     protected static $_properties = array(
         'idFeedback' => array(
             'type' => 'int',
@@ -32,9 +30,13 @@ class Application_Model_Feedback
             'type' => 'int',
             'default' => 0
         ),
+        'isProcessed' => array(
+            'type' => 'int',
+            'default' => 0
+        ),
         'feedbackStatus' => array(
             'type' => 'int',
-            'default' => self::STATUS_NOT_PROCESSED
+            'default' => self::STATUS_HIDE
         )
     );
 
@@ -72,14 +74,13 @@ class Application_Model_Feedback
     }
 
     public function remove() {
-        $this->_dataWorker->setValue('feedbackStatus', self::STATUS_DELETED);
+        $this->setStatus(self::STATUS_DELETED);
         $this->save();
         $this->__cleanCache();
     }
 
     public function getStatus() {
-        $status = $this->_dataWorker->getValue('feedbackStatus');
-        return $status == self::STATUS_NOT_PROCESSED ? self::STATUS_HIDE : $status;
+        return $this->_dataWorker->getValue('feedbackStatus');
     }
 
     public function setStatus($status) {
@@ -87,9 +88,9 @@ class Application_Model_Feedback
         if (in_array($status, array(
             self::STATUS_DELETED,
             self::STATUS_HIDE,
-            self::STATUS_SHOW,
-            self::STATUS_NOT_PROCESSED
+            self::STATUS_SHOW
         ))) {
+            $this->setProcessed(true);
             $this->_dataWorker->setValue('feedbackStatus', $status);
         } else {
             throw new Exception('Invalid feedback status');
@@ -97,8 +98,7 @@ class Application_Model_Feedback
     }
 
     public function isShow() {
-        return $this->getStatus() === self::STATUS_SHOW
-            || $this->getStatus() === self::STATUS_NOT_PROCESSED;
+        return $this->getStatus() === self::STATUS_SHOW;
     }
 
     public function show() {
@@ -154,6 +154,14 @@ class Application_Model_Feedback
 
     public function setShownOnMain($val) {
         $this->_dataWorker->setValue('showOnMain', $val);
+    }
+
+    public function setProcessed($val) {
+        $this->_dataWorker->setValue('isProcessed', $val);
+    }
+
+    public function isProcessed() {
+        return $this->_dataWorker->getValue('isProcessed');
     }
 
 }

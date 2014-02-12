@@ -42,3 +42,32 @@ NULL ,  '1',  'remove-reservation-ajax',  'public',  'reservation-ajax',  'remov
 UPDATE  `medoptima`.`routing` SET  `name` =  'save-reservation-ajax',
 `action` =  'save',
 `url` =  '/reservation/save/ajax' WHERE  `routing`.`idRoute` =1008;
+
+-- 12.02.2014
+
+UPDATE  `medoptima`.`routing` SET  `name` =  'create-reservation-ajax' WHERE  `routing`.`idRoute` =1008;
+
+UPDATE  `medoptima`.`routing` SET  `name` =  'delete-reservation-ajax' WHERE  `routing`.`idRoute` =1009;
+
+UPDATE  `medoptima`.`routing` SET  `url` =  '/reservation/create/ajax' WHERE  `routing`.`idRoute` =1008;
+
+UPDATE  `medoptima`.`routing` SET  `action` =  'create' WHERE  `routing`.`idRoute` =1008;
+
+UPDATE  `medoptima`.`routing` SET  `action` =  'delete' WHERE  `routing`.`idRoute` =1009;
+
+UPDATE  `medoptima`.`routing` SET  `url` =  '/reservation/delete/ajax' WHERE  `routing`.`idRoute` =1009;
+
+INSERT INTO  `medoptima`.`routing` (
+`idRoute` ,
+`type` ,
+`name` ,
+`module` ,
+`controller` ,
+`action` ,
+`url` ,
+`defaultParams` ,
+`routeStatus`
+)
+VALUES (
+NULL ,  '1',  'update-reservation-ajax',  'public',  'reservation-ajax',  'update',  '/reservation/update/ajax',  '{}',  '1'
+);

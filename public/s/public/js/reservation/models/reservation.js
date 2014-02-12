@@ -1,16 +1,19 @@
 MedOptima.prototype.ReservationModel = Backbone.Model.extend({
 
-    _saveUrl : '/reservation/save/ajax',
-    _cancelUrl : '/reservation/remove/ajax',
+    methodToUrl : {
+        'create' : '/reservation/create/ajax',
+        'update' : '/reservation/update/ajax',
+        'delete' : '/reservation/delete/ajax'
+    },
 
     defaults : {
-        id : 0,
-        visitDate : undefined,
-        visitTime : undefined,
-        selectedServices : [],
-        selectedDoctor : undefined,
-        visitorName : undefined,
-        visitorPhone : undefined
+        id                  : null,
+        visitDate           : undefined,
+        visitTime           : undefined,
+        selectedServices    : [],
+        selectedDoctor      : undefined,
+        visitorName         : undefined,
+        visitorPhone        : undefined
     },
 
     initialize : function() {
@@ -21,6 +24,15 @@ MedOptima.prototype.ReservationModel = Backbone.Model.extend({
         return !_.any(this.attributes, _.isUndefined);
     },
 
+
+//    sync : function(method, model, options) {
+//        if (model.methodToUrl && model.methodToUrl[method.toLowerCase()]) {
+//            options = options || {};
+//            options.url = model.methodToUrl[method.toLowerCase()];
+//        }
+//        return Backbone.sync.apply(this, arguments);
+//    },
+
     //RM_TODO via native backbone save. Use REST routes
     save : function() {
         this.trigger('save');
@@ -28,7 +40,7 @@ MedOptima.prototype.ReservationModel = Backbone.Model.extend({
         if (this.isValid()) {
             $.ajax({
                 type : 'post',
-                url : self._saveUrl,
+                url : self.methodToUrl['create'],
                 data : self.toJSON(),
                 dataType : 'json',
                 success : function(data) {
@@ -55,7 +67,7 @@ MedOptima.prototype.ReservationModel = Backbone.Model.extend({
         if (this.get('id') !== 0) {
             $.ajax({
                 type : 'post',
-                url : self._cancelUrl,
+                url : self.methodToUrl['delete'],
                 data : {id : self.get('id')},
                 dataType : 'json',
                 success : function(data) {
@@ -78,7 +90,7 @@ MedOptima.prototype.ReservationModel = Backbone.Model.extend({
     getUpdateData : function() { //RM_TODO rename
         var self = this;
         var data = {
-            date : self.get('visitDate')
+            date : self.get('visitDate').formatShortDate()
         };
         if (self.get('selectedServices').length) {
             _.extend(data, {
@@ -88,17 +100,12 @@ MedOptima.prototype.ReservationModel = Backbone.Model.extend({
         return data;
     },
 
-    getPrettyVisitDateTime : function() {
-        var visitTime = this.get('visitTime');
-        var visitDate = this.get('visitDate').split('.');
-        var visitMonth = visitDate[1];
-        visitDate = visitDate[0];
-        var monthNames = [
-            'января', 'февраля', 'марта', 'апреля', //RM_TODO move to Date.prototype
-            'мая', 'июня', 'июля', 'августа',
-            'сентября', 'октября', 'ноября', 'декабря'
-        ];
-        return [visitDate, monthNames[visitMonth - 1], 'в', visitTime].join(' ');
+    toJSON: function() {
+        var self = this;
+        return _.extend(_.clone(this.attributes), {
+            visitDate : self.get('visitDate').formatShortDate(),
+            visitTime : self.get('visitTime').formatTime()
+        });
     }
 
 });

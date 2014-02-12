@@ -64,6 +64,16 @@ MedOptima.prototype.CalendarWidget = Backbone.View.extend({
         this.model.setCurrentDate(new Date());
     },
 
+    showButtons : function() {
+        this.prevButtonView.show();
+        this.nextButtonView.show();
+    },
+
+    hideButtons : function() {
+        this.prevButtonView.hide();
+        this.nextButtonView.hide();
+    },
+
     _initViews : function() {
         this.calendarView = MedOptima.prototype.CalendarWidgetView.init(
             this.model,

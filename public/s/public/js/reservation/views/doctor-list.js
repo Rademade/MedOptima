@@ -6,6 +6,8 @@ MedOptima.prototype.ReservationViewDoctorList = Backbone.View.extend({
         this._$loader = Med.cloneAjaxLoader().hide();
         this.$el.after( this._$loader );
         this.collection.on('change:isSelected change:selectedTime', this._doctorChanged, this);
+//        this.collection.on('reset', this.todo, this);
+//        this.collection.on('error', this.todo, this);
         this._bindEvents();
     },
 

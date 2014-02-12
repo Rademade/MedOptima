@@ -29,6 +29,14 @@ MedOptima.prototype.CalendarWidgetNavButton = Backbone.View.extend({
                 self.trigger('click');
             }
         });
+    },
+
+    hide : function() {
+        this.$el.hide();
+    },
+
+    show : function() {
+        this.$el.show();
     }
 
 }, {

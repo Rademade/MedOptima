@@ -16,7 +16,9 @@ abstract class MedOptima_Controller_Public
         $this->view->assign(array(
             'currentMenuAlias' => $this->_currentMenuAlias,
             'phonePrefix' => Option::getValueByKey('phone-prefix'),
-            'phoneWithoutPrefix' => Option::getValueByKey('phone-without-prefix')
+            'phoneWithoutPrefix' => Option::getValueByKey('phone-without-prefix'),
+            'email' => Option::getValueByKey('email'),
+            'phoneWithPrefix' => Option::getValueByKey('phone-with-prefix')
         ));
     }
 

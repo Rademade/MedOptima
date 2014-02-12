@@ -3,8 +3,13 @@ class ReservationAjaxController
     extends
         RM_Controller_Ajax {
 
-    public function doctorListAction() {
+    public function preDispatch() {
+        parent::preDispatch();
         $this->_setResponseJSON();
+        $this->_result->status = 0;
+    }
+
+    public function doctorListAction() {
         $this->_result = array();
         $date = isset($this->_data->date) ? $this->_data->date : null;
         $services = isset($this->_data->services) ? $this->_data->services : '';
@@ -21,9 +26,7 @@ class ReservationAjaxController
         }
     }
 
-    public function saveAction() {
-        $this->_setResponseJSON();
-        $this->_result->status = 0;
+    public function createAction() {
         if ($this->getRequest()->isPost()) {
             try {
                 $data = (array)$this->_data;
@@ -41,8 +44,23 @@ class ReservationAjaxController
         }
     }
 
-    public function removeAction() {
-        $this->_setResponseJSON();
+    public function updateAction() {
+        if ($this->getRequest()->isPost()) {
+            try {
+                $data = (array)$this->_data;
+                $service = new MedOptima_Service_Reservation($data);
+                if (isset($data['id'])) {
+                    $reservation = $service->restore($data['id']);
+                    $this->_result->id = $reservation->getId();
+                }
+                $this->_result->status = 1;
+            } catch (Exception $e) {
+                $this->_result->errorMessage = $e->getMessage();
+            }
+        }
+    }
+
+    public function deleteAction() {
         if ($this->getRequest()->isPost()) {
             try {
                 $data = (array)$this->_data;

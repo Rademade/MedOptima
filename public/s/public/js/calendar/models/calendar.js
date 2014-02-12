@@ -1,7 +1,7 @@
 MedOptima.prototype.CalendarWidgetModel = Backbone.Model.extend({
 
     attributes : {
-        currentMonth : undefined,
+        currentMonth : undefined, //RM_TODO store objects
         currentMonthYear : undefined,
         prevMonth : undefined,
         prevMonthYear : undefined
@@ -11,7 +11,7 @@ MedOptima.prototype.CalendarWidgetModel = Backbone.Model.extend({
     date : undefined,
 
     setCurrentDate : function(date) {
-        date = new Date(date.getFullYear(), date.getMonth());
+        date = new Date(date.getFullYear(), date.getMonth()); //RM_TODO prototype method for date equal, greater than, less etc
         if (_.isUndefined(this.date) || date.getTime() !== this.date.getTime()) { //RM_TODO move to defaults
             this.trigger('beforeMonthChange');
             this.date = date;

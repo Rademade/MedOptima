@@ -1,155 +1,114 @@
-MedOptima.prototype.CalendarWidgetView = Backbone.View.extend({
+MedOptima.prototype.CalendarView = Backbone.View.extend({
 
-    collection : undefined,
-    _selectRules : undefined,
-    _displayRules : undefined,
-    _today : new Date(),
-    _updateFinished : false,
-    config : {
-        calendar : {
-            selectRules : {},
-            displayRules : {}
-        }
-    },
+    config          : undefined,
+    collection      : undefined,
+    $label          : undefined,
+    collectionView  : [],
+    $container      : undefined,
 
     initialize : function(options) {
-        this.config = options.config;
-        this._selectRules = this.config.calendar.selectRules;
-        this._displayRules = this.config.calendar.displayRules;
-        this.model.on('monthChange', this.update, this);
+        _.extend(this, options);
+        if (_.isFunction(this.config.applyDateRules) ) {
+            this.applyDateRules = this.config.applyDateRules;
+        }
+        this.$label = this.$el.find('.calendar-widget-month-label');
+        this._bindEvents();
     },
 
-    update : function() {
-        this._updateFinished = false;
-        this.collection.reset();
-        this.collection.update(this.model.toJSON());
-        var $old = this.$el;
-        var $new = this.render().hide();
-        this.$el = $new;
-        $old.after($new);
-        var self = this;
-        var finish = function() {
-            $old.remove();
-            self._updateFinished = true;
-        };
-        if (this.model.isMovingNext()) {
-            this._slideRight($old, $new, finish);
-        } else {
-            this._slideLeft($old, $new, finish);
-        }
+    _bindEvents : function() {
+        this.collection.on('change:selected', this._dateSelectionChanged, this);
+        this.model.on('beforeDisplayedDateChange', this._beforeDisplayedDateChanged, this);
+        this.model.on('displayedDateChange', this._displayedDateChanged, this);
     },
 
     render : function() {
-        var $el = this.$el.clone();
-        var $container = $el.children('.calendar-widget-month');
-        $container.empty();
-        this.collection.each(function(model) {
-            var view = new MedOptima.prototype.CalendarWidgetDateView({
-                model : model,
-                config : this.config.date
-            });
-            this._configureDate(model, view);
-            $container.append(view.$el);
+        this.$container = this.$el.children('.calendar-widget-month');
+        this.$container.empty();
+        this.collection.each(this._renderDate, this);
+        this.$container.append('<div class="clear"></div>');
+        this._updateLabel();
+    },
+
+    _renderDate : function(dateModel) {
+        var dateView = MedOptima.prototype.CalendarDateView.init(dateModel, this.config.date);
+        this.applyDateRules(dateModel, this.model.getDisplayedDate());
+        this.$container.append(dateView.$el);
+        this.collectionView.push(dateView);
+    },
+
+    _updateLabel : function() {
+        this.$label.text([
+            this.model.getDisplayedDate().getMonthName(),
+            this.model.getDisplayedDate().getFullYear()
+        ].join(' '));
+    },
+
+    animate : function() {
+
+    },
+
+    findDateView : function(dateModel) {
+        return _.find(this.collectionView, function(dateView) {
+            return dateView.model.isEqual(dateModel);
         }, this);
-        $container.append('<div class="clear"></div>');
-        $el.children('.calendar-widget-month-label').text([
-            this.config.locale.months[this.model.get('currentMonth')],
-            this.model.get('currentMonthYear')].join(' ')
-        );
-        return $el;
     },
 
-    updateFinished : function() {
-        return this._updateFinished;
-    },
-
-    _configureDate : function(model, view) {
-        this._applyDisplayRules(model, view);
-        if (!view.is('disabled')) {
-            this._applySelectRules(model, view);
-        }
-        this._bindDateEvents(model, view);
-    },
-
-
-    _applyDisplayRules : function(dateModel, dateView) {
-        if (dateModel.get('month') !== this.model.get('currentMonth')) {
-            dateView.setEnabled(false);
-        } else if (dateModel.isSunday()) {
-            dateView.setEnabled(!this._displayRules.disableSunday);
+    applyDateRules : function(dateModel, calendarDisplayedDate) {
+        var date = dateModel.get('date');
+        if (date.isPast()) {
+            dateModel.set('enabled', this.config.calendar.enablePast);
+        } else if (date.isFuture()) {
+            dateModel.set('enabled', this.config.calendar.enableFuture);
         } else {
-            dateView.setEnabled(true);
+            dateModel.set('enabled', this.config.calendar.enableToday);
         }
-    },
-
-    _applySelectRules : function(dateModel, dateView) {
-        var selMonth = this.model.get('currentMonth'), selYear = this.model.get('currentMonthYear');
-        var month = dateModel.get('month'), year = dateModel.get('year'), day = dateModel.get('day');
-        if (selYear < this._today.getFullYear()) {                              // прошедший год
-            dateView.setSelectable(this._selectRules.allowSelectPast);          // только если дата входит в отображаемый месяц
-        } else if (selYear > this._today.getFullYear()) {                       // будущее
-            dateView.setEnabled(true).setSelectable(this._selectRules.allowSelectFuture); // только если дата входит в отображаемый месяц
-        } else {                                                                // текущий год
-            if (selMonth < this._today.getMonth()) {                            // прошлое
-                dateView.setSelectable(this._selectRules.allowSelectPast);      // только если дата входит в отображаемый месяц
-            } else if (selMonth > this._today.getMonth()) {                      // будущее
-                dateView.setSelectable(this._selectRules.allowSelectFuture);      // только если дата входит в отображаемый месяц
-            } else {                                                              // текущий месяц
-                if (day < this._today.getDate()) {
-                    dateView.setSelectable(this._selectRules.allowSelectPast);
-                } else if (day > this._today.getDate()) {
-                    dateView.setSelectable(this._selectRules.allowSelectFuture)
-                } else {
-                    dateView.setSelectable(this._selectRules.allowSelectToday);
-                }
+        if (date.isSunday() && dateModel.is('enabled')) {
+            dateModel.set('enabled', this.config.calendar.enableSunday);
+        }
+        if (dateModel.is('enabled')
+            && calendarDisplayedDate.getMonth() == date.getMonth()
+            && calendarDisplayedDate.getFullYear() == date.getFullYear()
+        ) {
+            if (date.isPast()) {
+                dateModel.set('highlighted', this.config.calendar.highlightPast);
+            } else if (date.isFuture()) {
+                dateModel.set('highlighted', this.config.calendar.highlightFuture);
+            } else {
+                dateModel.set('highlighted', this.config.calendar.highlightToday);
+            }
+            if (date.isSunday() && dateModel.is('highlighted')) {
+                dateModel.set('highlighted', this.config.calendar.highlightSunday);
             }
         }
     },
 
-    _bindDateEvents : function(model, view) {
-        var self = this;
-        view.on('select',function(date) {
-            date.$el.siblings().removeClass(date.config.states.selected);
-            self.trigger('dateSelect', date);
-        }).on('click',function(date) {
-            self.trigger('dateClick', date);
-        }).on('reselect', function(date) {
-            self.trigger('dateReselect', date);
-        });
+    _beforeDisplayedDateChanged : function() {
+        this.collectionView = [];
     },
 
-    _slide : function($prev, $next, from, to, duration, finish) {
-        if (duration) {
-            $prev.hide('slide', {
-                direction : from
-            }, duration / 2, function() {
-                $next.show('slide', {direction : to}, duration, finish)
-            });
-        } else {
-            $prev.hide();
-            $next.show();
-            finish();
+    _displayedDateChanged : function() {
+        this.render();
+    },
+
+    _dateSelectionChanged : function(dateModel) {
+        if (dateModel.is('selected')) {
+            this.collection.each(function(otherDateModel) {
+                if (!otherDateModel.isEqual(dateModel)) {
+                    otherDateModel.set('selected', false);
+                }
+            }, this);
         }
-    },
-
-    _slideLeft : function($prev, $next, finish) {
-        var duration = this.config.calendar.slideDuration;
-        this._slide($prev, $next, 'left', 'right', duration, finish);
-    },
-
-    _slideRight : function($prev, $next, finish) {
-        var duration = this.config.calendar.slideDuration;
-        this._slide($prev, $next, 'right', 'left', duration, finish);
     }
 
 }, {
 
-    init : function(model, $el, config) {
-        return new MedOptima.prototype.CalendarWidgetView({
-            model : model,
-            el : $el,
-            config : config,
-            collection : MedOptima.prototype.CalendarWidgetDateCollection.init(model.toJSON())
+    init : function($el, config) {
+        var collection = new MedOptima.prototype.CalendarDateCollection();
+        return new MedOptima.prototype.CalendarView({
+            model       : new MedOptima.prototype.CalendarModel({collection : collection}),
+            el          : $el,
+            config      : config,
+            collection  : collection
         });
     }
 

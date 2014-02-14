@@ -96,6 +96,9 @@ class Application_Model_Medical_Doctor_WorkTime
     }
 
     public function setPeriod(MedOptima_DateTime_WeekdayPeriod $period) {
+        if ($period->getTimestampBegin() > $period->getTimestampEnd()) {
+            throw new Exception('Неверное время работы');
+        }
         $this->_period = $period;
         $this->_setWeekday($period->getWeekday());
         $this->_setTimeBegin($period->getTimeBegin());

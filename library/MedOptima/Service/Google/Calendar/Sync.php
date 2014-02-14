@@ -52,8 +52,8 @@ class MedOptima_Service_Google_Calendar_Sync {
             }
         } else if ($this->_reservation->isDeclined()) {
             if ($this->_reservation->wasSynced()) {
+                $this->deleteRemote(); // delete remove first because delete remove method removes Google Event Id !!
                 $this->_deleteLocal();
-                $this->deleteRemote();
             }
         }
         return true;

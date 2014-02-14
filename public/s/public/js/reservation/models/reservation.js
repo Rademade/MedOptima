@@ -13,22 +13,23 @@ MedOptima.prototype.ReservationModel = Backbone.Model.extend({
     },
 
     initialize : function() {
-        this.set('selectedServices', []);
+        _.bindAll(this, '_synced');
+        this.bind('sync', this._synced);
+    },
+
+    save : function() {
+        MedOptima.prototype.ReservationModel.__super__.save.apply(this, arguments);
+        this.trigger('save');
     },
 
     isValid : function() {
         return !_.any(this.attributes, _.isUndefined);
     },
     
-    save: function() {
-        MedOptima.prototype.ReservationModel.__super__.save.apply(this, arguments);
-        this.trigger('save');
-    },
-
     getUpdateData : function() { //RM_TODO rename
         var self = this;
         var data = {
-            date : self.get('visitDate').formatShortDate()
+            date : self.get('visitDate').getShortDateString()
         };
         if (self.get('selectedServices').length) {
             _.extend(data, {
@@ -41,9 +42,14 @@ MedOptima.prototype.ReservationModel = Backbone.Model.extend({
     toJSON: function() {
         var self = this;
         return _.extend(_.clone(this.attributes), {
-            visitDate : self.get('visitDate').formatShortDate(),
-            visitTime : self.get('visitTime').formatTime()
+            visitDate : self.get('visitDate').getShortDateString()
         });
+    },
+
+    _synced : function() {
+        if (this.get('status') != undefined && !this.get('status')) {
+            this.trigger('error');
+        }
     }
 
 });

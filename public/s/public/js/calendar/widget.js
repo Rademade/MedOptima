@@ -1,116 +1,55 @@
-/*
-    Triggers:
-        nextButtonClick : function($el, view)
-        prevButtonClick : function($el, view)
-        todayButtonClick : function($el)
-        dateClick : function($el, view, model)
-        dateSelect : function($el, view, model)
-        dateReselect : function($el, view, model)
-        dateChange : function(date)
-        beforeMonthChange : function(month)
-        monthChange : function(month)
- */
 MedOptima.prototype.CalendarWidget = Backbone.View.extend({
 
-    config : {
-        date : {
-            states : {
-                disabled    : 'off-date',
-                selectable  : 'active-date',
-                selected    : 'clicked',
-                current     : 'current-date',
-                weekend     : 'off-date'
-            },
-            disableSunday   : true
-        },
-        calendar : {
-            selectRules : {
-                allowSelectPast     : false,
-                allowSelectToday    : true,
-                allowSelectFuture   : true,
-                allowSelectSunday   : true
-            },
-            displayRules : {
-                disableSunday : false
-            },
-            slideDuration : 0
-        },
-        navigation : {
-            allowPast   : false,
-            allowFuture : true,
-            states : {
-                enabled : '',
-                disabled : 'button-disabled'
-            }
-        },
-        locale : {
-            months : [
-                'Январь','Февраль','Март','Апрель',
-                'Май','Июнь','Июль','Август',
-                'Сентябрь','Октябрь','Ноябрь','Декабрь'
-            ]
-        }
-    },
-
-    prevButtonView : undefined,
-    nextButtonView : undefined,
-    calendarView : undefined,
+    config      : undefined,
+    calendar    : undefined,
+    prevBtn     : undefined,
+    nextBtn     : undefined,
 
     initialize : function(options) {
-        _.extend(this.config, options.config);
-        this._initViews();
-        this._bindButtons();
-        this._configureRepeater();
-        this.model.setCurrentDate(new Date());
+        options || (options = {});
+        _.extend(this, options);
+        this._initComponents();
+        this._bindNavigateButtons();
+        this._bindOtherButtons();
+        this._bindEvents();
+        this.setButtonsVisible(true);
+        this.setButtonsEnabled(true);
+        this.calendar.model.setDisplayedDate(new Date);
     },
 
-    showButtons : function() {
-        this.prevButtonView.show();
-        this.nextButtonView.show();
+    setButtonsVisible : function(visible) {
+        this.prevBtn.setVisible(visible);
+        this.nextBtn.setVisible(visible);
+        return this;
     },
-
-    hideButtons : function() {
-        this.prevButtonView.hide();
-        this.nextButtonView.hide();
+    
+    setButtonsEnabled : function(enabled) {
+        this.prevBtn.setEnabled(enabled);
+        this.nextBtn.setEnabled(enabled);
+        return this;    
     },
-
-    _initViews : function() {
-        this.calendarView = MedOptima.prototype.CalendarWidgetView.init(
-            this.model,
+    
+    _initComponents : function() {
+        this.calendar = MedOptima.prototype.CalendarView.init(
             this.$el.find('.calendar-widget-month-container'),
             this.config
         );
-        this.prevButtonView = MedOptima.prototype.CalendarWidgetNavButton.init(
+        this.prevBtn = MedOptima.prototype.CalendarWidgetNavButton.init(
             this.$el.find('.calendar-widget-nav-button-prev'),
             this.config.navigation
         );
-        this.nextButtonView = MedOptima.prototype.CalendarWidgetNavButton.init(
+        this.nextBtn = MedOptima.prototype.CalendarWidgetNavButton.init(
             this.$el.find('.calendar-widget-nav-button-next'),
             this.config.navigation
         );
     },
 
-    _bindButtons : function() {
-        this._bindNavigateButtons();
-        this._bindOtherButtons();
-    },
-
     _bindNavigateButtons : function() {
-        this.prevButtonView.on('click', function() {
-            if (this.calendarView.updateFinished()) {
-                var date = this.model.getCurrentDate();
-                date.setMonth(date.getMonth() - 1);
-                this.model.setCurrentDate(date);
-                this.trigger('prevButtonClick', this.prevButtonView.$el, this.prevButtonView);
-            }
+        this.prevBtn.on('click', function() {
+            this.calendar.model.switchToPreviousMonth();
         }, this);
-        this.nextButtonView.on('click', function() {
-            if (this.calendarView.updateFinished()) {
-                var date = this.model.getCurrentDate();
-                date.setMonth(date.getMonth() + 1);
-                this.model.setCurrentDate(date);
-                this.trigger('nextButtonClick', this.nextButtonView.$el, this.nextButtonView);
-            }
+        this.nextBtn.on('click', function() {
+            this.calendar.model.switchToNextMonth()
         }, this);
     },
 
@@ -118,63 +57,80 @@ MedOptima.prototype.CalendarWidget = Backbone.View.extend({
         var self = this;
         var $today = this.$el.find('.calendar-widget-today-button');
         $today.click(function() {
-            self.model.setCurrentDate(new Date);
+            self.calendar.model.setDisplayedDate(new Date());
             self.trigger('todayButtonClick', $today);
         });
     },
 
-    _configureRepeater : function() {
-        var self = this;
-        this.calendarView
-            .on('dateClick', function(date) {
-                self.trigger('dateClick', date.$el, date, date.model);
-            }).on('dateSelect', function(date) {
-                self.trigger('dateSelect', date.$el, date, date.model);
-                self.trigger('dateChange', date.model.getDate());
-            }).on('dateReselect', function(date) {
-                self.trigger('dateReselect', date.$el, date, date.model);
-            });
-
-        this.model.on('monthChange', function() {
-            this._updateButtons();
-            this.trigger('monthChange', this.model.get('currentMonth'));
-        }, this);
-        this.model.on('beforeMonthChange', function() {
-            this.trigger('beforeMonthChange', this.model.get('currentMonth'));
+    _bindEvents : function() {
+        this.calendar.collection.on('change:selected', this._dateSelectionChanged, this);
+        this.calendar.model
+            .on('beforeDisplayedDateChange', this._beforeDisplayedDateChanged, this)
+            .on('displayedDateChange', this._displayedDateChanged, this);
+        this.calendar.on('dateReselect', function(dateModel, dateView) {
+            this.trigger('dateReselect', dateModel, dateView);
         }, this);
     },
 
+    _beforeDisplayedDateChanged : function() {
+        this.trigger('beforeDisplayedDateChange');
+    },
+    
+    _displayedDateChanged : function() {
+        this._updateButtons();
+        this.trigger('displayedDateChange');
+    },
+    
+    _dateSelectionChanged : function(dateModel) {
+        if (dateModel.is('selected')) {
+            var displayedDate = this.calendar.model.getDisplayedDate();
+            var selectedDate = dateModel.getDate();
+
+            if (selectedDate.getFullYear() < displayedDate.getFullYear()) {
+                this.calendar.model.switchToPreviousMonth();
+            } else if (selectedDate.getFullYear() > displayedDate.getFullYear()) {
+                this.calendar.model.switchToNextMonth();
+            } else {
+                if (selectedDate.getMonth() > displayedDate.getMonth()) {
+                    this.calendar.model.switchToNextMonth();
+                } else if (selectedDate.getMonth() < displayedDate.getMonth()) {
+                    this.calendar.model.switchToPreviousMonth();
+                } else {
+                    this.trigger('dateSelect', dateModel, this.calendar.findDateView(dateModel));
+                }
+            }
+            var newDateModel = this.calendar.collection.findByDate(selectedDate);
+            newDateModel.set('selected', true);
+        }
+    },
+
     _updateButtons : function() {
-        this.prevButtonView.setEnabled(
-            (this.model.isFuture() && !this.config.navigation.allowPast)
+        var date = this.calendar.model.getDisplayedDate();
+        this.prevBtn.setEnabled(
+            (date.isFuture() && !this.config.navigation.allowPast)
                 || this.config.navigation.allowPast
         );
-        this.nextButtonView.setEnabled(
-            this.model.isPast() && !this.config.navigation.allowFuture
+        this.nextBtn.setEnabled(
+            date.isPast() && !this.config.navigation.allowFuture
                 || this.config.navigation.allowFuture
         );
         this._updateButtonsLabel();
     },
 
     _updateButtonsLabel : function() {
-        var date = this.model.getCurrentDate();
+        var date = this.calendar.model.getDisplayedDate();
         date.setMonth(date.getMonth() - 1);
-        this.prevButtonView.setLabel(
-            this.config.locale.months[date.getMonth()]
-        );
+        this.prevBtn.setLabel(date.getMonthName());
         date.setMonth(date.getMonth() + 2);
-        this.nextButtonView.setLabel(
-            this.config.locale.months[date.getMonth()]
-        );
+        this.nextBtn.setLabel(date.getMonthName());
     }
 
 }, {
 
     init : function($el, config) {
         return new MedOptima.prototype.CalendarWidget({
-            el : $el,
-            model : new MedOptima.prototype.CalendarWidgetModel(),
-            config : config
+            el          : $el,
+            config      : config
         });
     }
 

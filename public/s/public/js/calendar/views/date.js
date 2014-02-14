@@ -1,43 +1,20 @@
-MedOptima.prototype.CalendarWidgetDateView = Backbone.View.extend({
+MedOptima.prototype.CalendarDateView = Backbone.View.extend({
 
     events : {
         'click span.calendar-box-date-item-value' : '_clicked'
     },
 
-    config : {},
-
-    initialize : function(options) {
-        this.config = options.config;
+    initialize : function() {
         this.render();
-        this.set('weekend', this.model.isSunday());
-        this.set('current', this.model.isToday());
+        this.model.on('change', this.update, this);
+        this.model.set('current', this.model.getDate().isToday());
     },
 
-    is : function(state) {
-        return this.$el.hasClass(this.config.states[state]);
-    },
-
-    set : function(states, active) {
-        if (typeof states == 'string') {
-            states = states.split(',');
-        }
-        _.each(states, function(state) {
-            var _class = this.config.states[state];
-            if (active) {
-                this.$el.addClass(_class);
-            } else {
-                this.$el.removeClass(_class);
-            }
+    update : function() {
+        _.each(this.model.changedAttributes(), function(activate, state) {
+            this.set(state, activate);
         }, this);
         return this;
-    },
-
-    setEnabled : function(enable) {
-        return this.set('selected,selectable', false).set('disabled', !enable);
-    },
-
-    setSelectable : function(selectable) {
-        return this.set('selected', false).set('selectable', selectable);
     },
 
     render : function() {
@@ -47,24 +24,73 @@ MedOptima.prototype.CalendarWidgetDateView = Backbone.View.extend({
     },
 
     getHtml : function() {
-        var template = MedOptima.prototype.CalendarWidgetDateView.template;
+        var template = MedOptima.prototype.CalendarDateView.template;
         return _.isFunction(template) ? template({item : this.model.toJSON()}) : '';
     },
 
-    _clicked : function() {
-        if (this.is('selectable')) {
-            if (this.is('selected')) {
-                this.trigger('reselect', this);
+    set : function(state, activate) {
+        if (state == 'enabled') {
+            if (activate) {
+                this.enable();
             } else {
-                this.set('selected', true);
-                this.trigger('select', this);
+                this.disable();
             }
         } else {
-            this.trigger('click', this);
+            var stateClass = this.getStateClass(state);
+            if (!_.isUndefined(stateClass)) {
+                if (activate) {
+                    this.$el.addClass(stateClass);
+                } else {
+                    this.$el.removeClass(stateClass);
+                }
+            }
         }
+        return this;
+    },
+
+
+    getConfig : function() {
+        return MedOptima.prototype.CalendarDateView.config;
+    },
+
+    getStateClass : function(state) {
+        return this.getConfig().states[state];
+    },
+
+    _clicked : function() {
+        if (this.model.is('enabled')) {
+            if (this.model.is('selected')) {
+                this.model.set('selected', false, {silent : true});
+            }
+            this.model.set('selected', true);
+        }
+    },
+
+    enable : function() {
+        this.$el
+            .removeClass(this.getStateClass('disabled'))
+            .addClass(this.getStateClass('enabled'));
+    },
+
+    disable : function() {
+        this.$el
+            .removeClass(this.getStateClass('enabled'))
+            .addClass(this.getStateClass('disabled'));
     }
 
 }, {
+
+    config : undefined,
+
+    init : function(model, config) {
+        config || (config = {});
+        if ( _.isUndefined(MedOptima.prototype.CalendarDateView.config) ) {
+            MedOptima.prototype.CalendarDateView.config = config;
+        }
+        return new MedOptima.prototype.CalendarDateView({
+            model : model
+        });
+    },
 
     template : function() {
         var $el = $('#calendar-widget-date-ejs');

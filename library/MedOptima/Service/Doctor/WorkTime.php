@@ -15,6 +15,11 @@ class MedOptima_Service_Doctor_WorkTime {
         return $result;
     }
 
+    /**
+     * @param Application_Model_Medical_Doctor $doctor
+     * @param array                            $data
+     * @return Application_Model_Medical_Doctor_WorkTime[]
+     */
     public function createListFromArray(Application_Model_Medical_Doctor $doctor, array $data) {
         $list = array();
         foreach ($data['key'] as $index => $day) {
@@ -25,18 +30,25 @@ class MedOptima_Service_Doctor_WorkTime {
                 $workTime->setPeriod(
                     new MedOptima_DateTime_WeekdayPeriod($day, $timeBegin, $timeEnd)
                 );
+                $workTime->setDoctor($doctor);
                 $list[] = $workTime;
             }
         }
         return $list;
     }
 
+    /**
+     * @param Application_Model_Medical_Doctor_WorkTime[] $list
+     */
     public function removeList(array $list) {
         foreach ($list as $workTime) {
             $workTime->remove();
         }
     }
 
+    /**
+     * @param Application_Model_Medical_Doctor_WorkTime[] $list
+     */
     public function saveList(array $list) {
         foreach ($list as $workTime) {
             $workTime->save();

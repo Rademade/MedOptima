@@ -13,7 +13,7 @@ class AdviceAjaxController
                 $advice->setVisitorName($data->visitor_name);
                 $advice->setVisitorEmail($data->visitor_email);
                 $advice->setVisitorQuestion($data->visitor_question);
-                $advice->setStatus(Application_Model_Medical_Advice::STATUS_NOT_PROCESSED);
+                $advice->setProcessed(false);
                 $advice->save();
                 $this->_result->status = 1;
             } catch (Exception $e) {}

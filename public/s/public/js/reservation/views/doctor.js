@@ -59,7 +59,7 @@ MedOptima.prototype.ReservationViewDoctor = Backbone.View.extend({
         if (!$time.hasClass('off')) {
             $time.siblings().removeClass('clicked');
             $time.addClass('clicked');
-            this.model.set('selectedTime', new Date().setTimeString($time.attr('data-time')));
+            this.model.set('selectedTime', new Time($time.attr('data-time')));
         }
     },
 

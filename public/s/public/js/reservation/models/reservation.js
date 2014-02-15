@@ -26,7 +26,7 @@ MedOptima.prototype.ReservationModel = Backbone.Model.extend({
         return !_.any(this.attributes, _.isUndefined);
     },
     
-    getUpdateData : function() { //RM_TODO rename
+    getUpdateData : function() {
         var self = this;
         var data = {
             date : self.get('visitDate').getShortDateString()

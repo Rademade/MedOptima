@@ -12,7 +12,7 @@ MedOptima.prototype.ReservationWidget = Backbone.View.extend({
         _.extend(this, data);
         this._initLoader();
         this._bindCalendarEvents();
-        this._bindModelEvents();
+        this._bindReservationEvents();
         this._bindMessageButtons();
     },
 
@@ -62,12 +62,15 @@ MedOptima.prototype.ReservationWidget = Backbone.View.extend({
         this.calendar.on('beforeDisplayedDateChange', this._beforeDisplayedDateChanged, this);
     },
 
-    _bindModelEvents : function() {
+    _bindReservationEvents : function() {
         this.model
             .on('save destroy', this.showLoader, this)
             .on('save', this.showCreateMessage, this)
             .on('destroy', this.showDeleteMessage, this)
             .on('error', this.showErrorMessage, this);
+        this.reservation
+            .on('show', this._scrollToReservation, this)
+            .on('hide', this._scrollToCalendar, this);
     },
 
     _bindMessageButtons : function() {
@@ -91,6 +94,14 @@ MedOptima.prototype.ReservationWidget = Backbone.View.extend({
 
     _beforeDisplayedDateChanged : function() {
         this.reservation.$el.hide().detach();
+    },
+
+    _scrollToReservation : function() {
+        $.scrollTo(this.reservation.$el.parent());
+    },
+
+    _scrollToCalendar : function() {
+        $.scrollTo(this.calendar.$el);
     }
 
 }, {

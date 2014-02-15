@@ -5,7 +5,7 @@
     <?= $this->render('blocks/index/reservation-widget.phtml') ?>
 
 </div>
-<?//=$this->render('blocks/index/map.phtml')?>
+<?=$this->render('blocks/index/map.phtml')?>
 <?echo $this->headScript()->captureStart();
     ?>$(function(){
         MedOptima.prototype.ReservationWidget.init($('#calendar-widget'), $('#reservation-widget'));

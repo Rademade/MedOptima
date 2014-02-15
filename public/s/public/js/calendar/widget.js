@@ -28,7 +28,11 @@ MedOptima.prototype.CalendarWidget = Backbone.View.extend({
         this.nextBtn.setEnabled(enabled);
         return this;    
     },
-    
+
+    scroll : function() {
+        $.scrollTo(this.$el);
+    },
+
     _initComponents : function() {
         this.calendar = MedOptima.prototype.CalendarView.init(
             this.$el.find('.calendar-widget-month-container'),
@@ -46,9 +50,11 @@ MedOptima.prototype.CalendarWidget = Backbone.View.extend({
 
     _bindNavigateButtons : function() {
         this.prevBtn.on('click', function() {
+            this.scroll();
             this.calendar.model.switchToPreviousMonth();
         }, this);
         this.nextBtn.on('click', function() {
+            this.scroll();
             this.calendar.model.switchToNextMonth()
         }, this);
     },
@@ -57,6 +63,7 @@ MedOptima.prototype.CalendarWidget = Backbone.View.extend({
         var self = this;
         var $today = this.$el.find('.calendar-widget-today-button');
         $today.click(function() {
+            self.scroll();
             self.calendar.model.setDisplayedDate(new Date());
             self.trigger('todayButtonClick', $today);
         });

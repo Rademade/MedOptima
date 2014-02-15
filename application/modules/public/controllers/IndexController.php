@@ -5,7 +5,7 @@ class IndexController
 
     public function preDispatch() {
         parent::preDispatch();
-//        RM_Head::getInstance()->getJS()->add('map');
+        RM_Head::getInstance()->getJS()->add('map');
     }
 
     public function indexAction() {

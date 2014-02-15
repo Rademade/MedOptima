@@ -10,11 +10,13 @@ MedOptima.prototype.ReservationView = Backbone.View.extend({
     },
 
     show : function() {
+        this.trigger('show');
         this.$el.fadeIn(200);
         return this;
     },
 
     hide : function() {
+        this.trigger('hide');
         this.$el.fadeOut(200);
         return this;
     },
@@ -25,17 +27,25 @@ MedOptima.prototype.ReservationView = Backbone.View.extend({
 
 
     _bindEvents : function() {
-        this.formView.on('submit', this._save, this);
-        this.model.on('change:visitTime', this._scrollToForm, this);
+        this.formView.on('submit', this._formSubmit, this);
+        this.model.on('change:visitTime', this._visitTimeChanged, this);
     },
 
-    _save : function() {
+    _visitTimeChanged : function() {
+        if (this.model.get('visitTime')) {
+            this.formView.show();
+            if (!this.formView.$el.visible()) {
+                $.scrollTo(this.formView.$el);
+            }
+        } else {
+            $.scrollTo(this.$el.parent());
+            this.formView.hide();
+        }
+    },
+
+    _formSubmit : function() {
         this.hide();
         this.model.save();
-    },
-
-    _scrollToForm : function() {
-        //RM_TODO scroll
     }
 
 }, {

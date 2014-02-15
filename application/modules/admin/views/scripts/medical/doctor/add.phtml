@@ -1,11 +1,9 @@
 <?php
 use Application_Model_User_Profile as User;
-use Application_Model_Medical_Doctor as Doctor;
 
 $form = new RM_View_Form();
 $form->getLangPanel()->allLangs();
 
-//RM_TODO
 $time = $this->TimeSplitter()->splitTimeIntoHoursMinutes(15);
 
 $form
@@ -35,10 +33,10 @@ $form
         $time, $time
     )))
     ->add(new RM_View_Form_Field_Select('Средняя продолжительность приема', 'reception_duration',
-        $this->DateTime_InsideDayDuration()->splitRange('00:00', '03:00', '00:15')
+        $this->DateTime_InsideDayDuration()->splitRange('00:15', '03:00', '00:15'), 900
     ));
 
-    if ($this->doctor instanceof Doctor) { // if edit action
+    if ($this->doctor instanceof Application_Model_Medical_Doctor) { // if edit action
         $form->add(new MedOptima_Admin_View_Form_Field_GoogleLink($this->doctor));
     }
 

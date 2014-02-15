@@ -1,11 +1,14 @@
 <?php
 $table = new RM_View_Table();
-$table->setEditRoute('admin-page-edit')
+
+$table
+    ->setEditRoute($this->editRoute)
     ->setStatusUrl($this->ajaxUrl)
-    ->setHead('Page name')
+    ->setHead('Название страницы')
     ->addPaginator($this->pages);
-foreach ($this->pages as $page):
-    /* @var RM_Page $page */
+
+foreach ($this->pages as $page) :
+    /* @var Application_Model_Page $page */
     $row = $table
         ->addRecord($page->getId(), $page->getContent()->getName())
         ->setPreviewUrl($page->getRoute()->getUrl());
@@ -15,4 +18,5 @@ foreach ($this->pages as $page):
             ->setDeletable();
     endif;
 endforeach;
+
 echo $table;

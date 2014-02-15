@@ -30,7 +30,8 @@ class Application_Model_Medical_Doctor
             'type' => 'int'
         ),
         'receptionDuration' => array(
-            'type' => 'string'
+            'type' => 'string',
+            'default' => '00:45'
         ),
         'lastSyncTime' => array(
             'type' => 'int'
@@ -253,6 +254,9 @@ class Application_Model_Medical_Doctor
     }
 
     public function setReceptionDuration(MedOptima_DateTime_Duration_InsideDay $duration) {
+        if ($duration->getTimestamp() < 15 * 60) {
+            throw new Exception('Invalid reception duration');
+        }
         $this->_dataWorker->setValue('receptionDuration', $duration);
     }
 

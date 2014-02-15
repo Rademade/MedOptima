@@ -92,17 +92,14 @@ MedOptima.prototype.ReservationViewDoctorList = Backbone.View.extend({
     },
 
     _doctorChanged : function(doctor) {
+        this.model.set('visitTime', doctor.get('selectedTime'));
         if (doctor.get('isSelected')) {
             this.collection.each(function(model) {
-                if (model.get('id') != doctor.get('id') && model.get('isSelected')) {
+                if (model.get('id') !== doctor.get('id')) {
                     model.set('isSelected', false);
-                    model.set('selectedTime', undefined);
                 }
             });
             this.model.set('selectedDoctor', doctor.get('id'));
-            this.model.set('visitTime', doctor.get('selectedTime'));
-        } else {
-            this.model.set('visitTime', undefined);
         }
     },
 

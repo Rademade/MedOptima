@@ -30,6 +30,11 @@ if ($this->user instanceof RM_User_Interface) :
             'count' => (new Application_Model_Medical_Reservation_Search())->getNotProcessedCount()
         ),
         array(
+            'name' => 'Параметры страниц',
+            'url' => $this->url(array(), 'admin-page-list'),
+            'menu' => 'pages'
+        ),
+        array(
             'name' => 'Текстовые блоки',
             'url' => $this->url(array(), 'admin-text-block-list'),
             'menu' => 'blocks'

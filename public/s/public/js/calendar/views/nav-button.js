@@ -1,15 +1,23 @@
 MedOptima.prototype.CalendarWidgetNavButton = Backbone.View.extend({
 
-    _$label : undefined,
+    $label : undefined,
+    config : undefined,
 
     initialize : function(options) {
-        this.config = options.config;
-        this._$label = this.$el.find('.calendar-widget-nav-button-label');
+        _.extend(this, options);
         this._bindEvents();
     },
 
     setLabel : function(label) {
-        this._$label.text(label);
+        this.$label.text(label);
+    },
+
+    hide : function() {
+        this.$el.hide();
+    },
+
+    show : function() {
+        this.$el.show();
     },
 
     setEnabled : function(enable) {
@@ -22,6 +30,14 @@ MedOptima.prototype.CalendarWidgetNavButton = Backbone.View.extend({
         }
     },
 
+    setVisible : function(visible) {
+        if (visible) {
+            this.show();
+        } else {
+            this.hide();
+        }
+    },
+
     _bindEvents : function() {
         var self = this;
         this.$el.click(function() {
@@ -29,14 +45,6 @@ MedOptima.prototype.CalendarWidgetNavButton = Backbone.View.extend({
                 self.trigger('click');
             }
         });
-    },
-
-    hide : function() {
-        this.$el.hide();
-    },
-
-    show : function() {
-        this.$el.show();
     }
 
 }, {
@@ -44,7 +52,8 @@ MedOptima.prototype.CalendarWidgetNavButton = Backbone.View.extend({
     init : function($el, config) {
         return new MedOptima.prototype.CalendarWidgetNavButton({
             el : $el,
-            config : config
+            config : config,
+            $label : $el.find('.calendar-widget-nav-button-label')
         });
     }
 

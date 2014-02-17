@@ -1,33 +1,35 @@
-MedOptima.prototype.CalendarWidgetDateModel = Backbone.Model.extend({
+MedOptima.prototype.CalendarDateModel = Backbone.Model.extend({
 
-    attributes : {
-        day : undefined,
-        month : undefined,
-        year : undefined
-    }, //RM_TODO store as object; add attributes as future and past
+    defaults : {
+        date        : undefined,
+        enabled     : false,
+        highlighted : false,
+        selected    : false,
+        current     : false
+    },
 
-    initialize : function(params) {
-        if (params.date instanceof Date) {
-            this.set('day', params.date.getDate());
-            this.set('month', params.date.getMonth());
-            this.set('year', params.date.getFullYear());
-            this.date = params.date;
+    initialize : function() {
+        if (_.isUndefined(this.get('date')) ) {
+            this.set('date', new Date);
         }
     },
 
-    isToday : function() {
-        var today = new Date();
-        return this.get('day') == today.getDate()
-            && this.get('month') == today.getMonth()
-            && this.get('year') == today.getFullYear();
-    },
-
-    isSunday : function() {
-        return this.getDate().getDay() == 0;
+    is : function(state) {
+        return this.get(state);
     },
 
     getDate : function() {
-        return new Date(this.get('year'), this.get('month'), this.get('day'));
+        return this.get('date');
+    },
+
+    toJSON : function() {
+        return {
+            day : this.getDate().getDate()
+        };
+    },
+
+    isEqual : function(other) {
+        return this.getDate().isEqual(other.getDate());
     }
 
 });

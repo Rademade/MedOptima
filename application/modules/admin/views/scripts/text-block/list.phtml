@@ -10,7 +10,6 @@ foreach ($this->blocks as $block):
     $row = $table
         ->addRecord($block->getId(), $block->getName())
         ->setStatus($block->getStatus())
-        ->setHideble()
-        ->setDeletable();
+        ->setHideble();
 endforeach;
 echo $table;

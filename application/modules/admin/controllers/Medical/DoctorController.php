@@ -49,6 +49,9 @@ class Admin_Medical_DoctorController
     public function editAction() {
         parent::editAction();
         $this->_entity = Doctor::getById($this->_getParam('id'));
+        $this->view->assign(array(
+            'doctor' => $this->_entity
+        ));
         if ($this->getRequest()->isPost()) {
             $data = (object)$this->getRequest()->getPost();
             try {
@@ -61,9 +64,6 @@ class Admin_Medical_DoctorController
             }
         } else {
             $this->__postFields();
-            $this->view->assign(array(
-                'doctor' => $this->_entity
-            ));
         }
     }
 
@@ -97,12 +97,12 @@ class Admin_Medical_DoctorController
         $this->__setContentFields();
         $photo = RM_Photo::getById($data->id_photo);
         if (!$photo instanceof RM_Photo) {
-            throw new Exception('Не выбрана фотография');
+//            throw new Exception('Не выбрана фотография');
         }
         if ( empty($data->id_posts) ) {
             throw new Exception('Не выбрана должность');
         }
-        $this->_entity->setPhoto($photo);
+//        $this->_entity->setPhoto($photo);
         $postCollection = $this->_entity->getPostCollection();
         $postCollection->resetItems();
         foreach ($data->id_posts as $idPost) {

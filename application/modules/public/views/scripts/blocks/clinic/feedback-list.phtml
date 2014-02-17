@@ -1,0 +1,45 @@
+<div class="clinic-comments">
+    <div class="fix">
+        <div class="main-title">Отзывы</div>
+        <div class="comments-item-list"><?
+            foreach ($this->feedbacks as $feedback) :
+                echo $this->partial('blocks/clinic/feedback.phtml', array(
+                    'feedback' => $feedback
+                ));
+            endforeach
+            ?></div>
+        <div class="comment-btn-box">
+            <span id="" class="button comments-btn form-activate-button">Напиcать отзыв...</span>
+
+            <div class="popup-box up-show form-container" style="display: none">
+                <i class="ico popup-tile"></i>
+
+                <form action="">
+                    <div class="popup-client-box">
+                        <div class="popup-client-box-item">
+                            <input name="visitor-name" data-alias="visitor_name" type="text" placeholder="Имя"/>
+                        </div>
+                        <div class="popup-client-box-item">
+                            <input name="visitor-phone" data-phone data-alias="visitor_phone" type="text"
+                                   placeholder="Телефон для связи"/>
+                        </div>
+                        <div>
+                            <textarea name="visitor-feedback" data-alias="visitor_feedback"></textarea>
+                        </div>
+                        <div class="popup-client-box-item">
+                            <input class="form-submit-button button popup-send-btn" type="button" value="Отправить"/>
+                        </div>
+                    </div>
+                </form>
+                <div class="error-box popup-client-box" style="display: none">
+                    <span class="error-message"></span>
+                    <span class="form-try-again-button">Попробовать еще раз</span>
+                </div>
+            </div>
+        </div>
+        <div class="thank-you-box popup-thx" style="display: none">Благодарим вас. <br/> Отзыв будет опубликован через
+            1—2 дня.
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>

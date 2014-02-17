@@ -115,7 +115,7 @@ class MedOptima_Service_Reservation {
     }
 
     private function _prepareServices() {
-        $selectedServices = isset($this->_data->selectedServiced) ? $this->_data->selectedServiced : array();
+        $selectedServices = isset($this->_data->selectedServices) ? $this->_data->selectedServices : array();
         if (!is_array($selectedServices)) {
             $selectedServices = array();
         }

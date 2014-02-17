@@ -13,7 +13,8 @@ try {
       	array(
             'help' => 'Displays usage information',
             'refresh_tokens' => 'Refresh doctor\'s access tokens',
-            'sync_events' => 'Sync reservations'
+            'sync_events' => 'Sync reservations',
+            'add_pages' => 'Add pages to admin panel'
         )
     );
     $opts->parse();
@@ -57,5 +58,38 @@ if (isset($opts->sync_events)) :
     }
     exit;
 endif;
+
+if (isset($opts->add_pages)) :
+    $pagesData = array(
+        array(
+            'name' => 'Главная',
+            'route' => 'index'
+        ),
+        array(
+            'name' => 'Клиника',
+            'route' => 'clinic'
+        ),
+        array(
+            'name' => 'Советы',
+            'route' => 'advices'
+        ),
+        array(
+            'name' => 'Контактная информация',
+            'route' => 'contacts'
+        )
+    );
+    foreach ($pagesData as $pageData) {
+        $page = Application_Model_Page::createSimplePage();
+        $page->getContent()->setName($pageData['name']);
+        $route = RM_Routing::getByName($pageData['route']);
+        $page->setRoute($route);
+        $page->show();
+        $page->save();
+        $route->idPage = $page->getId();
+        $route->save();
+    }
+    exit;
+endif;
+
 
 exit;

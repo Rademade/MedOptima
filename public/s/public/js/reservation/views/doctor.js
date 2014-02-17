@@ -1,23 +1,24 @@
 MedOptima.prototype.ReservationViewDoctor = Backbone.View.extend({
 
     events : {
-        'click :not(.popup-doctors-box-schedule, .popup-doctors-box-schedule *, .popup-box-close-link, .popup-box-close-link *)' : '_selected',
+        'click :not(.popup-doctors-box-schedule, .popup-doctors-box-schedule *, .popup-box-close-link, .popup-box-close-link *)' : '_clicked',
         //RM_TODO fix selector ^^^
-        'click .popup-box-close-link' : '_closed',
-        'click .popup-doctors-box-schedule button' : '_timeSelected'
+        'click .popup-box-close-link' : '_closeBoxClicked',
+        'click .popup-doctors-box-schedule button' : '_timeClicked'
     },
 
-    _$schedule : undefined,
+    $schedule : undefined,
 
     initialize : function() {
         this._updateSchedule();
-        this.model.on('change:isSelected', function() {
-            if (this.model.get('isSelected')) {
-                this.open();
-            } else {
-                this.close();
-            }
-        }, this);
+        this.model
+            .on('change:isSelected', function() {
+                if (this.model.get('isSelected')) {
+                    this.open();
+                } else {
+                    this.close();
+                }
+            }, this);
     },
 
     getHtml : function() {
@@ -33,51 +34,49 @@ MedOptima.prototype.ReservationViewDoctor = Backbone.View.extend({
     },
 
     open : function() {
+        this._clearSelectedTime();
         if (!this.$el.hasClass('activated')) {
             var _self = this;
-            this._$schedule.slideToggle(100, function() {
+            this.$schedule.slideToggle(100, function() {
                 _self.$el.addClass('activated')
             });
         }
     },
 
     close : function() {
+        this.model.set('selectedTime', undefined);
         if (this.$el.hasClass('activated')) {
             var _self = this;
-            this._$schedule.slideToggle(100, function() {
+            this.$schedule.slideToggle(100, function() {
                 _self.$el.removeClass('activated')
             });
         }
+        this._clearSelectedTime();
     },
 
     _updateSchedule : function() {
-        this._$schedule = this.$el.find('.popup-schedule-time');
+        this.$schedule = this.$el.find('.popup-schedule-time');
     },
 
-    _timeSelected : function(event) {
+    _clicked : function() {
+        this.model.set('isSelected', !this.model.get('isSelected'));
+    },
+
+    _timeClicked : function(event) {
         var $time = $(event.currentTarget);
         if (!$time.hasClass('off')) {
-            $time.siblings().removeClass('clicked');
-            $time.addClass('clicked');
-            this.model.set('selectedTime', new Date().setTimeString($time.attr('data-time')));
-        }
-    },
-
-    _selected : function() {
-        this.model.set('isSelected', !this.model.get('isSelected'));
-        if (!this.model.get('isSelected')) {
             this._clearSelectedTime();
+            $time.addClass('clicked');
+            this.model.set('selectedTime', new Time($time.attr('data-time')));
         }
     },
 
-    _closed : function() {
+    _closeBoxClicked : function() {
         this.model.set('isSelected', false);
-        this._clearSelectedTime();
     },
 
     _clearSelectedTime : function() {
         this.$el.find('.popup-schedule-time').removeClass('clicked');
-        this.model.set('selectedTime', undefined);
     }
 
 }, {

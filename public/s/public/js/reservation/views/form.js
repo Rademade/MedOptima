@@ -8,8 +8,8 @@ MedOptima.prototype.ReservationViewForm = Backbone.View.extend({
     _$fieldPhone : undefined,
 
     initialize : function() {
+        _.bindAll(this, '_submitButtonClicked');
         this._initFields();
-        this._bindEvents();
         this._bindValidation();
     },
 
@@ -23,18 +23,6 @@ MedOptima.prototype.ReservationViewForm = Backbone.View.extend({
         this.$el.animate({
             height : 'hide'
         }, 100);
-    },
-
-    _bindEvents : function() {
-        this.model.on('change:visitTime', this._timeChanged, this);
-    },
-
-    _timeChanged : function() {
-        if (this.model.get('visitTime') !== undefined) {
-            this.show();
-        } else {
-            this.hide();
-        }
     },
 
     _submitButtonClicked : function() {

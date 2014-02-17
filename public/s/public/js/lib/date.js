@@ -1,6 +1,20 @@
 $(function() {
 
+    Date.prototype.today = new Date();
+
     Date.prototype.getMonthNames = function() {
+        return [
+            'Январь', 'Февраль', 'Март', 'Апрель',
+            'Май', 'Июнь', 'Июль', 'Август',
+            'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+        ];
+    };
+
+    Date.prototype.getMonthName = function() {
+        return this.getMonthNames()[this.getMonth()];
+    };
+
+    Date.prototype.getDeclensionMonthNames = function() {
         return [
             'января', 'февраля', 'марта', 'апреля',
             'мая', 'июня', 'июля', 'августа',
@@ -8,11 +22,11 @@ $(function() {
         ];
     };
 
-    Date.prototype.getMonthName = function() {
-        return this.getMonthNames()[this.getMonth() + 1];
+    Date.prototype.getDeclensionMonthName = function() {
+        return this.getDeclensionMonthNames()[this.getMonth()];
     };
 
-    Date.prototype.formatShortDate = function() {
+    Date.prototype.getShortDateString = function() {
         return [
             this.getDate(),
             this.getMonth() + 1,
@@ -20,39 +34,15 @@ $(function() {
         ].join('.');
     };
 
-    Date.prototype.formatFullDate = function() {
+    Date.prototype.getFullDateString = function() {
         return [
             this.getDate(),
-            this.getMonthName(),
+            this.getDeclensionMonthName(),
             this.getFullYear()
         ].join(' ');
     };
 
-    Date.prototype.formatTime = function() {
-        var hours = this.getHours();
-        var minutes = this.getMinutes();
-        if (hours < 10) {
-            hours = '0' + hours;
-        }
-        if (minutes < 10) {
-            minutes = '0' + minutes;
-        }
-        return [
-            hours,
-            minutes
-        ].join(':');
-    };
-
-    Date.prototype.setTimeString = function(timeStr) {
-        if (!_.isArray(timeStr)) {
-            var tokens = timeStr.split(':');
-        }
-        this.setHours(tokens[0]);
-        this.setMinutes(tokens[1]);
-        return this;
-    };
-
-    Date.prototype.isDateGreater = function(date) {
+    Date.prototype.greaterThan = function(date) {
         if (_.isObject(date)) {
             if (this.getFullYear() != date.getFullYear()) {
                 return this.getFullYear() > date.getFullYear();
@@ -66,12 +56,41 @@ $(function() {
         }
     };
 
-    Date.prototype.isDateLesser = function(date) {
-        return !this.isDateGreater(date);
+    Date.prototype.lesserThan = function(date) {
+        if (_.isObject(date)) {
+            if (this.getFullYear() != date.getFullYear()) {
+                return this.getFullYear() < date.getFullYear();
+            }
+            if (this.getMonth() != date.getMonth()) {
+                return this.getMonth() < date.getMonth()
+            }
+            return this.getDate() < date.getDate();
+        } else {
+            return false;
+        }
     };
 
-    Date.prototype.isDateEqual = function(date) {
-        return !this.isDateGreater(date) && !this.isDateLesser(date);
+    Date.prototype.isEqual = function(date) {
+        return !this.greaterThan(date) && !this.lesserThan(date);
+    };
+
+    Date.prototype.isSunday = function() {
+        return this.getDay() == 0;
+    };
+
+    Date.prototype.isToday = function() {
+        var today = this.today;
+        return today.getDate() == this.getDate()
+            && today.getMonth() == this.getMonth()
+            && today.getFullYear() == this.getFullYear();
+    };
+
+    Date.prototype.isFuture = function() {
+        return this.greaterThan(new Date());
+    };
+
+    Date.prototype.isPast = function() {
+        return this.lesserThan(new Date());
     };
 
 });

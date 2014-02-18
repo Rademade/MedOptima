@@ -6,7 +6,7 @@
 .calendar-title {
     text-align: center;
     font-size: 30px;
-    color: #a2bb17;
+    color: #8d99a6;
     @include helveticaneuecyrthin();
 }
 
@@ -36,12 +36,71 @@
     top: 135px;
     font-size: 30px;
     color: #00a3df;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
     @include helveticaneuecyrthin();
 
     &:hover {
 
         span {
-            border-bottom: 1px solid #00a3df;
+            border-bottom: 1px solid #b2e3f5;
+        }
+
+        .prev-month-link-ico {
+           left: -5px;
+        }
+
+        .next-month-link-ico {
+            right: -5px;
+        }
+    }
+
+    &:active {
+        .prev-month-link-ico,
+        .next-month-link-ico {
+            @include transition(all 0.1s ease-in);
+        }
+
+        .prev-month-link-ico {
+            left: 10px;
+        }
+
+        .next-month-link-ico {
+            right: 10px;
+        }
+    }
+
+    &.button-disabled {
+        color: #8d99a6;
+        cursor: default;
+
+        span {
+            border-bottom: 1px solid transparent;
+        }
+
+        &:hover {
+
+            .prev-month-link-ico {
+                left: 0;
+            }
+
+            .next-month-link-ico {
+                right: 0;
+            }
+        }
+
+        &:active {
+
+            .prev-month-link-ico {
+                left: 0;
+            }
+
+            .next-month-link-ico {
+                right: 0;
+            }
         }
     }
 }
@@ -87,10 +146,28 @@
 .calendar-box-date-item {
     float: left;
     position: relative;
-
-    &.off-date {
+    cursor: pointer;
+    
+    &:hover {
         .calendar-box-date-item-value {
-            opacity: 0.4;
+            cursor: pointer;
+            color: #fff;
+            background-color: #00a3df;
+            @include border-radius(30px);
+        }
+    }
+    
+    &.off-date {
+        &:hover {
+            .calendar-box-date-item-value {
+                cursor: default;
+                color: #8d99a6;
+                background-color: transparent;
+                @include opacity(.4);
+            }
+        }
+        .calendar-box-date-item-value {
+            @include opacity(.4);
         }
     }
 
@@ -104,13 +181,10 @@
         .calendar-box-date-item-value {
             color: #00a3df;
         }
-
         &:hover {
             .calendar-box-date-item-value {
-                cursor: pointer;
                 color: #fff;
                 background-color: #00a3df;
-                @include border-radius(30px);
             }
         }
     }
@@ -150,6 +224,7 @@
 .next-month-link-ico {
     width: 18px;
     height: 32px;
+    @include transition(all 0.2s ease-in);
 }
 
 .prev-month-link-ico {
@@ -173,7 +248,7 @@
         text-transform: uppercase;
 
         &:hover {
-            border-bottom: 1px solid #00a3df;
+            border-bottom: 1px solid #b2e3f5;
         }
     }
 }

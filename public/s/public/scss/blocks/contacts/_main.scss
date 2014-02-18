@@ -38,6 +38,12 @@
 }
 .contact-box-mail {
     margin-top: 8px;
+
+    a {
+        &:hover {
+            border-bottom: 1px solid #b2e3f5;
+        }
+    }
 }
 
 .contact-box-adress {

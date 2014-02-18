@@ -32,6 +32,12 @@
     color: #8d99a6;
     font-size: 16px;
     line-height: 20px;
+
+    a {
+        &:hover {
+            border-bottom: 1px solid #b2e3f5;
+        }
+    }
 }
 
 .doctor-box-item-img {

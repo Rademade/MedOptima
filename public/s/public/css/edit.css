@@ -1,13 +1,4 @@
-.error-message {
-    color: white;
-}
-.success .error-message {
-    display: none;
-}
 
-.error .error-message {
-    display: block;
-}
 #ajax-loader {
     background: url('/s/public/images/loader.gif') 50% 50% no-repeat;
     min-height: inherit;
@@ -21,13 +12,12 @@
 .calendar-box {
     height: 335px;
 }
-.button-disabled {
-    color: #8d99a6;
-}
+
 .popup-client-box textarea {
     font: inherit;
     color: white;
 }
+
 .popup-error-message {
     color: white;
     display: block;

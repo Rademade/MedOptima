@@ -186,19 +186,17 @@
 }
 
 .popup-client-box-item {
-    margin-top: 12px;
+    margin: 0 0 20px 0;
+    position: relative;
 
-    ::-webkit-input-placeholder {
-        color: #fff;
+    &.bot-indent {
+        margin-bottom: 30px;
     }
+}
 
-    :-moz-placeholder {
-        color: #fff;
-    }
-
-    .placeholder {
-        color: #fff;
-    }
+.popup-box-input-container {
+    height: 31px;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
 }
 
 

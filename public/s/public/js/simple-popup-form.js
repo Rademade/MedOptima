@@ -51,14 +51,17 @@ MedOptima.prototype.SimplePopupForm = function() {
         $(document).mouseup(function(e) {
             if (!$formContainer.is(e.target) && $formContainer.has(e.target).length === 0) {
                 $formContainer.fadeOut(200);
+                $activateButton.removeClass('clicked');
             }
         });
 
         $activateButton.click(function() {
             if (!$formContainer.is(":visible")) {
                 $formContainer.fadeIn(200);
+                $activateButton.addClass('clicked');
             } else {
                 $formContainer.fadeOut(200);
+                $activateButton.removeClass('clicked');
             }
         });
     };

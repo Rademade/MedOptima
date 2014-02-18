@@ -3,16 +3,14 @@
         echo $this->partial('blocks/index/feedback.phtml', array(
             'feedback' => $feedback
         ));
-    endforeach
+    endforeach;
+    $block = Application_Model_TextBlock::getByAlias('index');
     ?><div class="text-box-item">
-        <div class="simple-text">
-            <h3>Как долго делается коронка?</h3>
-            <p>
-                На первом приёме врач-ортодонт делает слепок пациенту.
-                Слепок передаётся технику, который изготавливает коронку. Весь процесс занимает 4—7 дней. В этот промежуток, пацтиент выбирает — ходить без зуба
-                или поставить временную пломбу. Готовую коронку одевают на следующем приёме, подтачивают детали. Процесс вставки безболезненный.
-            </p>
-            <img src="/s/public/images/text-img-1.png" alt=""/>
+        <div class="simple-text"><?
+        if ($block instanceof Application_Model_TextBlock) :
+            echo $block->getText();
+        endif;
+            ?><img src="/s/public/images/text-img-1.png" alt=""/>
             <img src="/s/public/images/text-img-2.png" alt=""/>
             <img src="/s/public/images/text-img-3.png" alt=""/>
         </div>

@@ -1,0 +1,18 @@
+.error-message {
+    position: absolute;
+    color: white;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+.success {
+    .error-message {
+        display: none;
+    }
+}
+
+.error {
+    .error-message {
+        display: block;
+    }
+}

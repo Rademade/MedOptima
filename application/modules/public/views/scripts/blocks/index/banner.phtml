@@ -7,7 +7,7 @@ $previewHeight = 80;
 
 /* @var Application_Model_Banner[] $banners */
 $banners = $this->banners;
-
+$showQuotes = isset($this->showQuotes) ? $this->showQuotes : true;
 ?><div class="banner">
     <div class="banner-box">
         <div class="connected-carousels">
@@ -18,7 +18,9 @@ $banners = $this->banners;
                         foreach ($banners as $banner) :
                             ?><li><?
                                 $imagePath = $banner->getPhoto()->getPath($fullWidth, $fullHeight);
-                                echo $this->partial('blocks/index/banner/quote.phtml', ['banner' => $banner]);
+                                if ($showQuotes) :
+                                    echo $this->partial('blocks/index/banner/quote.phtml', ['banner' => $banner]);
+                                endif;
                                 ?><img src="<?=$imagePath?>" width="<?=$fullWidth?>" height="<?=$fullHeight?>" alt=""/>
                             </li><?
                         endforeach

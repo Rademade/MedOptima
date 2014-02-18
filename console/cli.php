@@ -14,7 +14,8 @@ try {
             'help' => 'Displays usage information',
             'refresh_tokens' => 'Refresh doctor\'s access tokens',
             'sync_events' => 'Sync reservations',
-            'add_pages' => 'Add pages to admin panel'
+            'add_pages' => 'Add pages to admin panel',
+            'clinic_text_block' => 'Add index text block'
         )
     );
     $opts->parse();
@@ -91,5 +92,17 @@ if (isset($opts->add_pages)) :
     exit;
 endif;
 
+if (isset($opts->clinic_text_block)) :
+    $values = array(
+        'name' => 'Блок на главной странице',
+        'alias' => 'index',
+        'text' => '<h3>Как долго делается коронка?</h3><p>На первом приёме врач-ортодонт делает слепок пациенту. Слепок передаётся технику, который изготавливает коронку. Весь процесс занимает 4—7 дней. В этот промежуток, пацтиент выбирает — ходить без зуба или поставить временную пломбу. Готовую коронку одевают на следующем приёме, подтачивают детали. Процесс вставки безболезненный.</p>'
+    );
+    $block = Application_Model_TextBlock::create();
+    foreach ($values as $name => $value) {
+        $block->{'set' . ucfirst($name)}($value);
+    }
+    $block->show();
+endif;
 
 exit;

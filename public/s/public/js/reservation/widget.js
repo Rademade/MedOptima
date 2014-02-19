@@ -59,6 +59,7 @@ MedOptima.prototype.ReservationWidget = Backbone.View.extend({
 
     _bindCalendarEvents : function() {
         this.calendar.on('dateSelect', this._dateSelected, this);
+        this.calendar.on('dateDeselect', this._dateDeselected, this);
         this.calendar.on('beforeDisplayedDateChange', this._beforeDisplayedDateChanged, this);
     },
 
@@ -79,17 +80,13 @@ MedOptima.prototype.ReservationWidget = Backbone.View.extend({
     },
 
     _dateSelected : function(dateModel, dateView) {
-        if ( dateView.$el.find('#' + this.reservation.$el.attr('id')).length ) {
-            if (this.reservation.visible()) {
-                this.reservation.hide();
-            } else {
-                this.reservation.show();
-            }
-        } else {
-            this.reservation.$el.appendTo(dateView.$el);
-            this.reservation.show();
-        }
+        this.reservation.$el.hide().appendTo(dateView.$el);
+        this.reservation.show();
         this.model.set('visitDate', dateModel.getDate());
+    },
+
+    _dateDeselected : function() {
+        this.reservation.$el.detach();
     },
 
     _beforeDisplayedDateChanged : function() {

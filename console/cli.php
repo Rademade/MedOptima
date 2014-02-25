@@ -15,7 +15,9 @@ try {
             'refresh_tokens' => 'Refresh doctor\'s access tokens',
             'sync_events' => 'Sync reservations',
             'add_pages' => 'Add pages to admin panel',
-            'clinic_text_block' => 'Add index text block'
+            'clinic_text_block' => 'Add index text block',
+            'remove_clinic_text_block' => 'Remove old clinic blocks',
+            'create_advice_galleries' => 'Create advice empty galleries'
         )
     );
     $opts->parse();
@@ -103,6 +105,23 @@ if (isset($opts->clinic_text_block)) :
         $block->{'set' . ucfirst($name)}($value);
     }
     $block->show();
+endif;
+
+if (isset($opts->remove_clinic_text_block)) :
+    $block = Application_Model_TextBlock::getByAlias('index');
+    $block->remove();
+endif;
+
+if (isset($opts->create_advice_galleries)) :
+    $list = Application_Model_Medical_Advice::getList();
+    foreach ($list as $advice) {
+        /**
+         * @var Application_Model_Medical_Advice $advice
+         */
+        $advice->setGallery(RM_Gallery::create());
+        $advice->save();
+    }
+
 endif;
 
 exit;

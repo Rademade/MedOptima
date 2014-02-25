@@ -54,6 +54,10 @@ class Application_Model_TextBlock
         $select->where('blockStatus != ?', self::STATUS_DELETED);
     }
 
+    /**
+     * @param $alias
+     * @return null|Application_Model_TextBlock
+     */
     public static function getByAlias($alias) {
         $select = self::_getSelect();
         $select->where('blockAlias = ?', $alias);

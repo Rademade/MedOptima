@@ -34,7 +34,7 @@ class Application_Model_Medical_Doctor_Search_Repository
         $conditions->onlyShown();
         $conditions->isWorkingAt($date);
         $conditions->providesServices($services);
-        $conditions->groupByDoctor();
+//        $conditions->groupByDoctor();
         return $this->__getEntitySearch($conditions)->getResults();
     }
 

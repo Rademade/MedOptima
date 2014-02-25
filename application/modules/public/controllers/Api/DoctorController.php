@@ -13,7 +13,12 @@ class Api_DoctorController
             $date = MedOptima_DateTime::create($date);
             $services = empty($services) ? [] : explode(',', $services);
             $doctors = (new Repo)->getWorkingDoctorsWithServices($date, $services);
-            return DTO::jsonSerializeList($doctors, $date);
+            $list = DTO::jsonSerializeList($doctors, $date);
+
+            for ($i = 0; $i < sizeof($list); ++$i) {
+                $list[$i]['id'] = $i;
+            }
+            return array_slice($list, 0, 8);
         } else {
             return [];
         }

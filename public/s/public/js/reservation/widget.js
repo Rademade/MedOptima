@@ -14,23 +14,27 @@ MedOptima.prototype.ReservationWidget = Backbone.View.extend({
         this._bindCalendarEvents();
         this._bindReservationEvents();
         this._bindMessageButtons();
+        this._bindBodyClick();
     },
 
     showCreateMessage : function() {
         this.createMsg.setLabel(this._getMessageDateTime());
         this.hideLoader();
         this.createMsg.show();
+        this._scrollToCalendar();
     },
 
     showDeleteMessage : function() {
         this.deleteMsg.setLabel('Отмена ' + this._getMessageDateTime());
         this.hideLoader();
         this.deleteMsg.show();
+        this._scrollToCalendar();
     },
 
     showErrorMessage : function() {
         this.hideLoader();
         this.errorMsg.show();
+        this._scrollToCalendar();
     },
 
     showLoader : function() {
@@ -39,6 +43,7 @@ MedOptima.prototype.ReservationWidget = Backbone.View.extend({
         this.deleteMsg.hide();
         this.errorMsg.hide();
         this.loader.show();
+        this._scrollToCalendar();
     },
 
     hideLoader : function() {
@@ -75,12 +80,23 @@ MedOptima.prototype.ReservationWidget = Backbone.View.extend({
     },
 
     _bindMessageButtons : function() {
-        this.createMsg.on('buttonClick', this.model.destroy, this.model);
+        this.createMsg
+            .on('buttonClick', this._changeReservationTimeButtonClicked, this) //RM_TODO refactor name
+            .on('secondButtonClick', this.model.destroy, this.model);
         this.deleteMsg.on('buttonClick', this.model.save, this.model);
     },
 
+    _bindBodyClick : function() {
+        this.listenTo(Backbone.EventBroker, 'body:click', function(e) {
+            if ($(document.body).has(e.target).length && !this.calendar.$el.has(e.target).length) {
+                this.reservation.hide();
+            }
+        }, this);
+    },
+
     _dateSelected : function(dateModel, dateView) {
-        this.reservation.$el.hide().appendTo(dateView.$el);
+        this.reservation.hide();
+        this.reservation.$el.appendTo(dateView.$el);
         this.reservation.show();
         this.model.set('visitDate', dateModel.getDate());
     },
@@ -94,11 +110,16 @@ MedOptima.prototype.ReservationWidget = Backbone.View.extend({
     },
 
     _scrollToReservation : function() {
-        $.scrollTo(this.reservation.$el.parent());
+        $.scrollTo(this.reservation.$el);
     },
 
     _scrollToCalendar : function() {
         $.scrollTo(this.calendar.$el);
+    },
+
+    _changeReservationTimeButtonClicked : function() {
+        this.createMsg.hide();
+        this.reservation.show();
     }
 
 }, {

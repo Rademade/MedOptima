@@ -17,6 +17,14 @@ class Application_Model_Medical_Advice_Search_Repository
         return $this->__getEntitySearch($conditions)->getResults();
     }
 
+    public function getShownOnMainAdvice() {
+        $conditions = $this->__getConditionClass();
+        $conditions->sortLastAdded();
+        $conditions->onlyShown();
+        $conditions->shownOnMain();
+        return $this->__getEntitySearch($conditions)->getFirst();
+    }
+
     protected function __getEntityClassName() {
         return 'Application_Model_Medical_Advice';
     }

@@ -1,43 +1,28 @@
 MedOptima.prototype.ReservationViewDoctorList = Backbone.View.extend({
 
     $loader : undefined,
-    emptyListTemplate : undefined,
-    loadErrorTemplate : undefined,
+    $emptyList : undefined,
+    $loadError : undefined,
 
     initialize : function() {
-        this.$loader = Med.cloneAjaxLoader().hide();
-        this.$el.after( this.$loader );
-        this._initTemplates();
+        this._initComponents();
         this._bindEvents();
     },
 
+    //RM_TODO refactor render
     render : function() {
         this.clear();
         if (!this.collection.size()) {
-            if (_.isFunction(this.emptyListTemplate)) {
-                this.$el.append(this.emptyListTemplate());
-            }
+            this.$emptyList.show();
         } else {
             this.collection.each(this._renderDoctor, this);
+            this.$el.append('<div class="clear"></div>');
         }
-        this.$el.append('<div class="clear"></div>');
         return this;
     },
 
     clear : function() {
         this.$el.empty();
-    },
-
-    show : function() {
-        this.$el.animate({
-            height : 'show'
-        }, 200);
-        return this;
-    },
-
-    hide : function() {
-        this.$el.hide();
-        return this;
     },
 
     _load : function() {
@@ -51,23 +36,26 @@ MedOptima.prototype.ReservationViewDoctorList = Backbone.View.extend({
     },
 
     _loadStart : function() {
-        this.hide();
-        this.$loader.height( this.$el.height() ).show();
+        this.$el.hide();
+        this.$emptyList.hide();
+        this.$loadError.hide();
+        this.$loader.show();
+        this.trigger('beforeRender');
     },
 
     _loadFinish : function() {
+        this.$el.show();
         this.$loader.hide();
-        this.show();
+        this.trigger('afterRender');
     },
 
     _loadError : function() {
         this.clear();
-        if (_.isFunction(this.loadErrorTemplate)) {
-            this.$el.append(this.loadErrorTemplate());
-        }
+        this.$loadError.show();
         this._loadFinish();
     },
 
+    //RM_TODO refactor
     _loadSuccess : function() {
         this.render();
         this._loadFinish();
@@ -103,9 +91,11 @@ MedOptima.prototype.ReservationViewDoctorList = Backbone.View.extend({
         }
     },
 
-    _initTemplates : function() {
-        this.emptyListTemplate = _.template($('#reservation-widget-doctor-list-empty-ejs').html());
-        this.loadErrorTemplate = _.template($('#reservation-widget-doctor-list-load-error-ejs').html());
+    _initComponents : function() {
+        this.$loader = Med.cloneAjaxLoader().hide();
+        this.$el.after(this.$loader);
+        this.$emptyList = this.$el.siblings('#popup-empty-list-message');
+        this.$loadError = this.$el.siblings('#popup-load-error-message');
     }
 
 }, {

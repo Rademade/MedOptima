@@ -70,6 +70,7 @@ class Application_Model_Medical_Doctor_WorkTime
     }
 
     public function save() {
+        $this->__setIdDoctor($this->getDoctor() ? $this->getDoctor()->getId() : 0);
         $this->_dataWorker->save();
         $this->__refreshCache();
     }
@@ -111,14 +112,13 @@ class Application_Model_Medical_Doctor_WorkTime
 
     public function getDoctor() {
         if (!$this->_doctor && $this->getIdDoctor()) {
-            $this->_doctor = RM_Photo::getById($this->getIdDoctor());
+            $this->_doctor = Doctor::getById($this->getIdDoctor());
         }
         return $this->_doctor;
     }
 
     public function setDoctor(Doctor $doctor) {
         $this->_doctor = $doctor;
-        $this->__setIdDoctor($doctor->getId());
     }
 
     protected function __setIdDoctor($id) {

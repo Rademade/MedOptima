@@ -1,8 +1,8 @@
 MedOptima.prototype.ReservationView = Backbone.View.extend({
 
-    serviceListView : undefined,
-    doctorListView : undefined,
-    formView : undefined,
+    serviceListView     : undefined,
+    doctorListView      : undefined,
+    formView            : undefined,
 
     initialize : function(data) {
         _.extend(this, data);
@@ -10,14 +10,14 @@ MedOptima.prototype.ReservationView = Backbone.View.extend({
     },
 
     show : function() {
-        this.trigger('show');
         this.$el.fadeIn(200);
+        this.trigger('show');
         return this;
     },
 
     hide : function() {
-        this.trigger('hide');
         this.$el.fadeOut(200);
+        this.trigger('hide');
         return this;
     },
 
@@ -25,27 +25,44 @@ MedOptima.prototype.ReservationView = Backbone.View.extend({
         return this.$el.is(':visible');
     },
 
-
     _bindEvents : function() {
-        this.formView.on('submit', this._formSubmit, this);
-        this.model.on('change:visitTime', this._visitTimeChanged, this);
+        this.formView
+            .on('submit', this._formSubmit, this)
+            .on('show', this._scrollToForm, this)
+            .on('hide', this._scrollToSelf, this);
+        this.model
+            .on('change:visitTime', this._visitTimeChanged, this)
+            .on('change:selectedDoctor', this._selectedDoctorChanged, this);
+        this.doctorListView.on('afterRender', this._afterDoctorListRender, this);
     },
 
     _visitTimeChanged : function() {
         if (this.model.get('visitTime')) {
             this.formView.show();
-            if (!this.formView.$el.visible()) {
-                $.scrollTo(this.formView.$el);
-            }
         } else {
-            $.scrollTo(this.$el.parent());
             this.formView.hide();
         }
+    },
+
+    _selectedDoctorChanged : function() {
+        this._scrollToSelf();
     },
 
     _formSubmit : function() {
         this.hide();
         this.model.save();
+    },
+
+    _scrollToForm : function() {
+        $.scrollTo(this.formView.$el);
+    },
+
+    _scrollToSelf : function() {
+        $.scrollTo(this.$el);
+    },
+
+    _afterDoctorListRender : function() {
+        this._scrollToSelf();
     }
 
 }, {

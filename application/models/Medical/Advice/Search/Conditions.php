@@ -15,4 +15,8 @@ class Application_Model_Medical_Advice_Search_Conditions
         $this->_getWhere()->add('doctorResponse', '!=', '');
     }
 
+    public function shownOnMain() {
+        $this->_getWhere()->add('isShownOnMain', '=', 1);
+    }
+
 }

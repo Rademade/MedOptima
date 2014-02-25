@@ -22,3 +22,17 @@ ALTER TABLE  `medicalAdvices` ADD  `visitorEmail` VARCHAR( 255 ) NOT NULL AFTER 
 -- 12.02.2014
 
 ALTER TABLE  `medicalAdvices` ADD  `isProcessed` INT NOT NULL AFTER  `doctorResponse` ;
+
+-- 25.02.2014
+
+ALTER TABLE `medicalAdvices` ADD `idGallery` INT NOT NULL
+AFTER `idDoctor`;
+
+INSERT INTO `routing` (`idRoute`, `type`, `name`, `module`, `controller`, `action`, `url`, `defaultParams`, `routeStatus`)
+VALUES
+  ( 154, 1, 'admin-gallery-photos', 'admin', 'gallery', 'photos', '/admin/:type/:idParent/gallery/photos/:id', '{}', 1 ),
+  ( 155, 1, 'admin-gallery-ajax', 'admin', 'gallery', 'ajax', '/admin/gallery/ajax', '{}', 1 ),
+  ( 156, 1, 'admin-gallery-photo-upload', 'admin', 'gallery', 'upload', '/admin/gallery/photo/upload/:id', '{}', 1 );
+
+ALTER TABLE `medicalAdvices` ADD `isShownOnMain` INT NOT NULL
+AFTER `isProcessed`;

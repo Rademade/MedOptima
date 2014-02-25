@@ -6,10 +6,13 @@ class Application_Model_Medical_Advice
         RM_Entity
     implements
         RM_Interface_Hideable,
-        RM_Interface_Deletable {
+        RM_Interface_Deletable,
+        RM_Interface_Gallarizable {
 
     const TABLE_NAME = 'medicalAdvices';
     const CACHE_NAME = 'medicalAdvices';
+
+    const GALLERY_TYPE_ADVICES = 1;
 
     protected static $_properties = array(
         'idAdvice' => array(
@@ -17,6 +20,9 @@ class Application_Model_Medical_Advice
             'id' => true
         ),
         'idDoctor' => array(
+            'type' => 'int'
+        ),
+        'idGallery' => array(
             'type' => 'int'
         ),
         'visitorName' => array(
@@ -32,6 +38,10 @@ class Application_Model_Medical_Advice
             'type' => 'string'
         ),
         'isProcessed' => array(
+            'type' => 'int',
+            'default' => 0
+        ),
+        'isShownOnMain' => array(
             'type' => 'int',
             'default' => 0
         ),
@@ -55,15 +65,21 @@ class Application_Model_Medical_Advice
      * @var Application_Model_Medical_Doctor
      */
     private $_doctor;
-    
+
+    /**
+     * @var RM_Gallery
+     */
+    private $_gallery;
+
     public function __construct(stdClass $data) {
         $this->_dataWorker = new RM_Entity_Worker_Data(get_class(), $data);
         $this->_cacheWorker = new RM_Entity_Worker_Cache(get_class());
     }
 
     public static function create() {
-        $post = new self(new RM_Compositor(array()));
-        return $post;
+        $advice = new self(new RM_Compositor(array()));
+        $advice->setGallery(RM_Gallery::create());
+        return $advice;
     }
 
     public static function _setSelectRules(Zend_Db_Select $select) {
@@ -71,6 +87,7 @@ class Application_Model_Medical_Advice
     }
 
     public function save() {
+        $this->__setIdGallery($this->getGallery()->save()->getId());
         $this->_dataWorker->save();
         $this->__refreshCache();
     }
@@ -180,6 +197,41 @@ class Application_Model_Medical_Advice
 
     public function isProcessed() {
         return $this->_dataWorker->getValue('isProcessed');
+    }
+
+    public function getIdGallery() {
+        return $this->_dataWorker->getValue('idGallery');
+    }
+
+    public function getGallery() {
+        if (!$this->_gallery instanceof RM_Gallery) {
+            $this->_gallery = RM_Gallery::getById($this->getIdGallery());
+        }
+        return $this->_gallery;
+    }
+
+    public function setGallery(RM_Gallery $gallery) {
+        $this->_gallery = $gallery;
+    }
+
+    public function getGallarizableItemId() {
+        return $this->getId();
+    }
+
+    public function getGallarizableItemType() {
+        return self::GALLERY_TYPE_ADVICES;
+    }
+
+    public function setShownOnMain($val) {
+        $this->_dataWorker->setValue('isShownOnMain', $val);
+    }
+
+    public function isShownOnMain() {
+        return $this->_dataWorker->getValue('isShownOnMain');
+    }
+
+    protected function __setIdGallery($idVersion) {
+        $this->_dataWorker->setValue('idGallery', $idVersion);
     }
 
     protected function __setIdDoctor($id) {

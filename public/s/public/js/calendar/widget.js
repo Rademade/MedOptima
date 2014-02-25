@@ -74,9 +74,6 @@ MedOptima.prototype.CalendarWidget = Backbone.View.extend({
         this.calendar.model
             .on('beforeDisplayedDateChange', this._beforeDisplayedDateChanged, this)
             .on('displayedDateChange', this._displayedDateChanged, this);
-        this.calendar.on('dateReselect', function(dateModel, dateView) {
-            this.trigger('dateReselect', dateModel, dateView);
-        }, this);
     },
 
     _beforeDisplayedDateChanged : function() {
@@ -108,6 +105,8 @@ MedOptima.prototype.CalendarWidget = Backbone.View.extend({
             }
             var newDateModel = this.calendar.collection.findByDate(selectedDate);
             newDateModel.set('selected', true);
+        } else {
+            this.trigger('dateDeselect', dateModel, this.calendar.findDateView(dateModel));
         }
     },
 

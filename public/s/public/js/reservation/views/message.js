@@ -1,7 +1,8 @@
 MedOptima.prototype.MessageView = Backbone.View.extend({
 
     events : {
-        'click .message-button' : '_clicked'
+        'click .message-button:first'   : '_firstButtonClicked',
+        'click .message-button:last'    : '_secondButtonClicked'
     },
 
     _$label : undefined,
@@ -15,8 +16,13 @@ MedOptima.prototype.MessageView = Backbone.View.extend({
         return this;
     },
 
-    _clicked : function() {
+    _firstButtonClicked : function() {
         this.trigger('buttonClick');
+    },
+
+    //RM_TODO refactor
+    _secondButtonClicked : function() {
+        this.trigger('secondButtonClick');
     },
 
     show : function() {

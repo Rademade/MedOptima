@@ -28,4 +28,8 @@ class Application_Model_Medical_Doctor_Search_Conditions
         $this->_getWhere()->add('idDoctor', '=', $id);
     }
 
+    public function sortLastAdded() {
+        $this->_getOrder()->add('idDoctor', RM_Query_Order::DESC);
+    }
+
 }

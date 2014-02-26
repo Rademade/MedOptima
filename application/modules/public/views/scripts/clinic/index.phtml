@@ -30,7 +30,8 @@ $vacancy = Block::getByAlias('opened-vacancies');
 
         <?=$this->partial('blocks/index/banner.phtml', array(
             'banners' => $this->banners,
-            'showQuotes' => false
+            'showQuotes' => false,
+            'withMargin' => ' with-margin'
         ))?>
 
         <div class="doctor-box"><?

@@ -89,7 +89,9 @@ MedOptima.prototype.ReservationWidget = Backbone.View.extend({
     _bindBodyClick : function() {
         this.listenTo(Backbone.EventBroker, 'body:click', function(e) {
             if ($(document.body).has(e.target).length && !this.calendar.$el.has(e.target).length) {
-                this.reservation.hide();
+                if (this.reservation.visible()) {
+                    this.reservation.hide();
+                }
             }
         }, this);
     },

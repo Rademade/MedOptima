@@ -4,16 +4,17 @@
             'feedback' => $feedback
         ));
     endforeach;
-    $block = Application_Model_TextBlock::getByAlias('index');
-    ?><div class="text-box-item">
-        <div class="simple-text"><?
-        if ($block instanceof Application_Model_TextBlock) :
-            echo $block->getText();
-        endif;
-            ?><img src="/s/public/images/text-img-1.png" alt=""/>
-            <img src="/s/public/images/text-img-2.png" alt=""/>
-            <img src="/s/public/images/text-img-3.png" alt=""/>
-        </div>
-        <div class="clear"></div>
-    </div>
-</div>
+    $advice = (new Application_Model_Medical_Advice_Search_Repository())->getShownOnMainAdvice();
+    if ($advice instanceof Application_Model_Medical_Advice) :
+        ?><div class="text-box-item">
+            <div class="simple-text">
+                <h3><?=$advice->getVisitorQuestion()?></h3>
+                <p><?= $advice->getDoctorResponse()?></p><?
+                    foreach ($advice->getGallery()->getPhotos() as $photo) :
+                        ?><img src="<?= $photo->getPath(140, 140) ?>" alt=""/><?
+                    endforeach;
+                ?></div>
+            <div class="clear"></div>
+        </div><?
+    endif;
+?></div>

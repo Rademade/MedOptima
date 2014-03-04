@@ -48,27 +48,32 @@ class MedOptima_Service_Reservation {
         $this->_prepareDoctor();
         $this->_prepareVisitTime();
         $this->_prepareServices();
-        $reservation = $this->_initReservation();
+        $reservation = $this->_initReservation(Reservation::create());
         $this->_session->ids[] = $reservation->getId(); //store to session
         return $reservation;
     }
 
-    /**
-     * @param $idReservation
-     * @return Reservation
-     * @throws Exception
-     */
-    public function restore($idReservation) {
+    public function update($idReservation) {
         $idReservation = (int)$idReservation;
         if (in_array($idReservation, $this->_session->ids)) {
-            $reservation = Reservation::getById( $idReservation );
-            if ($reservation && $reservation->isDeclinedByVisitor()) {
-                $reservation->setNew();
+            /**
+             * @var Reservation $reservation
+             */
+            $reservation = Reservation::getById($idReservation);
+            if ($reservation) {
+                if ($reservation->isDeclinedByVisitor()) {
+                    $reservation->setNew();
+                } else {
+                    $this->_prepareDoctor();
+                    $this->_prepareVisitTime(array($reservation->getId()));
+                    $this->_prepareServices();
+                    $this->_initReservation($reservation);
+                }
                 $reservation->save();
                 return $reservation;
             }
         }
-        throw new Exception('Cannot restore invalid reservation');
+        throw new Exception('Cannot update invalid reservation');
     }
 
     /**
@@ -79,6 +84,9 @@ class MedOptima_Service_Reservation {
     public function remove($idReservation) {
         $idReservation = (int)$idReservation;
         if (in_array($idReservation, $this->_session->ids)) {
+            /**
+             * @var Reservation $reservation
+             */
             $reservation = Reservation::getById($idReservation);
             if ($reservation && $reservation->isNew()) {
                 $reservation->setDeclinedByVisitor();
@@ -105,11 +113,11 @@ class MedOptima_Service_Reservation {
         }
     }
 
-    private function _prepareVisitTime() {
+    private function _prepareVisitTime(array $excludedReservations = array()) {
         $this->_fromTime = MedOptima_DateTime::create($this->_data->visitDate . ' ' . $this->_data->visitTime);
         $this->_toTime = clone $this->_fromTime;
         $this->_toTime->addSeconds($this->_doctor->getReceptionDuration()->getTimestamp()); //RM_TODO reception duration
-        if (!$this->_doctor->getSchedule($this->_fromTime)->isAvailable($this->_fromTime, $this->_toTime)) {
+        if (!$this->_doctor->getSchedule($this->_fromTime)->isAvailable($this->_fromTime, $this->_toTime, $excludedReservations)) {
             throw new Exception('Doctor is not available at this time (' . $this->_fromTime->getGostDatetime() . ')');
         }
     }
@@ -128,8 +136,7 @@ class MedOptima_Service_Reservation {
         }
     }
 
-    private function _initReservation() {
-        $reservation = Reservation::create();
+    private function _initReservation(Reservation $reservation) {
         $reservation->setDoctor($this->_doctor);
         $reservation->setDesiredVisitTime($this->_fromTime->getTimestamp());
         $reservation->setFinalVisitTime($this->_fromTime->getTimestamp());

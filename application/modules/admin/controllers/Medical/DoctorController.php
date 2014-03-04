@@ -10,6 +10,9 @@ class Admin_Medical_DoctorController
      */
     protected $_entity;
 
+    private $_workTimeList = [];
+    private $_workTimeService;
+
     public function preDispatch() {
         $this->_itemName = 'Специалисты';
         $this->_listRoute = 'admin-medical-doctor-list';
@@ -26,7 +29,7 @@ class Admin_Medical_DoctorController
     public function listAction() {
         parent::listAction();
         $this->view->assign(array(
-            'medicalDoctors' => Doctor::getList()
+            'medicalDoctors' => (new Application_Model_Medical_Doctor_Search_Repository)->getSortedList()
         ));
     }
 
@@ -38,7 +41,7 @@ class Admin_Medical_DoctorController
                 $this->_entity = Doctor::create();
                 $this->__setData($data);
                 $this->_entity->validate();
-                $this->_entity->save();
+                $this->_saveEntity();
                 $this->__goBack();
             } catch (Exception $e) {
                 $this->view->showMessage($e);
@@ -57,7 +60,7 @@ class Admin_Medical_DoctorController
             try {
                 $this->__setData($data);
                 $this->_entity->validate();
-                $this->_entity->save();
+                $this->_saveEntity();
                 $this->view->showMessage('Изменения сохранены');
             } catch (Exception $e) {
                 $this->view->showMessage($e);
@@ -119,7 +122,7 @@ class Admin_Medical_DoctorController
                 $serviceCollection->add($service);
             }
         }
-        $this->_setDoctorWorkTime($data);
+        $this->_initWorkTimeList($data);
         $user = Application_Model_User_Profile::getById($data->id_user);
         if ( $user instanceof Application_Model_User_Profile ) {
             $this->_entity->setUser($user);
@@ -131,12 +134,20 @@ class Admin_Medical_DoctorController
         );
     }
 
-    private function _setDoctorWorkTime(stdClass $data) {
-        $workTimeService = new MedOptima_Service_Doctor_WorkTime;
-        $workTimeService->removeList($this->_entity->getWorkTimeList());
-        $workTimeService->saveList(
-            $workTimeService->createListFromArray($this->_entity, $data->work_time_list)
-        );
+    private function _initWorkTimeList(stdClass $data) {
+        $this->_workTimeService = new MedOptima_Service_Doctor_WorkTime;
+        if ($this->_entity->getId() != 0) {
+            $this->_workTimeService->removeList($this->_entity->getWorkTimeList());
+        }
+        $this->_workTimeList = $this->_workTimeService->createListFromArray($this->_entity, $data->work_time_list);
+    }
+
+    private function _saveEntity() {
+        $this->_entity->save();
+        if (!$this->_workTimeService) {
+            $this->_workTimeService = new MedOptima_Service_Doctor_WorkTime();
+        }
+        $this->_workTimeService->saveList($this->_workTimeList);
     }
 
 }

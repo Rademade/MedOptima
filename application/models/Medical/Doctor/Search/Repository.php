@@ -3,6 +3,12 @@ class Application_Model_Medical_Doctor_Search_Repository
     extends
         RM_Entity_Search_Repository {
 
+    public function getSortedList() {
+        $conditions = $this->__getConditionClass();
+        $conditions->sortLastAdded();
+        return $this->__getEntitySearch($conditions)->getResults();
+    }
+
     /**
      * @return Application_Model_Medical_Doctor[]
      */

@@ -14,7 +14,7 @@ class Api_ReservationController
 
     public function updateItem() {
         $service = new MedOptima_Service_Reservation( $this->_data );
-        $reservation = $service->restore( $this->getParam('id') );
+        $reservation = $service->update( $this->getParam('id') );
         return [
             'id' => $reservation->getId(),
             'status' => 1

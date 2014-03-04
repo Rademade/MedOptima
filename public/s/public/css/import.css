@@ -657,8 +657,12 @@ input[type="text"] {
   position: relative;
   height: 560px;
 }
+/* line 4, C:/www/medoptima-git/public/s/public/scss/blocks/index/_banner.scss */
+.banner.with-margin {
+  margin-top: 40px;
+}
 
-/* line 6, C:/www/medoptima-git/public/s/public/scss/blocks/index/_banner.scss */
+/* line 9, C:/www/medoptima-git/public/s/public/scss/blocks/index/_banner.scss */
 .banner-box {
   position: absolute;
   width: 1020px;
@@ -667,19 +671,19 @@ input[type="text"] {
   left: -40px;
 }
 
-/* line 15, C:/www/medoptima-git/public/s/public/scss/blocks/index/_banner.scss */
+/* line 18, C:/www/medoptima-git/public/s/public/scss/blocks/index/_banner.scss */
 .banner-prev-ico,
 .banner-next-ico {
   width: 18px;
   height: 32px;
 }
 
-/* line 20, C:/www/medoptima-git/public/s/public/scss/blocks/index/_banner.scss */
+/* line 23, C:/www/medoptima-git/public/s/public/scss/blocks/index/_banner.scss */
 .banner-prev-ico {
   background-position: -90px 0;
 }
 
-/* line 24, C:/www/medoptima-git/public/s/public/scss/blocks/index/_banner.scss */
+/* line 27, C:/www/medoptima-git/public/s/public/scss/blocks/index/_banner.scss */
 .banner-next-ico {
   background-position: -120px 0;
 }
@@ -691,7 +695,7 @@ input[type="text"] {
 
 /* line 5, C:/www/medoptima-git/public/s/public/scss/blocks/index/_text-box.scss */
 .text-box-item {
-  padding-top: 55px;
+  padding-top: 25px;
 }
 
 /* line 12, C:/www/medoptima-git/public/s/public/scss/blocks/index/_text-box.scss */
@@ -909,18 +913,25 @@ input[type="text"] {
 }
 /* line 175, C:/www/medoptima-git/public/s/public/scss/blocks/index/_callendar.scss */
 .calendar-box-date-item.current-date .calendar-box-date-item-value {
-  background: url("/s/public/images/date-bg.png") 18px 30px no-repeat;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
+  border-radius: 30px;
+  -webkit-box-shadow: inset 0 0 0 2px #00a3df;
+  -moz-box-shadow: inset 0 0 0 2px #00a3df;
+  box-shadow: inset 0 0 0 2px #00a3df;
 }
-/* line 181, C:/www/medoptima-git/public/s/public/scss/blocks/index/_callendar.scss */
+/* line 182, C:/www/medoptima-git/public/s/public/scss/blocks/index/_callendar.scss */
 .calendar-box-date-item.active-date .calendar-box-date-item-value {
   color: #00a3df;
 }
-/* line 185, C:/www/medoptima-git/public/s/public/scss/blocks/index/_callendar.scss */
+/* line 186, C:/www/medoptima-git/public/s/public/scss/blocks/index/_callendar.scss */
 .calendar-box-date-item.active-date:hover .calendar-box-date-item-value {
   color: #fff;
   background-color: #00a3df;
 }
-/* line 193, C:/www/medoptima-git/public/s/public/scss/blocks/index/_callendar.scss */
+/* line 194, C:/www/medoptima-git/public/s/public/scss/blocks/index/_callendar.scss */
 .calendar-box-date-item.clicked .calendar-box-date-item-value {
   color: #fff;
   cursor: pointer;
@@ -932,7 +943,7 @@ input[type="text"] {
   border-radius: 30px;
 }
 
-/* line 203, C:/www/medoptima-git/public/s/public/scss/blocks/index/_callendar.scss */
+/* line 204, C:/www/medoptima-git/public/s/public/scss/blocks/index/_callendar.scss */
 .calendar-box-date-item-value {
   display: block;
   width: 40px;
@@ -943,7 +954,7 @@ input[type="text"] {
   font-family: 'helveticaneuecyrroman', Arial, sans-serif;
 }
 
-/* line 213, C:/www/medoptima-git/public/s/public/scss/blocks/index/_callendar.scss */
+/* line 214, C:/www/medoptima-git/public/s/public/scss/blocks/index/_callendar.scss */
 .current-date-ico {
   display: none;
   bottom: 5px;
@@ -954,7 +965,7 @@ input[type="text"] {
   background-position: 0 -15px;
 }
 
-/* line 224, C:/www/medoptima-git/public/s/public/scss/blocks/index/_callendar.scss */
+/* line 225, C:/www/medoptima-git/public/s/public/scss/blocks/index/_callendar.scss */
 .prev-month-link-ico,
 .next-month-link-ico {
   width: 18px;
@@ -965,31 +976,31 @@ input[type="text"] {
   transition: all 0.2s ease-in;
 }
 
-/* line 230, C:/www/medoptima-git/public/s/public/scss/blocks/index/_callendar.scss */
+/* line 231, C:/www/medoptima-git/public/s/public/scss/blocks/index/_callendar.scss */
 .prev-month-link-ico {
   left: 0;
   background-position: -15px 0;
 }
 
-/* line 235, C:/www/medoptima-git/public/s/public/scss/blocks/index/_callendar.scss */
+/* line 236, C:/www/medoptima-git/public/s/public/scss/blocks/index/_callendar.scss */
 .next-month-link-ico {
   right: 0;
   background-position: -35px 0;
 }
 
-/* line 240, C:/www/medoptima-git/public/s/public/scss/blocks/index/_callendar.scss */
+/* line 241, C:/www/medoptima-git/public/s/public/scss/blocks/index/_callendar.scss */
 .calendar-current-day-link {
   margin-top: 25px;
   text-align: center;
 }
-/* line 244, C:/www/medoptima-git/public/s/public/scss/blocks/index/_callendar.scss */
+/* line 245, C:/www/medoptima-git/public/s/public/scss/blocks/index/_callendar.scss */
 .calendar-current-day-link span {
   cursor: pointer;
   font-size: 15px;
   color: #00a3df;
   text-transform: uppercase;
 }
-/* line 250, C:/www/medoptima-git/public/s/public/scss/blocks/index/_callendar.scss */
+/* line 251, C:/www/medoptima-git/public/s/public/scss/blocks/index/_callendar.scss */
 .calendar-current-day-link span:hover {
   border-bottom: 1px solid #b2e3f5;
 }
@@ -1386,7 +1397,7 @@ input[type="text"] {
 
 /* line 5, C:/www/medoptima-git/public/s/public/scss/blocks/comments/_main.scss */
 .comments-item {
-  padding: 15px 0 10px 10px;
+  padding: 15px 0 30px 10px;
   background: url("/s/public/images/text-border.png") left top repeat-x;
 }
 
@@ -1463,9 +1474,10 @@ input[type="text"] {
 /* line 1, C:/www/medoptima-git/public/s/public/scss/blocks/quotes/_main.scss */
 .index-quote {
   padding-bottom: 45px;
+  margin-bottom: 35px;
   background: url("/s/public/images/text-border.png") left bottom repeat-x;
 }
-/* line 5, C:/www/medoptima-git/public/s/public/scss/blocks/quotes/_main.scss */
+/* line 6, C:/www/medoptima-git/public/s/public/scss/blocks/quotes/_main.scss */
 .index-quote .simple-text {
   width: 815px;
   margin: 0 auto;
@@ -1475,12 +1487,12 @@ input[type="text"] {
   font-family: 'helveticaneuecyrthin', Arial, sans-serif;
 }
 
-/* line 15, C:/www/medoptima-git/public/s/public/scss/blocks/quotes/_main.scss */
+/* line 16, C:/www/medoptima-git/public/s/public/scss/blocks/quotes/_main.scss */
 .index-quote-text {
   position: relative;
 }
 
-/* line 19, C:/www/medoptima-git/public/s/public/scss/blocks/quotes/_main.scss */
+/* line 20, C:/www/medoptima-git/public/s/public/scss/blocks/quotes/_main.scss */
 .quote-text-sign {
   float: right;
   margin: 0 70px 0 0;
@@ -1488,33 +1500,33 @@ input[type="text"] {
   font-size: 16px;
 }
 
-/* line 27, C:/www/medoptima-git/public/s/public/scss/blocks/quotes/_main.scss */
+/* line 28, C:/www/medoptima-git/public/s/public/scss/blocks/quotes/_main.scss */
 .quote-top-ico,
 .quote-bottom-ico {
   width: 70px;
   height: 55px;
 }
 
-/* line 32, C:/www/medoptima-git/public/s/public/scss/blocks/quotes/_main.scss */
+/* line 33, C:/www/medoptima-git/public/s/public/scss/blocks/quotes/_main.scss */
 .quote-top-ico {
   top: -20px;
   left: -30px;
   background-position: 0 -40px;
 }
 
-/* line 38, C:/www/medoptima-git/public/s/public/scss/blocks/quotes/_main.scss */
+/* line 39, C:/www/medoptima-git/public/s/public/scss/blocks/quotes/_main.scss */
 .quote-bottom-ico {
   bottom: 0;
   right: -10px;
   background-position: -80px -40px;
 }
 
-/* line 44, C:/www/medoptima-git/public/s/public/scss/blocks/quotes/_main.scss */
+/* line 45, C:/www/medoptima-git/public/s/public/scss/blocks/quotes/_main.scss */
 .clinic-quote {
   position: relative;
   padding: 40px 0 55px 0;
 }
-/* line 48, C:/www/medoptima-git/public/s/public/scss/blocks/quotes/_main.scss */
+/* line 49, C:/www/medoptima-git/public/s/public/scss/blocks/quotes/_main.scss */
 .clinic-quote .simple-text {
   padding: 20px 0 0 60px;
   color: #8d99a6;
@@ -1522,31 +1534,31 @@ input[type="text"] {
   line-height: 32px;
   font-family: 'helveticaneuecyrthin', Arial, sans-serif;
 }
-/* line 56, C:/www/medoptima-git/public/s/public/scss/blocks/quotes/_main.scss */
+/* line 57, C:/www/medoptima-git/public/s/public/scss/blocks/quotes/_main.scss */
 .clinic-quote .quote-text-sign {
   margin: 20px 0 35px 0;
 }
 
-/* line 61, C:/www/medoptima-git/public/s/public/scss/blocks/quotes/_main.scss */
+/* line 62, C:/www/medoptima-git/public/s/public/scss/blocks/quotes/_main.scss */
 .clinic-quote-text {
   position: relative;
 }
 
-/* line 66, C:/www/medoptima-git/public/s/public/scss/blocks/quotes/_main.scss */
+/* line 67, C:/www/medoptima-git/public/s/public/scss/blocks/quotes/_main.scss */
 .quote-top-s-ico,
 .quote-bottom-s-ico {
   width: 50px;
   height: 38px;
 }
 
-/* line 71, C:/www/medoptima-git/public/s/public/scss/blocks/quotes/_main.scss */
+/* line 72, C:/www/medoptima-git/public/s/public/scss/blocks/quotes/_main.scss */
 .quote-top-s-ico {
   top: 0;
   left: 0;
   background-position: -150px 0;
 }
 
-/* line 77, C:/www/medoptima-git/public/s/public/scss/blocks/quotes/_main.scss */
+/* line 78, C:/www/medoptima-git/public/s/public/scss/blocks/quotes/_main.scss */
 .quote-bottom-s-ico {
   bottom: -15px;
   right: -30px;
@@ -1590,41 +1602,41 @@ input[type="text"] {
   font-size: 16px;
   line-height: 20px;
 }
-/* line 37, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
+/* line 36, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
 .clinic-text-box a:hover {
   border-bottom: 1px solid #b2e3f5;
 }
 
-/* line 43, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
+/* line 42, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
 .doctor-box-item-img {
   float: left;
   margin-right: 15px;
   width: 140px;
   height: 140px;
 }
-/* line 49, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
+/* line 48, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
 .doctor-box-item-img img {
   width: 100%;
   height: 100%;
 }
 
-/* line 55, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
+/* line 54, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
 .doctor-box {
   margin-top: 70px;
 }
 
-/* line 59, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
+/* line 58, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
 .doctor-box-item {
   margin-bottom: 35px;
 }
 
-/* line 63, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
+/* line 62, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
 .doctor-box-item-info {
   float: left;
   width: 450px;
 }
 
-/* line 68, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
+/* line 67, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
 .doctor-box-item-name {
   margin: 10px 0 15px 0;
   color: #8d99a6;
@@ -1632,7 +1644,7 @@ input[type="text"] {
   font-family: 'helveticaneuecyrthin', Arial, sans-serif;
 }
 
-/* line 75, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
+/* line 74, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
 .doctor-box-item-text {
   color: #8d99a6;
   font-size: 16px;
@@ -1666,4 +1678,13 @@ input[type="text"] {
 /* line 6, C:/www/medoptima-git/public/s/public/scss/typography/_simple-text.scss */
 .simple-text p {
   margin-bottom: 20px;
+}
+
+/* line 12, C:/www/medoptima-git/public/s/public/scss/typography/_simple-text.scss */
+.comments-item-text .simple-text {
+  margin-bottom: 0;
+}
+/* line 14, C:/www/medoptima-git/public/s/public/scss/typography/_simple-text.scss */
+.comments-item-text .simple-text p {
+  margin-bottom: 0;
 }

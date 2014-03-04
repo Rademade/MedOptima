@@ -1,6 +1,9 @@
 .banner {
     position: relative;
     height: 560px;
+    &.with-margin {
+        margin-top: 40px;
+    }
 }
 
 .banner-box {

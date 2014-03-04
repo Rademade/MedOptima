@@ -86,6 +86,7 @@ class Admin_Medical_AdviceController
         $_POST['id_doctor'] = $this->_entity->getIdDoctor();
         $_POST['visitor_name'] = $this->_entity->getVisitorName();
         $_POST['visitor_email'] = $this->_entity->getVisitorEmail();
+        $_POST['shown_on_main'] = $this->_entity->isShownOnMain();
     }
 
     protected function __setData(stdClass $data) {
@@ -100,6 +101,7 @@ class Admin_Medical_AdviceController
         } else {
             $this->_entity->resetDoctor();
         }
+        $this->_entity->setShownOnMain($data->shown_on_main);
     }
 
 }

@@ -42,4 +42,8 @@ $(function(){
         })
         .jcarouselPagination();
 
+    $(document.body).click(function(e) {
+        Backbone.EventBroker.trigger('body:click', e);
+    });
+
 });

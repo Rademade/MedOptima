@@ -59,10 +59,7 @@ MedOptima.prototype.CalendarDateView = Backbone.View.extend({
 
     _clicked : function() {
         if (this.model.is('enabled')) {
-            if (this.model.is('selected')) {
-                this.model.set('selected', false, {silent : true});
-            }
-            this.model.set('selected', true);
+            this.model.set('selected', !this.model.is('selected'));
         }
     },
 

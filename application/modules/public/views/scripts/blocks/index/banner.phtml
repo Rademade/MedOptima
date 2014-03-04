@@ -8,7 +8,7 @@ $previewHeight = 80;
 /* @var Application_Model_Banner[] $banners */
 $banners = $this->banners;
 $showQuotes = isset($this->showQuotes) ? $this->showQuotes : true;
-?><div class="banner">
+?><div class="banner<?=$this->withMargin?>">
     <div class="banner-box">
         <div class="connected-carousels">
 

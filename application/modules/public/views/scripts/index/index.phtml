@@ -2,9 +2,10 @@
     <?=$this->render('blocks/index/banner.phtml')?>
     <?=$this->render('blocks/index/text-box.phtml')?>
     <?= $this->render('blocks/index/calendar-widget.phtml') ?>
-    <?= $this->render('blocks/index/reservation-widget.phtml') ?>
-
-</div>
+    <?= $this->render('blocks/index/reservation-widget.phtml') ?><?
+    echo $this->render('blocks/index/reservation/doctor.ejs');
+    echo $this->render('blocks/index/calendar/date.ejs');
+    ?></div>
 <?=$this->render('blocks/index/map.phtml')?>
 <?echo $this->headScript()->captureStart();
     ?>$(function(){

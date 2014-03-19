@@ -100,12 +100,12 @@ class Admin_Medical_DoctorController
         $this->__setContentFields();
         $photo = RM_Photo::getById($data->id_photo);
         if (!$photo instanceof RM_Photo) {
-//            throw new Exception('Не выбрана фотография');
+            throw new Exception('Не выбрана фотография');
         }
         if ( empty($data->id_posts) ) {
             throw new Exception('Не выбрана должность');
         }
-//        $this->_entity->setPhoto($photo);
+        $this->_entity->setPhoto($photo);
         $postCollection = $this->_entity->getPostCollection();
         $postCollection->resetItems();
         foreach ($data->id_posts as $idPost) {

@@ -1,6 +1,7 @@
 <?php
 if ($this->isLinked) { ?>
-    <span class="sec-links">Google Календарь подключен</span><?
+    <span class="sec-links" style="margin-right: 10px">Google Календарь подключен</span>
+    <a href="<?= $this->unlinkUrl ?>" class="main-links">Отключить</a><?
 } else { ?>
-    <a href="<?=$this->linkUrl?>" class="main-links" style="float: left">Подключить Google Календарь</a><?
+    <a href="<?=$this->linkUrl?>" class="main-links">Подключить Google Календарь</a><?
 }

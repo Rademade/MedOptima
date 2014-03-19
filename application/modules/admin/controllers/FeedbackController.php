@@ -66,6 +66,14 @@ class Admin_FeedbackController
 
     protected function __setData(stdClass $data) {
         $this->__setContentFields();
+        $this->_entity->setVisitorName($data->visitor_name);
+        $this->_entity->setVisitorPhone($data->visitor_phone);
+        $this->_entity->setContent($data->feedback_content);
+        try {
+            $this->_entity->setDatePosted(RM_Date_Datetime::fromString($data->date_posted));
+        } catch(Exception $e) {
+            throw new Exception('Неверная дата');
+        }
         $this->_entity->setShownOnMain( (bool)$data->show_on_main );
     }
 

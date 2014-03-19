@@ -16,3 +16,8 @@ CREATE TABLE IF NOT EXISTS `googleAccessTokens` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 ALTER TABLE  `googleAccessTokens` CHANGE  `idUser`  `idDoctor` INT( 11 ) NOT NULL ;
+
+-- 19.03.2014
+
+INSERT INTO routing (idRoute, type, name, module, controller, action, url, defaultParams, routeStatus) VALUES
+( 157, 1, 'admin-unlink-google-account', 'admin', 'google-account', 'unlink', '/admin/google/unlink/:idDoctor', '{}', 1 );

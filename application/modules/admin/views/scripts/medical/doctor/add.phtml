@@ -7,11 +7,11 @@ $form->getLangPanel()->allLangs();
 $time = $this->TimeSplitter()->splitTimeIntoHoursMinutes(15);
 
 $form
-    ->add( new RM_View_Form_Field_Select('Пользователь', 'id_user', array_merge(array(
+    ->add( new RM_View_Form_Field_Select('Пользователь', 'id_user', array(
         0 => 'Отсутствует'
-    ), $this->toSelect(User::getList(), function (User $user) {
+    ) + $this->toSelect(User::getList(), function (User $user) {
         return $user->getFullName();
-    }) )))
+    }) ))
     ->add(new RM_View_Form_Field_Image('Фото', 'id_photo', 0, 255, 175))
     ->add(new RM_View_Form_Field_Text('Имя', 'firstName', []))
     ->add(new RM_View_Form_Field_Text('Фамилия', 'secondName', []))

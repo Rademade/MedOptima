@@ -36,7 +36,8 @@ class MedOptima_Admin_View_Form_Field_GoogleLink
             static::BASE_PATH . static::TPL,
             $this->addFieldData($idLang, array(
                 'isLinked' => $this->_accessToken instanceof Application_Model_Api_Google_AccessToken,
-                'linkUrl' => $this->_client ? $this->_client->createAuthUrl() : ''
+                'linkUrl' => $this->_client ? $this->_client->createAuthUrl() : '',
+                'unlinkUrl' => $this->getView()->url(['idDoctor' => $this->_doctor->getId()], 'admin-unlink-google-account')
             ))
         ));
         return $this->renderRow($row);

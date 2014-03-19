@@ -32,4 +32,11 @@ class MedOptima_Service_Google_Account {
         return true;
     }
 
+    public function unlinkDoctorAccount(Doctor $doctor) {
+        $token = AccessToken::getByDoctor($doctor);
+        if ($token instanceof AccessToken) {
+            $token->remove();
+        }
+    }
+
 }

@@ -24,6 +24,7 @@
     width: 300px;
     margin: 0 auto;
     height: 300px;
+    text-align: center;
 }
 .calendar-appointment {
     height : 300px;

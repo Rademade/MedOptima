@@ -10,7 +10,7 @@
 
     li {
         float: left;
-        margin-right: 29px;
+        margin-right: 30px;
 
         &.current {
             a {
@@ -21,6 +21,7 @@
         a {
             padding-bottom: 3px;
             color: #fff;
+            font-size: 14px;
             @include helveticaneuecyrroman;
             @include transition(opacity .25s ease);
 

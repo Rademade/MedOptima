@@ -116,7 +116,7 @@ class MedOptima_Service_Reservation {
     private function _prepareVisitTime(array $excludedReservations = array()) {
         $this->_fromTime = MedOptima_DateTime::create($this->_data->visitDate . ' ' . $this->_data->visitTime);
         $this->_toTime = clone $this->_fromTime;
-        $this->_toTime->addSeconds($this->_doctor->getReceptionDuration()->getTimestamp()); //RM_TODO reception duration
+        $this->_toTime->addSeconds($this->_getFixedDoctorReceptionDuration());
         if (!$this->_doctor->getSchedule($this->_fromTime)->isAvailable($this->_fromTime, $this->_toTime, $excludedReservations)) {
             throw new Exception('Doctor is not available at this time (' . $this->_fromTime->getGostDatetime() . ')');
         }
@@ -150,6 +150,11 @@ class MedOptima_Service_Reservation {
         $reservation->setStatus($reservation::STATUS_NEW);
         $reservation->save();
         return $reservation;
+    }
+
+    //RM_TODO test
+    private function _getFixedDoctorReceptionDuration() {
+        return $this->_doctor->getReceptionDuration()->getTimestamp() * 0.65; // get sure reservation will be bounded
     }
 
 }

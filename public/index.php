@@ -26,5 +26,4 @@ $application = new Zend_Application(
     APPLICATION_PATH . '/configs/base/application.ini'
 );
 
-$application->bootstrap()
-    ->run();
+$application->bootstrap()->run();

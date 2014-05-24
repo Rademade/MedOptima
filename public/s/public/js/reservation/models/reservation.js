@@ -19,7 +19,7 @@ MedOptima.prototype.ReservationModel = Backbone.Model.extend({
 
     save : function() {
         MedOptima.prototype.ReservationModel.__super__.save.apply(this, arguments);
-        this.trigger('save');
+        this.trigger('save', this);
     },
 
     isValid : function() {

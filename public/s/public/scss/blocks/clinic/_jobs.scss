@@ -1,0 +1,23 @@
+.jobs {
+    padding: 50px 0;
+
+    .jobs-item {
+        padding: 15px 0 20px 0;
+        background: url("#{$path}text-border.png") left bottom repeat-x;
+        .main-title {
+           margin-bottom: 10px;
+        }
+
+        .jobs-item-text {
+            font-size: 14px;
+            line-height: 19px;
+            color: #505a65;
+            @include helveticaneuecyrroman;
+
+            a {
+                font-size: 14px;
+                line-height: 19px;
+            }
+        }
+    }
+}

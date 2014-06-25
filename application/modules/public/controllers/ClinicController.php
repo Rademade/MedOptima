@@ -15,6 +15,10 @@ class ClinicController
     }
 
 
-    public function jobsAction() {
+    public function vacanciesAction() {
+        $this->_currentMenuAlias = 'vacancies';
+        $this->view->assign(array(
+            'vacancies' => Application_Model_Vacancy::getList()
+        ));
     }
 }

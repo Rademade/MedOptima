@@ -115,6 +115,9 @@ class MedOptima_Service_Reservation {
 
     private function _prepareVisitTime(array $excludedReservations = array()) {
         $this->_fromTime = MedOptima_DateTime::create($this->_data->visitDate . ' ' . $this->_data->visitTime);
+        if ($this->_fromTime->isToday()) {
+            throw new Exception('Can not make reservation for today');
+        }
         $this->_toTime = clone $this->_fromTime;
         $this->_toTime->addSeconds($this->_getFixedDoctorReceptionDuration());
         if (!$this->_doctor->getSchedule($this->_fromTime)->isAvailable($this->_fromTime, $this->_toTime, $excludedReservations)) {

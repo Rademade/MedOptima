@@ -40,10 +40,16 @@ MedOptima.prototype.ReservationModel = Backbone.Model.extend({
     },
 
     toJSON: function() {
-        var self = this;
-        return _.extend(_.clone(this.attributes), {
-            visitDate : self.get('visitDate').getShortDateString()
+        var json = this.omit('visitDate', 'selectedDoctor');
+        return _.extend(json, {
+            visitDate : this.get('visitDate').getShortDateString(),
+            selectedDoctor : this.get('selectedDoctor').get('id')
         });
+    },
+
+    setSelectedDoctor : function(doctor) {
+        this.attributes.selectedDoctor = doctor;
+        this.trigger('change:selectedDoctor', doctor);
     },
 
     _synced : function() {

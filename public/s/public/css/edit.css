@@ -29,3 +29,9 @@
 .calendar-appointment {
     height : 300px;
 }
+.clinic-services button.off {
+    border: 1px solid #ffffff;
+    cursor: default;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
+    opacity: 0.4;
+}

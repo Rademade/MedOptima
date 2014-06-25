@@ -46,7 +46,9 @@ class MedOptima_DTO_Doctor {
             'posts' => array_map(
                 function (Application_Model_Medical_Post $post) {
                     return $post->getName();
-                }, $doctor->getPosts())
+                }, $doctor->getPosts()
+            ),
+            'services' => $this->_serializeServices()
         ));
         return $data;
     }
@@ -63,6 +65,14 @@ class MedOptima_DTO_Doctor {
     
     private function _addSchedule() {
         return $this->_date instanceof MedOptima_DateTime;
+    }
+
+    private function _serializeServices() {
+        $services = [];
+        foreach ($this->_doctor->getServices() as $service) {
+            $services[] = $service->getId();
+        }
+        return $services;
     }
 
 }

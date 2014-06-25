@@ -27,7 +27,7 @@ MedOptima.prototype.ReservationViewDoctorList = Backbone.View.extend({
 
     _load : function() {
         this._loadStart();
-        this.model.set('selectedDoctor', undefined);
+        this.model.setSelectedDoctor(null);
         this.model.set('visitTime', undefined);
         this.collection.fetch({
             data : this.model.getUpdateData(),
@@ -87,7 +87,9 @@ MedOptima.prototype.ReservationViewDoctorList = Backbone.View.extend({
                     model.set('isSelected', false);
                 }
             });
-            this.model.set('selectedDoctor', doctor.get('id'));
+            this.model.setSelectedDoctor(doctor);
+        } else {
+            this.model.setSelectedDoctor(null);
         }
     },
 

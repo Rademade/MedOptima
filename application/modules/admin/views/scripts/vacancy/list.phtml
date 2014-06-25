@@ -1,0 +1,14 @@
+<?php
+$table = new RM_View_Table();
+$table
+    ->setEditRoute($this->editRoute)
+    ->setStatusUrl($this->ajaxUrl)
+    ->setHead('Название');
+
+foreach ($this->vacancies as $vacancy):
+    /* @var Application_Model_Vacancy $vacancy */
+    $row = $table
+        ->addRecord($vacancy->getId(), $vacancy->getName())
+        ->setHideble();
+endforeach;
+echo $table;

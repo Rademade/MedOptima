@@ -1,33 +1,30 @@
 <?php
-use Application_Model_TextBlock as TextBlock;
-
-class Admin_TextBlockController
+class Admin_VacancyController
     extends
         MedOptima_Controller_Admin {
 
     /**
-     * @var Application_Model_TextBlock
+     * @var Application_Model_Vacancy
      */
     protected $_entity;
 
     public function preDispatch() {
-        $this->_itemName = 'Текстовые блоки';
-        $this->_listRoute = 'admin-text-block-list';
-        $this->_addRoute = 'admin-text-block-add';
-        $this->_editRoute = 'admin-text-block-edit';
-        $this->_ajaxRoute = 'admin-text-block-ajax';
-        $this->_itemClassName = 'Application_Model_TextBlock';
+        $this->_itemName = 'Вакансии';
+        $this->_listRoute = 'admin-vacancy-list';
+        $this->_addRoute = 'admin-vacancy-add';
+        $this->_editRoute = 'admin-vacancy-edit';
+        $this->_ajaxRoute = 'admin-vacancy-ajax';
+        $this->_itemClassName = 'Application_Model_Vacancy';
         parent::preDispatch();
-        $this->_addButton = $this->_user->getRole()->isProgrammer();
         $this->view->assign(array(
-            'menu' => 'blocks'
+            'menu' => 'vacancies'
         ));
     }
 
     public function listAction() {
         parent::listAction();
         $this->view->assign(array(
-            'blocks' => TextBlock::getList()
+            'vacancies' => Application_Model_Vacancy::getList()
         ));
     }
 
@@ -36,7 +33,7 @@ class Admin_TextBlockController
         if ($this->getRequest()->isPost()) {
             try {
                 $data = (object)$this->getRequest()->getPost();
-                $this->_entity = TextBlock::create();
+                $this->_entity = Application_Model_Vacancy::create();
                 $this->__setData($data);
                 $this->_entity->save();
                 $this->__goBack();
@@ -63,31 +60,23 @@ class Admin_TextBlockController
     }
 
     protected function __setData(stdClass $data) {
-        if ( $this->_user->getRole()->isProgrammer() ) {
-            if ( !empty($data->alias) ) {
-                $this->_entity->setAlias($data->alias);
-            } else {
-                throw new Exception('Invalid alias');
-            }
-        }
         $this->__setContentFields();
     }
 
     protected function __postFields() {
-        $_POST['alias'] = $this->_entity->getAlias();
         $this->__postContentFields();
     }
 
     protected function getListCrumbName() {
-        return 'Список блоков';
+        return 'Список вакансий';
     }
 
     protected function getAddCrumbName() {
-        return 'Добавить блок';
+        return 'Добавить вакансию';
     }
 
     protected function getEditCrumbName() {
-        return 'Редактировать блок';
+        return 'Редактировать вакансию';
     }
 
 }

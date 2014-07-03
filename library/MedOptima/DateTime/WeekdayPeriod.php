@@ -3,6 +3,9 @@ use MedOptima_DateTime as DateTime;
 
 class MedOptima_DateTime_WeekdayPeriod {
 
+    const EVEN_WEEKDAYS = 8;
+    const ODD_WEEKDAYS = 9;
+
     protected $_weekday = 0;
     protected $_timeBegin = '00:00';
     protected $_timeEnd = '00:00';
@@ -18,8 +21,7 @@ class MedOptima_DateTime_WeekdayPeriod {
     }
 
     public function setWeekday($weekday) {
-        $this->_validateWeekday($weekday);
-        $this->_weekday = $weekday;
+        $this->_weekday = (int)$weekday;
         return $this;
     }
 
@@ -61,6 +63,14 @@ class MedOptima_DateTime_WeekdayPeriod {
             && $this->_timestampBegin <= $timestamp && $timestamp < $this->_timestampEnd;
     }
 
+    public function evenWeekdays() {
+        return $this->_weekday === self::EVEN_WEEKDAYS;
+    }
+
+    public function oddWeekdays() {
+        return $this->_weekday === self::ODD_WEEKDAYS;
+    }
+
     protected function __toLocalFormat(DateTime $dateTime) {
         return $dateTime->getTimeAsSeconds();
     }
@@ -68,12 +78,6 @@ class MedOptima_DateTime_WeekdayPeriod {
     protected function __updateTimestamp() {
         $this->_timestampBegin = DateTime::timeToSeconds($this->_timeBegin);
         $this->_timestampEnd = DateTime::timeToSeconds($this->_timeEnd);
-    }
-
-    private function _validateWeekday($weekday) {
-        if (!isset($weekday, DateTime::getWeekdayNames()[$weekday])) {
-            throw new Exception('Invalid weekday');
-        }
     }
 
 }

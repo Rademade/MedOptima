@@ -28,6 +28,10 @@ class Application_Model_Medical_Doctor_WorkTime
         'timeEnd' => array(
             'type' => 'string'
         ),
+        'isDependency' => array(
+            'type' => 'int',
+            'default' => RM_Interface_Switcher::TURN_OFF
+        ),
         'workTimeStatus' => array(
             'type' => 'int',
             'default' => self::STATUS_UNDELETED
@@ -119,6 +123,14 @@ class Application_Model_Medical_Doctor_WorkTime
 
     public function setDoctor(Doctor $doctor) {
         $this->_doctor = $doctor;
+    }
+
+    public function setIsDependency($value) {
+        $this->_dataWorker->setValue('isDependency', $value);
+    }
+
+    public function isDependency() {
+        return $this->_dataWorker->getValue('isDependency') === RM_Interface_Switcher::TURN_ON;
     }
 
     protected function __setIdDoctor($id) {

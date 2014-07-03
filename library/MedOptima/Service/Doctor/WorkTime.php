@@ -1,5 +1,8 @@
 <?php
 use MedOptima_DateTime as DateTime;
+use MedOptima_DateTime_WeekdayPeriod as Period;
+use Application_Model_Medical_Doctor as Doc;
+use Application_Model_Medical_Doctor_WorkTime as WorkTime;
 
 class MedOptima_Service_Doctor_WorkTime {
 
@@ -7,6 +10,7 @@ class MedOptima_Service_Doctor_WorkTime {
         $result = array();
         foreach ($list as $workTime) {
             /** @var Application_Model_Medical_Doctor_WorkTime $workTime */
+            if ($workTime->isDependency()) continue;
             $period = $workTime->getPeriod();
             $result['key'][] = $period->getWeekday();
             $result['value1'][] = DateTime::toGostTime($period->getTimeBegin());
@@ -20,19 +24,18 @@ class MedOptima_Service_Doctor_WorkTime {
      * @param array                            $data
      * @return Application_Model_Medical_Doctor_WorkTime[]
      */
-    public function createListFromArray(Application_Model_Medical_Doctor $doctor, array $data) {
+    public function createListFromArray(Doc $doctor, array $data) {
         $list = array();
         foreach ($data['key'] as $index => $day) {
-            $timeBegin = $data["value1"][$index];
-            $timeEnd = $data["value2"][$index];
+            $timeBegin = $data['value1'][$index];
+            $timeEnd = $data['value2'][$index];
             if ($day && $timeBegin && $timeEnd) {
-                $workTime = Application_Model_Medical_Doctor_WorkTime::create($doctor);
-                $workTime->setPeriod(
-                    new MedOptima_DateTime_WeekdayPeriod($day, $timeBegin, $timeEnd)
-                );
-                $workTime->setDoctor($doctor);
+                $workTime = $this->__createWorkTime($doctor, $day, $timeBegin, $timeEnd);
                 $list[] = $workTime;
+                $dependencies = $this->__createWorkTimeDependencies($doctor, $workTime);
+                $list = array_merge($list, $dependencies);
             }
+
         }
         return $list;
     }
@@ -53,6 +56,28 @@ class MedOptima_Service_Doctor_WorkTime {
         foreach ($list as $workTime) {
             $workTime->save();
         }
+    }
+
+    protected function __createWorkTime(Doc $doc, $day, $timeBegin, $timeEnd) {
+        $period = new Period($day, $timeBegin, $timeEnd);
+        $workTime = WorkTime::create($doc);
+        $workTime->setPeriod($period);
+        $workTime->setDoctor($doc);
+        return $workTime;
+    }
+
+    protected function __createWorkTimeDependencies(Doc $doc, WorkTime $initiator) {
+        $list = [];
+        $period = $initiator->getPeriod();
+        $expected = $period->evenWeekdays() ? 0 : 1;
+        foreach (DateTime::getWeekdayNames() as $num => $day) {
+            if (($num % 2) === $expected) {
+                $workTime = $this->__createWorkTime($doc, $num, $period->getTimeBegin(), $period->getTimeEnd());
+                $workTime->setIsDependency(true);
+                $list[] = $workTime;
+            }
+        }
+        return $list;
     }
 
 }

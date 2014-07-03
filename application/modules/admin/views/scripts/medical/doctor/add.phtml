@@ -29,7 +29,7 @@ $form
         []
     ))
     ->add(new MedOptima_Admin_View_Form_Field_MultiListSelect('График работы', 'work_time_list', 3, array(
-        MedOptima_DateTime::getWeekdayNames(),
+        $this->getWorkTimeWeekdaysVariants(),
         $time, $time
     )))
     ->add(new RM_View_Form_Field_Select('Средняя продолжительность приема', 'reception_duration',

@@ -29,9 +29,10 @@
 }
 
 .clinic-text-box {
-    color: #8d99a6;
-    font-size: 16px;
-    line-height: 20px;
+    color: #505a65;
+    font-size: 14px;
+    line-height: 21px;
+
     a {
         &:hover {
             border-bottom: 1px solid #b2e3f5;
@@ -66,13 +67,13 @@
 
 .doctor-box-item-name {
     margin: 10px 0 15px 0;
-    color: #8d99a6;
+    color: #505a65;
     font-size: 30px;
     @include helveticaneuecyrthin();
 }
 
 .doctor-box-item-text {
-    color: #8d99a6;
-    font-size: 16px;
-    line-height: 24px;
+    color: #505a65;
+    font-size: 14px;
+    line-height: 21px;
 }

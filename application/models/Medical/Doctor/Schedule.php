@@ -35,9 +35,9 @@ class Application_Model_Medical_Doctor_Schedule
     public function isAvailable(DateTime $from, DateTime $to = null, array $excludeReservations = array()) {
         if (!$to) {
             $to = clone $from;
-            $to->addSeconds( $this->_doctor->getReceptionDuration()->getTimestamp() );
+            $to->addSeconds( $this->_doctor->getMinReceptionDuration()->getTimestamp() );
         }
-        if ( !$this->isWorkingAt($from) || !$this->isWorkingAt($to) ) { //RM_TODO reception duration
+        if ( !$this->isWorkingAt($from) || !$this->isWorkingAt($to) ) {
             return false;
         }
         return !$this->_reservationService->hasReservationsBetween($from, $to, $excludeReservations);

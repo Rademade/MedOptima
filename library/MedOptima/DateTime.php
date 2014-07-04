@@ -220,6 +220,10 @@ class MedOptima_DateTime extends DateTime {
         return $timestamp - $clone->getTimestamp();
     }
 
+    public function isToday() {
+        return self::create()->getGostDate() === $this->getGostDate();
+    }
+
     private static function _getDefaultTimeZone() {
         return new DateTimeZone(self::DEFAULT_TIME_ZONE); //RM_TODO static
     }

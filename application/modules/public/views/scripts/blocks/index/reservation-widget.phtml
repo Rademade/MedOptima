@@ -2,7 +2,7 @@
     <div id="reservation-popup" class="calendar-popup" style="display: none">
         <i class="ico popup-tile"></i>
         <div class="calendar-popup-box">
-                <div id="service-list" class="calendar-popup-box-menu"><?
+                <div id="service-list" class="calendar-popup-box-menu clinic-services"><?
                     foreach ($this->services as $service) : ?>
                         <button class="popup-btn" data-id="<?= $service->getId() ?>"><?= $service->getName() ?></button><?
                     endforeach

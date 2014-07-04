@@ -1,0 +1,13 @@
+<?php
+/** @var Application_Model_Vacancy[] $vacancies */
+$vacancies = $this->vacancies;
+?><div class="jobs">
+    <div class="fix"><?
+        foreach ($vacancies as $vacancy) :
+            ?><div class="jobs-item">
+                <p class="main-title"><?=$vacancy->getName()?></p>
+                <p class="jobs-item-text"><?=$vacancy->getDescription()?></a></p>
+            </div><?
+        endforeach;
+    ?></div>
+</div>

@@ -56,6 +56,11 @@ if ($this->user instanceof RM_User_Interface) :
             'count' => (new Application_Model_Feedback_Search())->getNotProcessedCount()
         ),
         array(
+            'name' => 'Вакансии',
+            'url' => $this->url(array(), 'admin-vacancy-list'),
+            'menu' => 'vacancies'
+        ),
+        array(
             'name' => 'Опции',
             'url' => $this->url(array(), 'admin-option-list'),
             'menu' => 'options'

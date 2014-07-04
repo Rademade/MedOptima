@@ -1,7 +1,6 @@
 <?php
 use Application_Model_TextBlock as Block;
 $aboutClinic = Block::getByAlias('about-clinic');
-$vacancy = Block::getByAlias('opened-vacancies');
 ?><div class="clinic">
     <div class="fix">
         <div class="clinic-left-box"><?
@@ -18,13 +17,6 @@ $vacancy = Block::getByAlias('opened-vacancies');
             endforeach;
 
         ?></div><?
-
-        if ($vacancy instanceof Block) : ?>
-            <div class="clinic-right-box">
-                <div class="main-title"><?=$vacancy->getName()?></div>
-                <div class="clinic-text-box"><?=$vacancy->getText()?></div>
-            </div><?
-        endif;
 
         ?><div class="clear"></div>
 

@@ -6,7 +6,7 @@ $form
     ->add(new RM_View_Form_Field_Checkbox('Отображать на главной', 'show_on_main', false))
     ->add(new RM_View_Form_Field_Checkbox('Отображать на странице клиники', 'show_on_clinic', false))
     ->add(new RM_View_Form_Field_Image('Фотография', 'id_photo', 0, 640, 360))
-    ->add(new RM_View_Form_Field_Select('Цитата', 'id_quote', array_merge(array(
+    ->add(new RM_View_Form_Field_Select('Цитата', 'id_quote', array(
         0 => 'Без цитаты'
-    ), $this->QuoteToSelect(Application_Model_Quote::getList()))));
+    ) + $this->QuoteToSelect(Application_Model_Quote::getList())));
 echo $form->render();

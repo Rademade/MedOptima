@@ -3,7 +3,7 @@ MedOptima.prototype.CalendarConfig = function() {
     this.calendar = {
         enablePast      : false,
         enableFuture    : true,
-        enableToday     : true,
+        enableToday     : false,
         enableSunday    : false,
         highlightPast   : false,
         highlightFuture : true,

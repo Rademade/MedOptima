@@ -20,6 +20,10 @@ class Zend_View_Helper_GetMenu
                     'name' => 'Советы',
                     'url' => $this->view->url([], 'advices')
                 ),
+                'vacancies' => array(
+                    'name' => 'Вакансии',
+                    'url' => $this->view->url([], 'clinic-vacancies')
+                ),
                 'contacts' => array(
                     'name' => 'Контактная информация',
                     'url' => $this->view->url([], 'contacts')

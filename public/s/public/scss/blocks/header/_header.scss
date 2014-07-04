@@ -21,7 +21,13 @@
         a {
             padding-bottom: 3px;
             color: #fff;
+            font-size: 14px;
             @include helveticaneuecyrroman;
+            @include transition(opacity .25s ease);
+
+            &:hover {
+                @include opacity(.7);
+            }
         }
     }
 }

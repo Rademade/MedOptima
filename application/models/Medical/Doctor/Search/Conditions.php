@@ -16,6 +16,7 @@ class Application_Model_Medical_Doctor_Search_Conditions
         if (!empty($services)) {
             $this->_getJoin()->add('join', 'medicalDoctorServices', 'medicalDoctors', 'idDoctor');
             $this->_getWhere()->add('idService', 'IN', $services);
+            $this->_getWhere()->add('medicalDoctorServices.doctorServiceStatus', '!=', RM_Interface_Deletable::STATUS_DELETED);
         }
     }
 

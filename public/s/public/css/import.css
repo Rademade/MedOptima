@@ -1,4 +1,4 @@
-/* line 17, C:/Ruby/lib/ruby/gems/1.9.1/gems/compass-0.12.3/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 17, C:/Ruby/lib/ruby/gems/1.9.1/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -20,45 +20,45 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 22, C:/Ruby/lib/ruby/gems/1.9.1/gems/compass-0.12.3/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 22, C:/Ruby/lib/ruby/gems/1.9.1/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1;
 }
 
-/* line 24, C:/Ruby/lib/ruby/gems/1.9.1/gems/compass-0.12.3/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 24, C:/Ruby/lib/ruby/gems/1.9.1/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 26, C:/Ruby/lib/ruby/gems/1.9.1/gems/compass-0.12.3/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 26, C:/Ruby/lib/ruby/gems/1.9.1/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 28, C:/Ruby/lib/ruby/gems/1.9.1/gems/compass-0.12.3/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 28, C:/Ruby/lib/ruby/gems/1.9.1/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 30, C:/Ruby/lib/ruby/gems/1.9.1/gems/compass-0.12.3/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 30, C:/Ruby/lib/ruby/gems/1.9.1/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 103, C:/Ruby/lib/ruby/gems/1.9.1/gems/compass-0.12.3/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 103, C:/Ruby/lib/ruby/gems/1.9.1/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 32, C:/Ruby/lib/ruby/gems/1.9.1/gems/compass-0.12.3/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 32, C:/Ruby/lib/ruby/gems/1.9.1/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 116, C:/Ruby/lib/ruby/gems/1.9.1/gems/compass-0.12.3/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 116, C:/Ruby/lib/ruby/gems/1.9.1/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
   display: block;
 }
@@ -392,8 +392,8 @@ a {
 
 /* line 55, C:/www/medoptima-git/public/s/public/scss/main/_main.scss */
 .fix {
-  width: 940px;
-  padding: 0 20px;
+  width: 960px;
+  padding: 0 10px;
   margin: 0 auto;
 }
 
@@ -460,7 +460,7 @@ textarea {
 
 /* line 1, C:/www/medoptima-git/public/s/public/scss/blocks/header/_header.scss */
 .header {
-  min-width: 940px;
+  min-width: 960px;
   height: 65px;
   background-color: #00a3df;
 }
@@ -483,23 +483,33 @@ textarea {
 .header-menu li a {
   padding-bottom: 3px;
   color: #fff;
+  font-size: 14px;
   font-family: 'helveticaneuecyrroman', Arial, sans-serif;
+  -webkit-transition: opacity 0.25s ease;
+  -moz-transition: opacity 0.25s ease;
+  -o-transition: opacity 0.25s ease;
+  transition: opacity 0.25s ease;
+}
+/* line 28, C:/www/medoptima-git/public/s/public/scss/blocks/header/_header.scss */
+.header-menu li a:hover {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+  opacity: 0.7;
 }
 
-/* line 29, C:/www/medoptima-git/public/s/public/scss/blocks/header/_header.scss */
+/* line 35, C:/www/medoptima-git/public/s/public/scss/blocks/header/_header.scss */
 .header-contact-info-appointments {
   float: right;
   padding-top: 7px;
 }
 
-/* line 34, C:/www/medoptima-git/public/s/public/scss/blocks/header/_header.scss */
+/* line 40, C:/www/medoptima-git/public/s/public/scss/blocks/header/_header.scss */
 .header-appointments-link {
   display: block;
   position: relative;
   width: 13px;
   height: 13px;
 }
-/* line 40, C:/www/medoptima-git/public/s/public/scss/blocks/header/_header.scss */
+/* line 46, C:/www/medoptima-git/public/s/public/scss/blocks/header/_header.scss */
 .header-appointments-link .appointments-ico {
   width: 13px;
   height: 13px;
@@ -512,7 +522,7 @@ textarea {
   position: relative;
   width: 170px;
   height: 65px;
-  margin: 0 35px 0 0;
+  margin: 0 55px 0 0;
 }
 
 /* line 9, C:/www/medoptima-git/public/s/public/scss/blocks/header/logo/_logo.scss */
@@ -525,7 +535,7 @@ textarea {
 
 /* line 1, C:/www/medoptima-git/public/s/public/scss/blocks/footer/_footer.scss */
 .footer {
-  min-width: 940px;
+  min-width: 960px;
   height: 65px;
   margin-top: -65px;
   background-color: #00a3df;
@@ -668,7 +678,7 @@ input[type="text"] {
   width: 1020px;
   height: 100%;
   top: 0;
-  left: -40px;
+  left: -30px;
 }
 
 /* line 18, C:/www/medoptima-git/public/s/public/scss/blocks/index/_banner.scss */
@@ -1351,48 +1361,53 @@ input[type="text"] {
 
 /* line 35, C:/www/medoptima-git/public/s/public/scss/blocks/contacts/_main.scss */
 .contact-box-phone {
-  font-size: 16px;
-  color: #8d99a6;
+  font-size: 14px;
+  color: #505a65;
+  line-height: 21px;
 }
 
-/* line 39, C:/www/medoptima-git/public/s/public/scss/blocks/contacts/_main.scss */
+/* line 40, C:/www/medoptima-git/public/s/public/scss/blocks/contacts/_main.scss */
 .contact-box-mail {
   margin-top: 8px;
 }
-/* line 43, C:/www/medoptima-git/public/s/public/scss/blocks/contacts/_main.scss */
+/* line 44, C:/www/medoptima-git/public/s/public/scss/blocks/contacts/_main.scss */
 .contact-box-mail a:hover {
   border-bottom: 1px solid #b2e3f5;
 }
 
-/* line 49, C:/www/medoptima-git/public/s/public/scss/blocks/contacts/_main.scss */
+/* line 50, C:/www/medoptima-git/public/s/public/scss/blocks/contacts/_main.scss */
 .contact-box-adress {
   width: 195px;
   margin-top: 20px;
-  font-size: 16px;
-  line-height: 24px;
-  color: #8d99a6;
+  font-size: 14px;
+  line-height: 21px;
+  color: #505a65;
 }
 
-/* line 57, C:/www/medoptima-git/public/s/public/scss/blocks/contacts/_main.scss */
+/* line 58, C:/www/medoptima-git/public/s/public/scss/blocks/contacts/_main.scss */
 .contact-box-sign {
   float: left;
   width: 260px;
 }
 /* line 62, C:/www/medoptima-git/public/s/public/scss/blocks/contacts/_main.scss */
+.contact-box-sign .simple-text {
+  line-height: 21px;
+}
+/* line 64, C:/www/medoptima-git/public/s/public/scss/blocks/contacts/_main.scss */
 .contact-box-sign .simple-text h3 {
   font-size: 14px;
-  color: #8d99a6;
+  color: #505a65;
 }
-/* line 68, C:/www/medoptima-git/public/s/public/scss/blocks/contacts/_main.scss */
+/* line 70, C:/www/medoptima-git/public/s/public/scss/blocks/contacts/_main.scss */
 .contact-box-sign .simple-text ul li {
   font-size: 14px;
-  color: #8d99a6;
+  color: #505a65;
 }
-/* line 74, C:/www/medoptima-git/public/s/public/scss/blocks/contacts/_main.scss */
+/* line 76, C:/www/medoptima-git/public/s/public/scss/blocks/contacts/_main.scss */
 .contact-box-sign .simple-text p {
   margin-top: 20px;
   font-size: 14px;
-  color: #8d99a6;
+  color: #505a65;
 }
 
 /* line 1, C:/www/medoptima-git/public/s/public/scss/blocks/comments/_main.scss */
@@ -1603,57 +1618,83 @@ input[type="text"] {
 
 /* line 31, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
 .clinic-text-box {
-  color: #8d99a6;
-  font-size: 16px;
-  line-height: 20px;
+  color: #505a65;
+  font-size: 14px;
+  line-height: 21px;
 }
-/* line 36, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
+/* line 37, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
 .clinic-text-box a:hover {
   border-bottom: 1px solid #b2e3f5;
 }
 
-/* line 42, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
+/* line 43, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
 .doctor-box-item-img {
   float: left;
   margin-right: 15px;
   width: 140px;
   height: 140px;
 }
-/* line 48, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
+/* line 49, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
 .doctor-box-item-img img {
   width: 100%;
   height: 100%;
 }
 
-/* line 54, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
+/* line 55, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
 .doctor-box {
   margin-top: 70px;
 }
 
-/* line 58, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
+/* line 59, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
 .doctor-box-item {
   margin-bottom: 35px;
 }
 
-/* line 62, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
+/* line 63, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
 .doctor-box-item-info {
   float: left;
   width: 450px;
 }
 
-/* line 67, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
+/* line 68, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
 .doctor-box-item-name {
   margin: 10px 0 15px 0;
-  color: #8d99a6;
+  color: #505a65;
   font-size: 30px;
   font-family: 'helveticaneuecyrthin', Arial, sans-serif;
 }
 
-/* line 74, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
+/* line 75, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_main.scss */
 .doctor-box-item-text {
-  color: #8d99a6;
-  font-size: 16px;
-  line-height: 24px;
+  color: #505a65;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+/* line 1, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_jobs.scss */
+.jobs {
+  padding: 50px 0;
+}
+/* line 4, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_jobs.scss */
+.jobs .jobs-item {
+  padding: 15px 0 20px 0;
+  background: url("/s/public/images/text-border.png") left bottom repeat-x;
+}
+/* line 7, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_jobs.scss */
+.jobs .jobs-item .main-title {
+  margin-bottom: 10px;
+}
+/* line 11, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_jobs.scss */
+.jobs .jobs-item .jobs-item-text {
+  font-size: 14px;
+  line-height: 19px;
+  color: #505a65;
+  font-family: 'helveticaneuecyrroman', Arial, sans-serif;
+}
+/* line 17, C:/www/medoptima-git/public/s/public/scss/blocks/clinic/_jobs.scss */
+.jobs .jobs-item .jobs-item-text a {
+  font-size: 14px;
+  line-height: 19px;
 }
 
 /* line 1, C:/www/medoptima-git/public/s/public/scss/blocks/errors/_main.scss */

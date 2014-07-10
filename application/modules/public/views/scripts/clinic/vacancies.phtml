@@ -1,8 +1,15 @@
 <?php
 /** @var Application_Model_Vacancy[] $vacancies */
 $vacancies = $this->vacancies;
+$block = Application_Model_TextBlock::getByAlias('opened-vacancies');
 ?><div class="jobs">
     <div class="fix"><?
+        if ($block instanceof Application_Model_TextBlock) :
+            ?><div class="jobs-item">
+                <p class="main-title"><?= $block->getName() ?></p>
+                <p class="jobs-item-text"><?= $block->getText() ?></a></p>
+            </div><?
+        endif;
         foreach ($vacancies as $vacancy) :
             ?><div class="jobs-item">
                 <p class="main-title"><?=$vacancy->getName()?></p>

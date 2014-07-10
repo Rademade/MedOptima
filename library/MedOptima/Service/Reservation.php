@@ -48,7 +48,7 @@ class MedOptima_Service_Reservation {
         $this->_prepareDoctor();
         $this->_prepareVisitTime();
         $this->_prepareServices();
-        $reservation = $this->_initReservation(Reservation::create());
+        $reservation = $this->_buildReservation(Reservation::create());
         $this->_session->ids[] = $reservation->getId(); //store to session
         return $reservation;
     }
@@ -67,7 +67,7 @@ class MedOptima_Service_Reservation {
                     $this->_prepareDoctor();
                     $this->_prepareVisitTime(array($reservation->getId()));
                     $this->_prepareServices();
-                    $this->_initReservation($reservation);
+                    $this->_buildReservation($reservation);
                 }
                 $reservation->save();
                 return $reservation;
@@ -139,7 +139,7 @@ class MedOptima_Service_Reservation {
         }
     }
 
-    private function _initReservation(Reservation $reservation) {
+    private function _buildReservation(Reservation $reservation) {
         $reservation->setDoctor($this->_doctor);
         $reservation->setDesiredVisitTime($this->_fromTime->getTimestamp());
         $reservation->setFinalVisitTime($this->_fromTime->getTimestamp());

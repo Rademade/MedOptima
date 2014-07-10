@@ -17,7 +17,8 @@ try {
             'add_pages' => 'Add pages to admin panel',
             'clinic_text_block' => 'Add index text block',
             'remove_clinic_text_block' => 'Remove old clinic blocks',
-            'create_advice_galleries' => 'Create advice empty galleries'
+            'create_advice_galleries' => 'Create advice empty galleries',
+            'second_phone' => ''
         )
     );
     $opts->parse();
@@ -122,6 +123,14 @@ if (isset($opts->create_advice_galleries)) :
         $advice->save();
     }
 
+endif;
+
+if (isset($opts->second_phone)) :
+    $option = Application_Model_Option::create();
+    $option->getContent()->setName('Дополнительный телефон');
+    $option->setOptionKey('second-phone');
+    $option->getContent()->setValue('+7 (999) 999 99 99');
+    $option->save();
 endif;
 
 exit;

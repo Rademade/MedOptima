@@ -18,7 +18,8 @@ abstract class MedOptima_Controller_Public
             'phonePrefix' => Option::getValueByKey('phone-prefix'),
             'phoneWithoutPrefix' => Option::getValueByKey('phone-without-prefix'),
             'email' => Option::getValueByKey('email'),
-            'phoneWithPrefix' => Option::getValueByKey('phone-with-prefix')
+            'phoneWithPrefix' => Option::getValueByKey('phone-with-prefix'),
+            'secondPhone' => Option::getValueByKey('second-phone')
         ));
     }
 

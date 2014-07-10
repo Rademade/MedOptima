@@ -219,7 +219,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   display: block;
   position: absolute;
   top: 0;
-  width: 305px;
+  width: 50%;
   height: 410px;
   color: #fff;
 }

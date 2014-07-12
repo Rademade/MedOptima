@@ -12,8 +12,9 @@
 
 <div id="message-delete" class="calendar-appointment" style="display: none">
     <div class="calendar-appointment-date"><span class="message-label"></span></div>
-    <div class="calendar-appointment-text">Вы отменили запись. Если вы сомневаетесь — позвоните нам <?=$this->phoneWithPrefix?> или
-        напишите <a href="mailto:<?=$this->email?>"><?= $this->email ?></a></div>
+    <div class="calendar-appointment-text">Вы отменили запись. Если вы сомневаетесь — позвоните нам <br>(<?=$this->phonePrefix?>) <?=$this->phoneWithoutPrefix?> или
+        напишите <br><a href="mailto:<?=$this->email?>"><?= $this->email ?></a>
+    </div>
     <div class="calendar-appointment-link"><a class="message-button" href="javascript:void(0)">Вернуть запись</a></div>
 </div>
 

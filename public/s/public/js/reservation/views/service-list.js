@@ -4,14 +4,10 @@ MedOptima.prototype.ReservationViewServiceList = Backbone.View.extend({
         'click button' : 'serviceClicked'
     },
 
-    initialize : function() {
-        this.listenTo(this.model, 'change:selectedDoctor', this.__onDoctorChanged);
-    },
-
     serviceClicked : function(event) {
         var $service = $(event.currentTarget);
-        if ($service.hasClass('off')) return;
         $service.toggleClass('clicked');
+        $service.siblings('button').removeClass('clicked');
         this.model.set('selectedServices', this._getSelectedServices());
     },
 
@@ -20,31 +16,6 @@ MedOptima.prototype.ReservationViewServiceList = Backbone.View.extend({
             var $el = $(el);
             return $el.attr('data-id');
         });
-    },
-
-    __onDoctorChanged : function(doctor) {
-        console.log('doctor changed');
-        if (!doctor) return this.__enableServices('all');
-        return this.__enableServices(doctor.get('services'));
-    },
-
-    __enableServices : function(services) {
-        if (_.isArray(services)) {
-
-            var pred = function() {
-                var $el = $(this), id = $el.data('id');
-                if (_.indexOf(services, id) === -1) {
-                    $el.addClass('off');
-                } else {
-                    $el.removeClass('off');
-                }
-            };
-
-            this.$('button').each(pred);
-
-        } else if (services === 'all') {
-            this.$('button').removeClass('off');
-        }
     }
 
 }, {

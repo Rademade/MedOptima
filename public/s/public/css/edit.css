@@ -1,7 +1,7 @@
 
 #ajax-loader {
     background: url('/s/public/images/loader.gif') 50% 50% no-repeat;
-    min-height: 350px;
+    min-height: 200px;
 }
 .ui-datepicker-prev, .ui-datepicker-next {
     display: none;
@@ -23,7 +23,7 @@
     display: block;
     width: 300px;
     margin: 0 auto;
-    height: 300px;
+    line-height: 200px;
     text-align: center;
 }
 .calendar-appointment {

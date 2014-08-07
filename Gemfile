@@ -1,2 +1,2 @@
 gem "capistrano", "2.15.5"
-gem 'capistrano-shared_file'
+gem 'hipchat', '~> 1.2.0'

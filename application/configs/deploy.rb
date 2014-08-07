@@ -1,3 +1,5 @@
+require 'hipchat/capistrano'
+
 set   :application,         "med-optima"
 set   :deploy_to,           "/var/www/med-optima"
 set   :domain,              "med-optima.rademade.com"
@@ -23,6 +25,12 @@ set   :shared_children,     ["application/configs/base",
 
 set   :copy_exclude,        [".git", ".DS_Store", ".gitignore", ".gitmodules", "Capfile"]
 set   :normalize_asset_timestamps, false
+
+set   :hipchat_token,         ENV['HIPCHAT_AUTH_TOKEN']
+set   :hipchat_room_name,     "379396"
+set   :hipchat_announce,      false
+set   :hipchat_color,         "yellow"
+set   :hipchat_success_color, "green"
 
 after "deploy:update_code" do
   run "rm -rf #{latest_release}/public/s/_compress/css/* && chmod 777 #{latest_release}/public/s/_compress/css"

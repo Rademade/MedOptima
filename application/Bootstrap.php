@@ -34,6 +34,10 @@ class Bootstrap
         $routingInstaller->install();
     }
 
+    protected function _initGlobalFunctions() {
+        RM_System_GlobalFunctions::init();
+    }
+
     protected function _initView() {
         $view = new Zend_View();
         $view->doctype('HTML5');

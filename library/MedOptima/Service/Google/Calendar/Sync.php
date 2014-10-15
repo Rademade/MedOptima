@@ -41,7 +41,13 @@ class MedOptima_Service_Google_Calendar_Sync {
     }
 
     public function sync() {
+        if ($this->_debug) {
+            echo "Sync of reservation #{$this->_reservation->getId()}" . PHP_EOL;
+        }
         if ( !$this->isValid() ) {
+            if ($this->_debug) {
+                echo 'Something wrong with calendar. Stop' . PHP_EOL;
+            }
             return false;
         }
         if ($this->_reservation->isAccepted()) {

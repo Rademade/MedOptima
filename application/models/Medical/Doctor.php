@@ -15,8 +15,6 @@ class Application_Model_Medical_Doctor
     const TABLE_NAME = 'medicalDoctors';
     const CACHE_NAME = 'medicalDoctors';
 
-    const MIN_RECEPTION_DURATION_FACTOR = 0.95;
-
     protected static $_properties = array(
         'idDoctor' => array(
             'id' => true,
@@ -284,9 +282,7 @@ class Application_Model_Medical_Doctor
 
     public function getMinReceptionDuration() {
         $duration = $this->getReceptionDuration()->getTimestamp();
-        return new MedOptima_DateTime_Duration_InsideDay(
-            $duration * self::MIN_RECEPTION_DURATION_FACTOR
-        );
+        return new MedOptima_DateTime_Duration_InsideDay($duration);
     }
 
     protected function __setIdContent($idContent) {

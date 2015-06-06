@@ -60,7 +60,7 @@ class MedOptima_DateTime_WeekdayPeriod {
     public function includes(DateTime $dateTime) {
         $timestamp = $this->__toLocalFormat($dateTime);
         return $this->_weekday == $dateTime->getWeekday()
-            && $this->_timestampBegin <= $timestamp && $timestamp < $this->_timestampEnd;
+            && $this->_timestampBegin <= $timestamp && $timestamp <= $this->_timestampEnd;
     }
 
     public function evenWeekdays() {

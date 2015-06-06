@@ -34,7 +34,7 @@ class MedOptima_DTO_Schedule
             $from->addSeconds($time);
             $to->addSeconds($time);
 
-            for (; $time < $period->getTimestampEnd(); $time += $duration) {
+            for (; $time <= $period->getTimestampEnd() - $duration; $time += $duration) {
                 $result[$from->getTimestamp()] = array(
                     'time' => $from->getGostTime(),
                     'available' =>

@@ -69,7 +69,13 @@ class MedOptima_Service_Doctor_WorkTime {
     protected function __createWorkTimeDependencies(Doc $doc, WorkTime $initiator) {
         $list = [];
         $period = $initiator->getPeriod();
-        $expected = $period->evenWeekdays() ? 0 : 1;
+        if ($period->evenWeekdays()) {
+            $expected = 0;
+        } elseif ($period->oddWeekdays()) {
+            $expected = 1;
+        } else {
+            return $list;
+        }
         foreach (DateTime::getWeekdayNames() as $num => $day) {
             if (($num % 2) === $expected) {
                 $workTime = $this->__createWorkTime($doc, $num, $period->getTimeBegin(), $period->getTimeEnd());

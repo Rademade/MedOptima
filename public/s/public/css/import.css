@@ -1,4 +1,4 @@
-/* line 17, ../../../../../../Ruby/lib/ruby/gems/1.9.1/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 5, ../../../../../../.rvm/gems/ruby-2.0.0-p576/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -20,46 +20,46 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 22, ../../../../../../Ruby/lib/ruby/gems/1.9.1/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 22, ../../../../../../.rvm/gems/ruby-2.0.0-p576/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1;
 }
 
-/* line 24, ../../../../../../Ruby/lib/ruby/gems/1.9.1/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 24, ../../../../../../.rvm/gems/ruby-2.0.0-p576/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 26, ../../../../../../Ruby/lib/ruby/gems/1.9.1/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 26, ../../../../../../.rvm/gems/ruby-2.0.0-p576/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 28, ../../../../../../Ruby/lib/ruby/gems/1.9.1/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 28, ../../../../../../.rvm/gems/ruby-2.0.0-p576/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 30, ../../../../../../Ruby/lib/ruby/gems/1.9.1/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 30, ../../../../../../.rvm/gems/ruby-2.0.0-p576/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 103, ../../../../../../Ruby/lib/ruby/gems/1.9.1/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 103, ../../../../../../.rvm/gems/ruby-2.0.0-p576/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 32, ../../../../../../Ruby/lib/ruby/gems/1.9.1/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 32, ../../../../../../.rvm/gems/ruby-2.0.0-p576/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 116, ../../../../../../Ruby/lib/ruby/gems/1.9.1/gems/compass-0.12.6/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+/* line 116, ../../../../../../.rvm/gems/ruby-2.0.0-p576/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block;
 }
 
@@ -70,7 +70,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   font-weight: normal;
   font-style: normal;
 }
-
 @font-face {
   font-family: 'helveticaneuecyrlight';
   src: url("/s/public/fonts/helveticaneuecyr-light-webfont.eot");
@@ -78,7 +77,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   font-weight: normal;
   font-style: normal;
 }
-
 @font-face {
   font-family: 'helveticaneuecyrthin';
   src: url("/s/public/fonts/helveticaneuecyr-thin-webfont.eot");
@@ -86,7 +84,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   font-weight: normal;
   font-style: normal;
 }
-
 /* line 4, ../scss/plugins/_jcarousel.scss */
 .photo-text-box {
   display: block;
@@ -207,13 +204,13 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 /* line 111, ../scss/plugins/_jcarousel.scss */
 .connected-carousels .carousel-navigation li.active img {
   border-color: #ccc;
-  -webkit-box-shadow: 0px 0px 0px 2px #00a3df;
   -moz-box-shadow: 0px 0px 0px 2px #00a3df;
+  -webkit-box-shadow: 0px 0px 0px 2px #00a3df;
   box-shadow: 0px 0px 0px 2px #00a3df;
 }
 
 /** Stage carousel controls **/
-/* line 119, ../scss/plugins/_jcarousel.scss */
+/* line 118, ../scss/plugins/_jcarousel.scss */
 .connected-carousels .prev-stage,
 .connected-carousels .next-stage {
   display: block;
@@ -239,13 +236,13 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   right: 0;
 }
 
-/* line 141, ../scss/plugins/_jcarousel.scss */
+/* line 140, ../scss/plugins/_jcarousel.scss */
 .connected-carousels .prev-stage.inactive,
 .connected-carousels .next-stage.inactive {
   display: none;
 }
 
-/* line 146, ../scss/plugins/_jcarousel.scss */
+/* line 145, ../scss/plugins/_jcarousel.scss */
 .connected-carousels .prev-stage span,
 .connected-carousels .next-stage span {
   display: none;
@@ -268,14 +265,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   right: 20px;
 }
 
-/* line 166, ../scss/plugins/_jcarousel.scss */
+/* line 165, ../scss/plugins/_jcarousel.scss */
 .connected-carousels .prev-stage:hover span,
 .connected-carousels .next-stage:hover span {
   display: block;
 }
 
 /** Navigation carousel controls **/
-/* line 173, ../scss/plugins/_jcarousel.scss */
+/* line 172, ../scss/plugins/_jcarousel.scss */
 .connected-carousels .prev-navigation,
 .connected-carousels .next-navigation {
   display: block;
@@ -309,7 +306,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   text-indent: 20px;
 }
 
-/* line 204, ../scss/plugins/_jcarousel.scss */
+/* line 203, ../scss/plugins/_jcarousel.scss */
 .connected-carousels .prev-navigation.inactive,
 .connected-carousels .next-navigation.inactive {
   opacity: .5;
@@ -323,7 +320,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   font-weight: normal;
   font-style: normal;
 }
-
 @font-face {
   font-family: 'helveticaneuecyrlight';
   src: url("/s/public/fonts/helveticaneuecyr-light-webfont.eot");
@@ -331,7 +327,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   font-weight: normal;
   font-style: normal;
 }
-
 @font-face {
   font-family: 'helveticaneuecyrthin';
   src: url("/s/public/fonts/helveticaneuecyr-thin-webfont.eot");
@@ -339,7 +334,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   font-weight: normal;
   font-style: normal;
 }
-
 /* line 1, ../scss/main/_main.scss */
 html, body {
   height: 100%;
@@ -451,10 +445,8 @@ textarea {
   outline: none;
   resize: none;
   background-color: transparent;
-  -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
-  -ms-border-radius: 6px;
-  -o-border-radius: 6px;
+  -webkit-border-radius: 6px;
   border-radius: 6px;
 }
 
@@ -485,9 +477,9 @@ textarea {
   color: #fff;
   font-size: 14px;
   font-family: 'helveticaneuecyrroman', Arial, sans-serif;
-  -webkit-transition: opacity 0.25s ease;
   -moz-transition: opacity 0.25s ease;
   -o-transition: opacity 0.25s ease;
+  -webkit-transition: opacity 0.25s ease;
   transition: opacity 0.25s ease;
 }
 /* line 28, ../scss/blocks/header/_header.scss */
@@ -573,16 +565,15 @@ textarea {
 .operation-item {
   padding: 20px;
   background-color: #fff;
-  -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
-  -ms-border-radius: 3px;
-  -o-border-radius: 3px;
+  -webkit-border-radius: 3px;
   border-radius: 3px;
-  -webkit-background-clip: padding;
   -moz-background-clip: padding;
+  -o-background-clip: padding-box;
+  -webkit-background-clip: padding;
   background-clip: padding-box;
-  -webkit-box-shadow: 0 2px 1px rgba(228, 224, 210, 0.5);
   -moz-box-shadow: 0 2px 1px rgba(228, 224, 210, 0.5);
+  -webkit-box-shadow: 0 2px 1px rgba(228, 224, 210, 0.5);
   box-shadow: 0 2px 1px rgba(228, 224, 210, 0.5);
 }
 
@@ -616,10 +607,8 @@ button {
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.7);
   background-color: transparent;
-  -webkit-border-radius: 7px;
   -moz-border-radius: 7px;
-  -ms-border-radius: 7px;
-  -o-border-radius: 7px;
+  -webkit-border-radius: 7px;
   border-radius: 7px;
 }
 /* line 29, ../scss/blocks/button/_button.scss */
@@ -640,10 +629,8 @@ button {
   color: #00a3df;
   padding: 9px 0 8px 0;
   border: 1px solid #00a3df;
-  -webkit-border-radius: 7px;
   -moz-border-radius: 7px;
-  -ms-border-radius: 7px;
-  -o-border-radius: 7px;
+  -webkit-border-radius: 7px;
   border-radius: 7px;
 }
 /* line 48, ../scss/blocks/button/_button.scss */
@@ -666,7 +653,7 @@ input[type="submit"]::-moz-focus-inner {
   border: 0;
 }
 
-/* line 13, ../scss/blocks/input/_input.scss */
+/* line 12, ../scss/blocks/input/_input.scss */
 input[type="password"],
 input[type="text"] {
   width: 100%;
@@ -695,7 +682,7 @@ input[type="text"] {
   left: -30px;
 }
 
-/* line 18, ../scss/blocks/index/_banner.scss */
+/* line 17, ../scss/blocks/index/_banner.scss */
 .banner-prev-ico,
 .banner-next-ico {
   width: 18px;
@@ -745,10 +732,8 @@ input[type="text"] {
 .text-box-item .simple-text img {
   float: left;
   margin-left: 15px;
-  -webkit-border-radius: 70px;
   -moz-border-radius: 70px;
-  -ms-border-radius: 70px;
-  -o-border-radius: 70px;
+  -webkit-border-radius: 70px;
   border-radius: 70px;
 }
 
@@ -771,7 +756,7 @@ input[type="text"] {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=20);
   opacity: 0.2;
 }
-/* line 19, ../scss/blocks/index/_callendar.scss */
+/* line 18, ../scss/blocks/index/_callendar.scss */
 .calendar-data-container.hidden .calendar-prev-month-link,
 .calendar-data-container.hidden .calendar-next-month-link {
   cursor: default;
@@ -782,7 +767,7 @@ input[type="text"] {
   border-bottom: 0;
 }
 
-/* line 33, ../scss/blocks/index/_callendar.scss */
+/* line 32, ../scss/blocks/index/_callendar.scss */
 .calendar-prev-month-link,
 .calendar-next-month-link {
   position: absolute;
@@ -812,14 +797,14 @@ input[type="text"] {
 .calendar-next-month-link:hover .next-month-link-ico {
   right: -5px;
 }
-/* line 63, ../scss/blocks/index/_callendar.scss */
+/* line 62, ../scss/blocks/index/_callendar.scss */
 .calendar-prev-month-link:active .prev-month-link-ico,
 .calendar-prev-month-link:active .next-month-link-ico,
 .calendar-next-month-link:active .prev-month-link-ico,
 .calendar-next-month-link:active .next-month-link-ico {
-  -webkit-transition: all 0.1s ease-in;
   -moz-transition: all 0.1s ease-in;
   -o-transition: all 0.1s ease-in;
+  -webkit-transition: all 0.1s ease-in;
   transition: all 0.1s ease-in;
 }
 /* line 67, ../scss/blocks/index/_callendar.scss */
@@ -916,10 +901,8 @@ input[type="text"] {
   cursor: pointer;
   color: #fff;
   background-color: #00a3df;
-  -webkit-border-radius: 30px;
   -moz-border-radius: 30px;
-  -ms-border-radius: 30px;
-  -o-border-radius: 30px;
+  -webkit-border-radius: 30px;
   border-radius: 30px;
 }
 /* line 162, ../scss/blocks/index/_callendar.scss */
@@ -937,13 +920,11 @@ input[type="text"] {
 }
 /* line 175, ../scss/blocks/index/_callendar.scss */
 .calendar-box-date-item.current-date .calendar-box-date-item-value {
-  -webkit-border-radius: 30px;
   -moz-border-radius: 30px;
-  -ms-border-radius: 30px;
-  -o-border-radius: 30px;
+  -webkit-border-radius: 30px;
   border-radius: 30px;
-  -webkit-box-shadow: inset 0 0 0 2px #00a3df;
   -moz-box-shadow: inset 0 0 0 2px #00a3df;
+  -webkit-box-shadow: inset 0 0 0 2px #00a3df;
   box-shadow: inset 0 0 0 2px #00a3df;
 }
 /* line 182, ../scss/blocks/index/_callendar.scss */
@@ -960,10 +941,8 @@ input[type="text"] {
   color: #fff;
   cursor: pointer;
   background-color: #00a3df;
-  -webkit-border-radius: 30px;
   -moz-border-radius: 30px;
-  -ms-border-radius: 30px;
-  -o-border-radius: 30px;
+  -webkit-border-radius: 30px;
   border-radius: 30px;
 }
 
@@ -989,14 +968,14 @@ input[type="text"] {
   background-position: 0 -15px;
 }
 
-/* line 225, ../scss/blocks/index/_callendar.scss */
+/* line 224, ../scss/blocks/index/_callendar.scss */
 .prev-month-link-ico,
 .next-month-link-ico {
   width: 18px;
   height: 32px;
-  -webkit-transition: all 0.2s ease-in;
   -moz-transition: all 0.2s ease-in;
   -o-transition: all 0.2s ease-in;
+  -webkit-transition: all 0.2s ease-in;
   transition: all 0.2s ease-in;
 }
 
@@ -1029,7 +1008,7 @@ input[type="text"] {
   border-bottom: 1px solid #b2e3f5;
 }
 
-/* line 2, ../scss/blocks/popup/_main.scss */
+/* line 1, ../scss/blocks/popup/_main.scss */
 .calendar-popup,
 .popup-box {
   width: 340px;
@@ -1038,10 +1017,8 @@ input[type="text"] {
   background-color: rgba(141, 153, 166, 0.9);
   border: 1px solid rgba(141, 153, 166, 0.9);
   border-top: 0;
-  -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
+  -webkit-border-radius: 5px;
   border-radius: 5px;
   position: absolute;
   top: 40px;
@@ -1088,10 +1065,8 @@ input[type="text"] {
   margin: 0 2px 8px 0;
   padding: 2px 8px;
   border: 1px solid #ffffff;
-  -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
+  -webkit-border-radius: 5px;
   border-radius: 5px;
 }
 /* line 52, ../scss/blocks/popup/_main.scss */
@@ -1121,10 +1096,8 @@ input[type="text"] {
   text-align: center;
   line-height: 22px;
   border: 1px solid #ffffff;
-  -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
+  -webkit-border-radius: 5px;
   border-radius: 5px;
 }
 /* line 80, ../scss/blocks/popup/_main.scss */
@@ -1213,10 +1186,8 @@ input[type="text"] {
   height: 56px;
   margin-right: 10px;
   background-color: #8d99a6;
-  -webkit-border-radius: 50px;
   -moz-border-radius: 50px;
-  -ms-border-radius: 50px;
-  -o-border-radius: 50px;
+  -webkit-border-radius: 50px;
   border-radius: 50px;
 }
 /* line 162, ../scss/blocks/popup/_main.scss */
@@ -1224,10 +1195,8 @@ input[type="text"] {
   width: 100%;
   height: 100%;
   background-color: #8d99a6;
-  -webkit-border-radius: 50px;
   -moz-border-radius: 50px;
-  -ms-border-radius: 50px;
-  -o-border-radius: 50px;
+  -webkit-border-radius: 50px;
   border-radius: 50px;
 }
 
@@ -1475,31 +1444,37 @@ input[type="text"] {
 .comments-item-text .simple-text {
   color: #8d99a6;
 }
-/* line 42, ../scss/blocks/comments/_main.scss */
+/* line 43, ../scss/blocks/comments/_main.scss */
 .comments-item-text .simple-text p {
   margin-top: 10px;
   font-size: 16px;
   line-height: 24px;
 }
-
 /* line 49, ../scss/blocks/comments/_main.scss */
+.comments-item-text .simple-text img {
+  margin-top: 10px;
+  width: 100%;
+  height: auto;
+}
+
+/* line 56, ../scss/blocks/comments/_main.scss */
 .comments-item-list {
   margin-bottom: 30px;
   background: url("/s/public/images/text-border.png") left bottom repeat-x;
 }
 
-/* line 53, ../scss/blocks/comments/_main.scss */
+/* line 60, ../scss/blocks/comments/_main.scss */
 .comment-btn-box {
   float: left;
   position: relative;
 }
 
-/* line 58, ../scss/blocks/comments/_main.scss */
+/* line 65, ../scss/blocks/comments/_main.scss */
 .clinic-comments {
   margin-top: 60px;
 }
 
-/* line 62, ../scss/blocks/comments/_main.scss */
+/* line 69, ../scss/blocks/comments/_main.scss */
 .tips-btn-box {
   float: left;
   position: relative;
@@ -1534,7 +1509,7 @@ input[type="text"] {
   font-size: 16px;
 }
 
-/* line 28, ../scss/blocks/quotes/_main.scss */
+/* line 27, ../scss/blocks/quotes/_main.scss */
 .quote-top-ico,
 .quote-bottom-ico {
   width: 70px;
@@ -1578,7 +1553,7 @@ input[type="text"] {
   position: relative;
 }
 
-/* line 67, ../scss/blocks/quotes/_main.scss */
+/* line 66, ../scss/blocks/quotes/_main.scss */
 .quote-top-s-ico,
 .quote-bottom-s-ico {
   width: 50px;

@@ -1,18 +1,28 @@
 <?php
 $advice = $this->advice;
-$doctor = $advice->getDoctor();
-if ($advice instanceof Application_Model_Medical_Advice) : ?>
-    <div class="comments-item">
+if ($advice instanceof Application_Model_Medical_Advice) :
+    $doctor = $advice->getDoctor();
+    $poster = $advice->getGallery()->getPosterPhoto();
+    if ($doctor instanceof Application_Model_Medical_Doctor) :
+        $doctorName = $doctor->getName();
+        $formattedPosts = $this->DoctorFormatter($doctor)->getFormattedPosts();
+    else :
+        $doctorName = '';
+        $formattedPosts = '';
+    endif;
+    ?><div class="comments-item">
         <div class="comments-item-name"><?=$advice->getVisitorQuestion()?></div>
         <div class="comments-item-author">
-            <div class="comments-item-author-name"><?=$doctor ? $doctor->getName() : ''?></div>
-            <div class="comments-item-author-post"><?
-                echo $doctor ? $this->DoctorFormatter($doctor)->getFormattedPosts() : ''?></div>
+            <div class="comments-item-author-name"><?=$doctorName?></div>
+            <div class="comments-item-author-post"><?=$formattedPosts?></div>
         </div>
         <div class="comments-item-text">
             <div class="simple-text">
-                <p><?=$advice->getDoctorResponse()?></p>
-            </div>
+                <p><?=$advice->getDoctorResponse()?></p><?
+                if ($poster instanceof RM_Photo) :
+                    ?><img src="<?=$poster->getPath()?>" alt=""/><?
+                endif;
+            ?></div>
         </div>
         <div class="clear"></div>
     </div><?

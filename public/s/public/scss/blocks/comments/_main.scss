@@ -39,10 +39,17 @@
 
     .simple-text {
         color: #8d99a6;
+
         p {
             margin-top: 10px;
             font-size: 16px;
             line-height: 24px;
+        }
+
+        img {
+          margin-top: 10px;
+          width: 100%;
+          height: auto;
         }
     }
 }
